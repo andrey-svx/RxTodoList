@@ -21,7 +21,7 @@ class ItemViewController: UIViewController {
         guard let viewModel = viewModel else { assertionFailure("VM has not been set!"); return }
         let item = viewModel.item
         
-        setTextField(with: viewModel)
+        setupTextField(viewModel)
         
         saveButton.rx
             .tap.bind(onNext: { [weak self] _ in
@@ -38,7 +38,7 @@ class ItemViewController: UIViewController {
             .disposed(by: bag)
     }
     
-    func setTextField(with viewModel: ItemViewModel) {
+    func setupTextField(_ viewModel: ItemViewModel) {
         if viewModel.forEditing,
            let value = try? viewModel.item.value() {
             textField.text = value

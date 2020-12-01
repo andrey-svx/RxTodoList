@@ -113,7 +113,6 @@
 			children = (
 				5A5141B6256C4B1C003B2D3A /* AppDelegate.swift */,
 				5A5141B8256C4B1C003B2D3A /* SceneDelegate.swift */,
-				5A815D1325757C73005934A1 /* TodoInputError.swift */,
 				5A815D1E25763747005934A1 /* ViewModels */,
 				5A815D2025763757005934A1 /* Views */,
 				5A5141BC256C4B1C003B2D3A /* Main.storyboard */,
@@ -136,6 +135,7 @@
 		5A815D2025763757005934A1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5A815D1325757C73005934A1 /* TodoInputError.swift */,
 				5ACD2492256C4FC50068AD1A /* ListViewController.swift */,
 				5A5141BA256C4B1C003B2D3A /* ItemViewController.swift */,
 			);

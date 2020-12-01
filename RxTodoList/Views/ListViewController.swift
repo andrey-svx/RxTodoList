@@ -13,11 +13,11 @@ final class ListViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "RxTodoList"
-        setupTableView()
-        setupButton()
+        setupTableView(viewModel)
+        setupButton(viewModel)
     }
     
-    func setupTableView() {
+    func setupTableView(_ viewModel: ListViewModel) {
         tableView.dataSource = nil
         tableView.delegate = nil
         
@@ -38,7 +38,7 @@ final class ListViewController: UITableViewController {
             .disposed(by: bag)
     }
     
-    func setupButton() {
+    func setupButton(_ viewModel: ListViewModel) {
         plusButton.rx
             .tap.bind { [weak self] _ in
                 self?.pushItemViewControllerToAppend()
