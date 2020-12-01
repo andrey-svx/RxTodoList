@@ -68,7 +68,7 @@ extension ListViewController {
     private func pushItemViewController(forItemAt indexPath: IndexPath) {
         guard let itemViewController = storyboard?.instantiateViewController(identifier: "ItemViewController") as? ItemViewController else { return }
         let index = indexPath.row
-        itemViewController.viewModel = self.viewModel.instantiateEditItemViewModel(at: index)
+        itemViewController.viewModel = self.viewModel.instantiateItemViewModel(forItemAt: index)
         guard let item = itemViewController.viewModel?.item else { assertionFailure("Item VM has not been set!"); return }
         
         item

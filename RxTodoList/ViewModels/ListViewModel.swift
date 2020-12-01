@@ -26,7 +26,7 @@ class ListViewModel {
         }
     }
     
-    func instantiateEditItemViewModel(at index: Int) -> ItemViewModel {
+    func instantiateItemViewModel(forItemAt index: Int) -> ItemViewModel {
         let todo = todos.value[index]
         return ItemViewModel(itemTitle: todo)
     }
