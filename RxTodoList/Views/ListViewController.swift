@@ -33,7 +33,9 @@ final class ListViewController: UITableViewController {
             .modelSelected(Todo.self)
             .flatMap { [unowned self] todo -> Observable<(String, Int)> in
                 let indexPath = self.tableView.indexPathForSelectedRow!
+                let index = indexPath.row
                 return self.pushItemViewController(forItemAt: indexPath)
+                    .flatMap { BehaviorSubject<(String, Int)>(value: ($0, index)) }
             }
             .retry()
             .subscribe(onNext: { [unowned self] (value, index) in
@@ -72,19 +74,18 @@ extension ListViewController {
         return item
     }
 
-    private func pushItemViewController(forItemAt indexPath: IndexPath) -> Observable<(String, Int)> {
+    private func pushItemViewController(forItemAt indexPath: IndexPath) -> Observable<String> {
         guard let itemViewController = storyboard?.instantiateViewController(identifier: "ItemViewController") as? ItemViewController else {
-            return BehaviorSubject<(String, Int)>(value: ("Empty", 0))
+            return BehaviorSubject<String>(value: ("Empty"))
         }
         let index = indexPath.row
         itemViewController.viewModel = self.viewModel.instantiateItemViewModel(forItemAt: index)
         guard let item = itemViewController.viewModel?.item else {
             assertionFailure("Item VM has not been set!")
-            return BehaviorSubject<(String, Int)>(value: ("Empty", 0))
+            return BehaviorSubject<String>(value: ("Empty"))
         }
         navigationController?.pushViewController(itemViewController, animated: true)
         return item
-            .flatMap { BehaviorSubject<(String, Int)>(value: ($0, index)) }
     }
 
 }
