@@ -1,0 +1,6 @@
+framework module Pods_RxTodoList {
+  umbrella header "Pods-RxTodoList-umbrella.h"
+
+  export *
+  module * { export * }
+}
