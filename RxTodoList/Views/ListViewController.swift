@@ -31,9 +31,13 @@ final class ListViewController: UITableViewController {
         
         tableView.rx
             .modelSelected(Todo.self)
-            .subscribe(onNext: { [weak self] todo in
-                guard let indexPath = self?.tableView.indexPathForSelectedRow else { return }
-                self?.pushItemViewController(forItemAt: indexPath)
+            .flatMap { [unowned self] todo -> Observable<(String, Int)> in
+                let indexPath = self.tableView.indexPathForSelectedRow!
+                return self.pushItemViewController(forItemAt: indexPath)
+            }
+            .retry()
+            .subscribe(onNext: { [unowned self] (value, index) in
+                self.viewModel.updateTodo(text: value, at: index)
             })
             .disposed(by: bag)
     }
@@ -45,14 +49,9 @@ final class ListViewController: UITableViewController {
                 self.pushItemViewControllerToAppend()
             }
             .retry()
-            .subscribe(
-                onNext: { [unowned self] event in
-                    self.viewModel.appendTodo(text: event)
-                },
-                onError: { error in
-                    print(error)
-                }
-            )
+            .subscribe(onNext: { [unowned self] event in
+                self.viewModel.appendTodo(text: event)
+            })
             .disposed(by: bag)
     }
     
@@ -73,21 +72,19 @@ extension ListViewController {
         return item
     }
 
-    private func pushItemViewController(forItemAt indexPath: IndexPath) {
-        guard let itemViewController = storyboard?.instantiateViewController(identifier: "ItemViewController") as? ItemViewController else { return }
+    private func pushItemViewController(forItemAt indexPath: IndexPath) -> Observable<(String, Int)> {
+        guard let itemViewController = storyboard?.instantiateViewController(identifier: "ItemViewController") as? ItemViewController else {
+            return BehaviorSubject<(String, Int)>(value: ("Empty", 0))
+        }
         let index = indexPath.row
         itemViewController.viewModel = self.viewModel.instantiateItemViewModel(forItemAt: index)
-        guard let item = itemViewController.viewModel?.item else { assertionFailure("Item VM has not been set!"); return }
-        
-        item
-            .subscribe(
-                onNext: { [weak self] event in
-                    self?.viewModel.updateTodo(text: event, at: index)
-                }
-            )
-            .disposed(by: bag)
-        
+        guard let item = itemViewController.viewModel?.item else {
+            assertionFailure("Item VM has not been set!")
+            return BehaviorSubject<(String, Int)>(value: ("Empty", 0))
+        }
         navigationController?.pushViewController(itemViewController, animated: true)
+        return item
+            .flatMap { BehaviorSubject<(String, Int)>(value: ($0, index)) }
     }
 
 }
