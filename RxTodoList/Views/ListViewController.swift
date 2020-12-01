@@ -34,7 +34,8 @@ final class ListViewController: UITableViewController {
             .flatMap { [unowned self] todo -> Observable<(String, Int)> in
                 let indexPath = self.tableView.indexPathForSelectedRow!
                 let index = indexPath.row
-                return self.pushItemViewController(forItemAt: indexPath)
+                let viewModel = self.viewModel.instantiateItemViewModel(forItemAt: index)
+                return self.pushItemViewController(with: viewModel)
                     .flatMap { BehaviorSubject<(String, Int)>(value: ($0, index)) }
             }
             .retry()
@@ -48,7 +49,8 @@ final class ListViewController: UITableViewController {
         plusBarButtonItem.rx
             .tap
             .flatMap { [unowned self] _ -> Observable<String> in
-                self.pushItemViewControllerToAppend()
+                let viewModel = ItemViewModel()
+                return self.pushItemViewController(with: viewModel)
             }
             .retry()
             .subscribe(onNext: { [unowned self] event in
@@ -61,30 +63,17 @@ final class ListViewController: UITableViewController {
 
 extension ListViewController {
     
-    private func pushItemViewControllerToAppend() -> Observable<String> {
-        guard let itemViewController = storyboard?.instantiateViewController(identifier: "ItemViewController") as? ItemViewController else {
-            return BehaviorSubject<String>(value: "Empty")
-        }
-        itemViewController.viewModel = ItemViewModel()
-        guard let item = itemViewController.viewModel?.item else {
-            assertionFailure("Item VM has not been set!")
-            return BehaviorSubject<String>(value: "Empty")
-        }
-        navigationController?.pushViewController(itemViewController, animated: true)
-        return item
-    }
-
-    private func pushItemViewController(forItemAt indexPath: IndexPath) -> Observable<String> {
+    private func pushItemViewController(with viewModel: ItemViewModel) -> Observable<String> {
         guard let itemViewController = storyboard?.instantiateViewController(identifier: "ItemViewController") as? ItemViewController else {
             return BehaviorSubject<String>(value: ("Empty"))
         }
-        let index = indexPath.row
-        itemViewController.viewModel = self.viewModel.instantiateItemViewModel(forItemAt: index)
+        itemViewController.viewModel = viewModel
         guard let item = itemViewController.viewModel?.item else {
             assertionFailure("Item VM has not been set!")
             return BehaviorSubject<String>(value: ("Empty"))
         }
         navigationController?.pushViewController(itemViewController, animated: true)
+        
         return item
     }
 

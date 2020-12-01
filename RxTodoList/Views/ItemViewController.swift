@@ -36,7 +36,8 @@ final class ItemViewController: UIViewController {
         let item = viewModel.item
         
         saveButton.rx
-            .tap.bind(onNext: { [weak self] _ in
+            .tap
+            .bind(onNext: { [weak self] _ in
                 item.onNext(self?.textField.text ?? "")
                 self?.navigationController?.popViewController(animated: true)
             })
@@ -54,5 +55,7 @@ final class ItemViewController: UIViewController {
 }
 
 enum TextInputError: Error {
+    
     case cancelled
+
 }
