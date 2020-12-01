@@ -2,33 +2,29 @@ import Foundation
 import RxRelay
 import RxSwift
 
-class ListViewModel {
+final class ListViewModel {
     
-    let todos = BehaviorRelay<[String]>(value: ["Clean the apt", "Learn to code", "Call mom", "Do the workout", "Call customers"])
+    private let todoList = TodoList()
     
-    func editTodo(text: String, at index: Int) {
+    var todos: BehaviorRelay<[Todo]> { todoList.todos }
+    
+    func updateTodo(text: String, at index: Int) {
         if !text.isEmpty {
-            var todos = self.todos.value
-            todos[index] = text
-            self.todos.accept(todos)
+            todoList.editTodo(text: text, at: index)
         } else {
-            var todos = self.todos.value
-            todos.remove(at: index)
-            self.todos.accept(todos)
+            todoList.deleteTodo(at: index)
         }
     }
 
     func appendTodo(text: String) {
         if !text.isEmpty {
-            var todos = self.todos.value
-            todos.append(text)
-            self.todos.accept(todos)
+            todoList.appendTodo(text: text)
         }
     }
     
     func instantiateItemViewModel(forItemAt index: Int) -> ItemViewModel {
         let todo = todos.value[index]
-        return ItemViewModel(itemTitle: todo)
+        return ItemViewModel(itemTitle: todo.name)
     }
     
 }

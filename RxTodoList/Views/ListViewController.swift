@@ -5,7 +5,7 @@ import UIKit
 
 final class ListViewController: UITableViewController {
     
-    @IBOutlet weak var plusButton: UIBarButtonItem!
+    @IBOutlet weak var plusBarButtonItem: UIBarButtonItem!
     
     private let viewModel = ListViewModel()
     private let bag = DisposeBag()
@@ -17,20 +17,20 @@ final class ListViewController: UITableViewController {
         setupButton(viewModel)
     }
     
-    func setupTableView(_ viewModel: ListViewModel) {
+    private func setupTableView(_ viewModel: ListViewModel) {
         tableView.dataSource = nil
         tableView.delegate = nil
         
         viewModel.todos
             .bind(to: tableView.rx.items) { (tableView, row, element) in
                 let cell = tableView.dequeueReusableCell(withIdentifier: "TodoCell")!
-                cell.textLabel?.text = "\(row + 1). \(element)"
+                cell.textLabel?.text = "\(row + 1). \(element.name)"
                 return cell
             }
             .disposed(by: bag)
         
         tableView.rx
-            .modelSelected(String.self)
+            .modelSelected(Todo.self)
             .subscribe(onNext: { [weak self] todo in
                 guard let indexPath = self?.tableView.indexPathForSelectedRow else { return }
                 self?.pushItemViewController(forItemAt: indexPath)
@@ -38,8 +38,8 @@ final class ListViewController: UITableViewController {
             .disposed(by: bag)
     }
     
-    func setupButton(_ viewModel: ListViewModel) {
-        plusButton.rx
+    private func setupButton(_ viewModel: ListViewModel) {
+        plusBarButtonItem.rx
             .tap.bind { [weak self] _ in
                 self?.pushItemViewControllerToAppend()
             }
@@ -74,7 +74,7 @@ extension ListViewController {
         item
             .subscribe(
                 onNext: { [weak self] event in
-                    self?.viewModel.editTodo(text: event, at: index)
+                    self?.viewModel.updateTodo(text: event, at: index)
                 },
                 onError: { error in
                     print(error)

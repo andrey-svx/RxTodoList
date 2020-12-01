@@ -33,14 +33,10 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="9NJ-EX-9kM">
-                        <barButtonItem key="rightBarButtonItem" title="Item" image="plus" catalog="system" id="4ZK-0r-CoV">
-                            <connections>
-                                <action selector="handlePlus:" destination="fgT-u8-4F4" id="ExX-fZ-0z8"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="plus" catalog="system" id="4ZK-0r-CoV"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="plusButton" destination="4ZK-0r-CoV" id="CaU-VQ-Clg"/>
+                        <outlet property="plusBarButtonItem" destination="4ZK-0r-CoV" id="CaU-VQ-Clg"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OLs-Gd-OAE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
