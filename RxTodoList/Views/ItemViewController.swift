@@ -43,8 +43,9 @@ final class ItemViewController: UIViewController {
             .disposed(by: bag)
         
         cancelButton.rx
-            .tap.bind(onNext: { [weak self] _ in
-                item.onError(TodoInputError.cancelled)
+            .tap
+            .bind(onNext: { [weak self] _ in
+                item.onError(TextInputError.cancelled)
                 self?.navigationController?.popViewController(animated: true)
             })
             .disposed(by: bag)
@@ -52,3 +53,6 @@ final class ItemViewController: UIViewController {
     
 }
 
+enum TextInputError: Error {
+    case cancelled
+}

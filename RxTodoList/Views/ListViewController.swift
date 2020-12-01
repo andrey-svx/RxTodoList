@@ -14,7 +14,7 @@ final class ListViewController: UITableViewController {
         super.viewDidLoad()
         title = "RxTodoList"
         setupTableView(viewModel)
-        setupButton(viewModel)
+        setupPlusButton(viewModel)
     }
     
     private func setupTableView(_ viewModel: ListViewModel) {
@@ -38,11 +38,21 @@ final class ListViewController: UITableViewController {
             .disposed(by: bag)
     }
     
-    private func setupButton(_ viewModel: ListViewModel) {
+    private func setupPlusButton(_ viewModel: ListViewModel) {
         plusBarButtonItem.rx
-            .tap.bind { [weak self] _ in
-                self?.pushItemViewControllerToAppend()
+            .tap
+            .flatMap { [unowned self] _ -> Observable<String> in
+                self.pushItemViewControllerToAppend()
             }
+            .retry()
+            .subscribe(
+                onNext: { [unowned self] event in
+                    self.viewModel.appendTodo(text: event)
+                },
+                onError: { error in
+                    print(error)
+                }
+            )
             .disposed(by: bag)
     }
     
@@ -50,19 +60,17 @@ final class ListViewController: UITableViewController {
 
 extension ListViewController {
     
-    private func pushItemViewControllerToAppend() {
-        guard let itemViewController = storyboard?.instantiateViewController(identifier: "ItemViewController") as? ItemViewController else { return }
+    private func pushItemViewControllerToAppend() -> Observable<String> {
+        guard let itemViewController = storyboard?.instantiateViewController(identifier: "ItemViewController") as? ItemViewController else {
+            return BehaviorSubject<String>(value: "Empty")
+        }
         itemViewController.viewModel = ItemViewModel()
-        guard let item = itemViewController.viewModel?.item else { assertionFailure("Item VM has not been set!"); return }
-        item
-            .subscribe(onNext: { [weak self] event in
-                self?.viewModel.appendTodo(text: event)
-            }, onError: { error in
-                print(error)
-            })
-            .disposed(by: bag)
-        
+        guard let item = itemViewController.viewModel?.item else {
+            assertionFailure("Item VM has not been set!")
+            return BehaviorSubject<String>(value: "Empty")
+        }
         navigationController?.pushViewController(itemViewController, animated: true)
+        return item
     }
 
     private func pushItemViewController(forItemAt indexPath: IndexPath) {
@@ -75,10 +83,8 @@ extension ListViewController {
             .subscribe(
                 onNext: { [weak self] event in
                     self?.viewModel.updateTodo(text: event, at: index)
-                },
-                onError: { error in
-                    print(error)
-                })
+                }
+            )
             .disposed(by: bag)
         
         navigationController?.pushViewController(itemViewController, animated: true)
