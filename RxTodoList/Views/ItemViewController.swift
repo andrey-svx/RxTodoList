@@ -13,11 +13,22 @@ final class ItemViewController: UIViewController {
     }()
     
     var viewModel: ItemViewModel?
+    
+    lazy var item: BehaviorSubject<String> = { [weak self] in
+        guard let item = self?.viewModel?.item else {
+            assertionFailure("Item VM has not been set!")
+            return BehaviorSubject<String>(value: "")
+        }
+        return item
+    }()
     private let bag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        guard let viewModel = viewModel else { assertionFailure("VM has not been set!"); return }
+        guard let viewModel = viewModel else {
+            assertionFailure("Item VM has not been set!")
+            return
+        }
         setupTextField(viewModel)
         setupButtons(viewModel)
     }

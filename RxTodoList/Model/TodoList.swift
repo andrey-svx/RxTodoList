@@ -7,9 +7,9 @@ class TodoList {
     let todos: BehaviorRelay<[Todo]>
     
     init() {
-        
-        if let todos = TodoList.downloadTodosFromLocalStorage() {
-            self.todos = BehaviorRelay<[Todo]>(value: todos)
+        let downloadedTodos = TodoList.downloadTodosFromLocalStorage()
+        if !downloadedTodos.isEmpty {
+            self.todos = BehaviorRelay<[Todo]>(value: downloadedTodos)
         } else {
             self.todos = BehaviorRelay<[Todo]>(
                 value: [
@@ -24,12 +24,13 @@ class TodoList {
         
     }
     
-    static private func downloadTodosFromLocalStorage() -> [Todo]? {
-        return nil
+    static private func downloadTodosFromLocalStorage() -> [Todo] {
+        // TODO: Use RxCoreData to pull data from phone
+        return []
     }
     
     private func uploadTodosToLocalStorage() {
-        
+        // TODO: Use RxCoreData to push changes to phone
     }
     
     func editTodo(text: String, at index: Int) {
