@@ -2,7 +2,7 @@ import Foundation
 import RxRelay
 import RxSwift
 
-final class ItemViewModel {
+final class ItemViewModel: ViewModel {
     
     let item = BehaviorSubject<String>(value: "")
     private let bag = DisposeBag()

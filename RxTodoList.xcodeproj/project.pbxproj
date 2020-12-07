@@ -17,8 +17,12 @@
 		5A5141C3256C4B1D003B2D3A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A5141C1256C4B1D003B2D3A /* LaunchScreen.storyboard */; };
 		5A815D1725758D78005934A1 /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A815D1625758D78005934A1 /* ListViewModel.swift */; };
 		5A815D1B25758F62005934A1 /* ItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A815D1A25758F62005934A1 /* ItemViewModel.swift */; };
+		5AB90261257ED3D6009E2315 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB90260257ED3D6009E2315 /* ViewModel.swift */; };
 		5ACC572D2576A62C005C7EBB /* Todo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACC572C2576A62C005C7EBB /* Todo.swift */; };
 		5ACD2493256C4FC50068AD1A /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACD2492256C4FC50068AD1A /* ListViewController.swift */; };
+		5AF58A86257E935200731532 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF58A85257E935200731532 /* MainViewController.swift */; };
+		5AF58A8C257E93BD00731532 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF58A8B257E93BD00731532 /* SettingsViewController.swift */; };
+		5AFFD545257ECFC9008393AB /* LogSignViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFFD544257ECFC9008393AB /* LogSignViewController.swift */; };
 		94311BC4F2D660CFF5846108 /* Pods_RxTodoList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBAA1B36BA2D6A0DEE76EB5F /* Pods_RxTodoList.framework */; };
 /* End PBXBuildFile section */
 
@@ -48,8 +52,12 @@
 		5A5141C4256C4B1D003B2D3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5A815D1625758D78005934A1 /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
 		5A815D1A25758F62005934A1 /* ItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemViewModel.swift; sourceTree = "<group>"; };
+		5AB90260257ED3D6009E2315 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		5ACC572C2576A62C005C7EBB /* Todo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Todo.swift; sourceTree = "<group>"; };
 		5ACD2492256C4FC50068AD1A /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
+		5AF58A85257E935200731532 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		5AF58A8B257E93BD00731532 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		5AFFD544257ECFC9008393AB /* LogSignViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogSignViewController.swift; sourceTree = "<group>"; };
 		C0FEB86C72158345843B5853 /* Pods-RxTodoList.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxTodoList.release.xcconfig"; path = "Target Support Files/Pods-RxTodoList/Pods-RxTodoList.release.xcconfig"; sourceTree = "<group>"; };
 		DBAA1B36BA2D6A0DEE76EB5F /* Pods_RxTodoList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RxTodoList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -138,6 +146,7 @@
 		5A815D1E25763747005934A1 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				5AB90260257ED3D6009E2315 /* ViewModel.swift */,
 				5A815D1625758D78005934A1 /* ListViewModel.swift */,
 				5A815D1A25758F62005934A1 /* ItemViewModel.swift */,
 			);
@@ -147,8 +156,11 @@
 		5A815D2025763757005934A1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5AF58A85257E935200731532 /* MainViewController.swift */,
 				5ACD2492256C4FC50068AD1A /* ListViewController.swift */,
 				5A5141BA256C4B1C003B2D3A /* ItemViewController.swift */,
+				5AF58A8B257E93BD00731532 /* SettingsViewController.swift */,
+				5AFFD544257ECFC9008393AB /* LogSignViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -315,12 +327,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				5A5141BB256C4B1C003B2D3A /* ItemViewController.swift in Sources */,
+				5AF58A8C257E93BD00731532 /* SettingsViewController.swift in Sources */,
 				5A815D1725758D78005934A1 /* ListViewModel.swift in Sources */,
 				5A285E7B25769DFF00BC528B /* TodoList.swift in Sources */,
 				5ACC572D2576A62C005C7EBB /* Todo.swift in Sources */,
+				5AFFD545257ECFC9008393AB /* LogSignViewController.swift in Sources */,
 				5A815D1B25758F62005934A1 /* ItemViewModel.swift in Sources */,
 				5A5141B7256C4B1C003B2D3A /* AppDelegate.swift in Sources */,
+				5AF58A86257E935200731532 /* MainViewController.swift in Sources */,
 				5ACD2493256C4FC50068AD1A /* ListViewController.swift in Sources */,
+				5AB90261257ED3D6009E2315 /* ViewModel.swift in Sources */,
 				5A5141B9256C4B1C003B2D3A /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

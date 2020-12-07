@@ -4,15 +4,15 @@ import RxSwift
 import UIKit
 
 final class ListViewController: UITableViewController {
-    
+
     @IBOutlet weak var plusBarButtonItem: UIBarButtonItem!
     
-    private let viewModel = ListViewModel()
+    private var viewModel = ListViewModel()
     private let bag = DisposeBag()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "RxTodoList"
+        navigationItem.title = "RxTodoList"
         setupTableView(viewModel)
         setupPlusButton(viewModel)
     }
@@ -57,7 +57,8 @@ final class ListViewController: UITableViewController {
     private func setupPlusButton(_ viewModel: ListViewModel) {
         plusBarButtonItem.rx
             .tap
-            .flatMap { [unowned self] _ -> Observable<String> in
+            .flatMap { [unowned self] hello -> Observable<String> in
+                print(hello)
                 let viewModel = ItemViewModel()
                 return self.instantiateItemViewController(viewModel) { [unowned self] itemViewController in
                     navigationController?.pushViewController(itemViewController, animated: true)

@@ -2,35 +2,25 @@ import Foundation
 import RxRelay
 import RxSwift
 
-class TodoList {
+final class TodoList {
     
     let todos: BehaviorRelay<[Todo]>
     
-    init() {
-        let downloadedTodos = TodoList.downloadTodosFromLocalStorage()
-        if !downloadedTodos.isEmpty {
-            self.todos = BehaviorRelay<[Todo]>(value: downloadedTodos)
-        } else {
-            self.todos = BehaviorRelay<[Todo]>(
-                value: [
-                    "Clean the apt",
-                    "Learn to code",
-                    "Call mom",
-                    "Do the workout",
-                    "Call customers"
-                ].map(Todo.init)
-            )
-        }
-        
+    required init() {
+        self.todos = BehaviorRelay<[Todo]>(
+            value: [
+                "Clean the apt",
+                "Learn to code",
+                "Call mom",
+                "Do the workout",
+                "Call customers"
+            ].map(Todo.init)
+        )
     }
     
-    static private func downloadTodosFromLocalStorage() -> [Todo] {
-        // TODO: Use RxCoreData to pull data from phone
-        return []
-    }
-    
-    private func uploadTodosToLocalStorage() {
-        // TODO: Use RxCoreData to push changes to phone
+    convenience init(_ loginDetails: (login: String, password: String)?) {
+        guard let loginDetails = loginDetails else { self.init(); return }
+        self.init()
     }
     
     func editTodo(text: String, at index: Int) {

@@ -2,7 +2,7 @@ import Foundation
 import RxRelay
 import RxSwift
 
-final class ListViewModel {
+final class ListViewModel: ViewModel {
     
     private let todoList = TodoList()
     
