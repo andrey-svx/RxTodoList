@@ -20,7 +20,10 @@
 		5AB90261257ED3D6009E2315 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB90260257ED3D6009E2315 /* ViewModel.swift */; };
 		5ACC572D2576A62C005C7EBB /* Todo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACC572C2576A62C005C7EBB /* Todo.swift */; };
 		5ACD2493256C4FC50068AD1A /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACD2492256C4FC50068AD1A /* ListViewController.swift */; };
-		5AF58A86257E935200731532 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF58A85257E935200731532 /* MainViewController.swift */; };
+		5AEB3DA7257F878300B34DC8 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEB3DA6257F878300B34DC8 /* LoginViewModel.swift */; };
+		5AEB3DAD257F8C1000B34DC8 /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEB3DAC257F8C1000B34DC8 /* SignupViewModel.swift */; };
+		5AEB3DB3257F901900B34DC8 /* LogSignViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEB3DB2257F901900B34DC8 /* LogSignViewModel.swift */; };
+		5AF58A86257E935200731532 /* UItabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF58A85257E935200731532 /* UItabBarController.swift */; };
 		5AF58A8C257E93BD00731532 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF58A8B257E93BD00731532 /* SettingsViewController.swift */; };
 		5AFFD545257ECFC9008393AB /* LogSignViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFFD544257ECFC9008393AB /* LogSignViewController.swift */; };
 		94311BC4F2D660CFF5846108 /* Pods_RxTodoList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBAA1B36BA2D6A0DEE76EB5F /* Pods_RxTodoList.framework */; };
@@ -55,7 +58,10 @@
 		5AB90260257ED3D6009E2315 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		5ACC572C2576A62C005C7EBB /* Todo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Todo.swift; sourceTree = "<group>"; };
 		5ACD2492256C4FC50068AD1A /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
-		5AF58A85257E935200731532 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		5AEB3DA6257F878300B34DC8 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		5AEB3DAC257F8C1000B34DC8 /* SignupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewModel.swift; sourceTree = "<group>"; };
+		5AEB3DB2257F901900B34DC8 /* LogSignViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogSignViewModel.swift; sourceTree = "<group>"; };
+		5AF58A85257E935200731532 /* UItabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UItabBarController.swift; sourceTree = "<group>"; };
 		5AF58A8B257E93BD00731532 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		5AFFD544257ECFC9008393AB /* LogSignViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogSignViewController.swift; sourceTree = "<group>"; };
 		C0FEB86C72158345843B5853 /* Pods-RxTodoList.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxTodoList.release.xcconfig"; path = "Target Support Files/Pods-RxTodoList/Pods-RxTodoList.release.xcconfig"; sourceTree = "<group>"; };
@@ -149,6 +155,9 @@
 				5AB90260257ED3D6009E2315 /* ViewModel.swift */,
 				5A815D1625758D78005934A1 /* ListViewModel.swift */,
 				5A815D1A25758F62005934A1 /* ItemViewModel.swift */,
+				5AEB3DB2257F901900B34DC8 /* LogSignViewModel.swift */,
+				5AEB3DA6257F878300B34DC8 /* LoginViewModel.swift */,
+				5AEB3DAC257F8C1000B34DC8 /* SignupViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -156,7 +165,7 @@
 		5A815D2025763757005934A1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				5AF58A85257E935200731532 /* MainViewController.swift */,
+				5AF58A85257E935200731532 /* UItabBarController.swift */,
 				5ACD2492256C4FC50068AD1A /* ListViewController.swift */,
 				5A5141BA256C4B1C003B2D3A /* ItemViewController.swift */,
 				5AF58A8B257E93BD00731532 /* SettingsViewController.swift */,
@@ -332,9 +341,12 @@
 				5A285E7B25769DFF00BC528B /* TodoList.swift in Sources */,
 				5ACC572D2576A62C005C7EBB /* Todo.swift in Sources */,
 				5AFFD545257ECFC9008393AB /* LogSignViewController.swift in Sources */,
+				5AEB3DAD257F8C1000B34DC8 /* SignupViewModel.swift in Sources */,
 				5A815D1B25758F62005934A1 /* ItemViewModel.swift in Sources */,
+				5AEB3DB3257F901900B34DC8 /* LogSignViewModel.swift in Sources */,
 				5A5141B7256C4B1C003B2D3A /* AppDelegate.swift in Sources */,
-				5AF58A86257E935200731532 /* MainViewController.swift in Sources */,
+				5AEB3DA7257F878300B34DC8 /* LoginViewModel.swift in Sources */,
+				5AF58A86257E935200731532 /* UItabBarController.swift in Sources */,
 				5ACD2493256C4FC50068AD1A /* ListViewController.swift in Sources */,
 				5AB90261257ED3D6009E2315 /* ViewModel.swift in Sources */,
 				5A5141B9256C4B1C003B2D3A /* SceneDelegate.swift in Sources */,
@@ -464,7 +476,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -519,7 +531,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

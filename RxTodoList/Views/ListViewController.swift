@@ -57,8 +57,7 @@ final class ListViewController: UITableViewController {
     private func setupPlusButton(_ viewModel: ListViewModel) {
         plusBarButtonItem.rx
             .tap
-            .flatMap { [unowned self] hello -> Observable<String> in
-                print(hello)
+            .flatMap { [unowned self] _ -> Observable<String> in
                 let viewModel = ItemViewModel()
                 return self.instantiateItemViewController(viewModel) { [unowned self] itemViewController in
                     navigationController?.pushViewController(itemViewController, animated: true)

@@ -44,23 +44,33 @@ final class ItemViewController: UIViewController {
     }
     
     private func setupButtons(_ viewModel: ItemViewModel) {
-        let item = viewModel.item
-        
         saveButton.rx
             .tap
             .bind(onNext: { [weak self] _ in
-                item.onNext(self?.textField.text ?? "")
-                self?.navigationController?.popViewController(animated: true)
+                guard let viewModel = self?.viewModel else { return }
+                self?.saveTapped(viewModel)
             })
             .disposed(by: bag)
         
         cancelButton.rx
             .tap
             .bind(onNext: { [weak self] _ in
-                item.onError(TextInputError.cancelled)
-                self?.navigationController?.popViewController(animated: true)
+                guard let viewModel = self?.viewModel else { return }
+                self?.cancelTapped(viewModel)
             })
             .disposed(by: bag)
+    }
+    
+    func saveTapped(_ viewModel: ItemViewModel) {
+        let item = viewModel.item
+        item.onNext(textField.text ?? "")
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func cancelTapped(_ viewModel: ItemViewModel) {
+        let item = viewModel.item
+        item.onError(TextInputError.cancelled)
+        navigationController?.popViewController(animated: true)
     }
     
 }
