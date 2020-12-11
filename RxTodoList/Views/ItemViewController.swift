@@ -1,9 +1,9 @@
 import RxSwift
 import UIKit
 
-final class ItemViewController: UIViewController {
+final class ItemViewController: UIViewController, ViewModeled {
 
-    @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var textField: ItemTextField!
     @IBOutlet weak var saveButton: UIButton!
     private lazy var cancelButton: UIBarButtonItem = { [weak self] in
         self?.navigationItem.setHidesBackButton(true, animated: false)
@@ -13,14 +13,7 @@ final class ItemViewController: UIViewController {
     }()
     
     var viewModel: ItemViewModel?
-    
-    lazy var item: BehaviorSubject<String> = { [weak self] in
-        guard let item = self?.viewModel?.item else {
-            assertionFailure("Item VM has not been set!")
-            return BehaviorSubject<String>(value: "")
-        }
-        return item
-    }()
+
     private let bag = DisposeBag()
     
     override func viewDidLoad() {
@@ -34,12 +27,7 @@ final class ItemViewController: UIViewController {
     }
     
     private func setupTextField(_ viewModel: ItemViewModel) {
-        if viewModel.forEditing,
-           let value = try? viewModel.item.value() {
-            textField.text = value
-        } else {
-            textField.placeholder = "Type todo item here"
-        }
+        textField.configure(with: viewModel)
         textField.becomeFirstResponder()
     }
     
@@ -64,12 +52,24 @@ final class ItemViewController: UIViewController {
     func saveTapped(_ viewModel: ItemViewModel) {
         let item = viewModel.item
         item.onNext(textField.text ?? "")
-        navigationController?.popViewController(animated: true)
+        routeBack()
     }
     
     func cancelTapped(_ viewModel: ItemViewModel) {
         let item = viewModel.item
         item.onError(TextInputError.cancelled)
+        routeBack()
+    }
+    
+}
+
+extension ItemViewController: Routable {
+    
+    func route<D: ViewModeled>(to destinationType: D.Type, with viewModel: D.T) {
+        // NOOP
+    }
+    
+    func routeBack() {
         navigationController?.popViewController(animated: true)
     }
     

@@ -2,7 +2,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-class SettingsViewController: UIViewController {
+final class SettingsViewController: UIViewController {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var logoutButton: UIButton!
@@ -23,7 +23,7 @@ class SettingsViewController: UIViewController {
     func presentLoginSugnupViewController(_ viewModel: LogSignViewModel) {
         guard let logSignViewController = storyboard?.instantiateViewController(withIdentifier: "LogSignViewController") as? LogSignViewController else { return }
         logSignViewController.viewModel = viewModel
-        logSignViewController.onDismiss = tabBarController?.prepareForRestart
+        logSignViewController.completion = tabBarController?.prepareForRestart
         present(logSignViewController, animated: true, completion: nil)
     }
 

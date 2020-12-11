@@ -3,15 +3,19 @@ import RxRelay
 import RxSwift
 import UIKit
 
-final class ListViewController: UITableViewController {
+final class ListViewController: UITableViewController, ViewModeled {
 
     @IBOutlet weak var plusBarButtonItem: UIBarButtonItem!
     
-    private var viewModel = ListViewModel()
+    var viewModel: ListViewModel? = ListViewModel()
+    
     private let bag = DisposeBag()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        guard let viewModel = viewModel else {
+            assertionFailure("VM has not been set!"); return
+        }
         navigationItem.title = "RxTodoList"
         setupTableView(viewModel)
         setupPlusButton(viewModel)
@@ -37,36 +41,21 @@ final class ListViewController: UITableViewController {
         tableView.delegate = nil
         tableView.rx
             .modelSelected(Todo.self)
-            .flatMap { [unowned self] todo -> Observable<(String, Int)> in
-                let indexPath = self.tableView.indexPathForSelectedRow!
-                let index = indexPath.row
-                let viewModel = self.viewModel.instantiateItemViewModel(forItemAt: index)
-                return self.instantiateItemViewController(viewModel) { [unowned self] itemViewController in
-                    navigationController?.pushViewController(itemViewController, animated: true)
+            .subscribe { [weak self] todo in
+                guard let indexPath = self?.tableView.indexPathForSelectedRow else {
+                    assertionFailure("Could not set indexPath for selected row")
+                    return
                 }
-                .item
-                .flatMap { BehaviorSubject<(String, Int)>(value: ($0, index)) }
+                self?.onDidSelectRow(at: indexPath)
             }
-            .retry()
-            .subscribe(onNext: { [unowned self] (value, index) in
-                self.viewModel.updateTodo(text: value, at: index)
-            })
             .disposed(by: bag)
     }
-    
+
     private func setupPlusButton(_ viewModel: ListViewModel) {
         plusBarButtonItem.rx
             .tap
-            .flatMap { [unowned self] _ -> Observable<String> in
-                let viewModel = ItemViewModel()
-                return self.instantiateItemViewController(viewModel) { [unowned self] itemViewController in
-                    navigationController?.pushViewController(itemViewController, animated: true)
-                }
-                .item
-            }
-            .retry()
-            .subscribe(onNext: { [unowned self] event in
-                self.viewModel.appendTodo(text: event)
+            .subscribe(onNext: { [weak self] _ in
+                self?.onTappedPlus()
             })
             .disposed(by: bag)
     }
@@ -75,13 +64,57 @@ final class ListViewController: UITableViewController {
 
 extension ListViewController {
     
-    private func instantiateItemViewController(_ viewModel: ItemViewModel, completion: @escaping (UIViewController) -> Void) -> ItemViewController {
-        guard let itemViewController = storyboard?.instantiateViewController(identifier: "ItemViewController") as? ItemViewController else {
-            return ItemViewController()
-        }
-        itemViewController.viewModel = viewModel
-        completion(itemViewController)
-        return itemViewController
+    func onTappedPlus() {
+        let itemViewModel = ItemViewModel()
+        itemViewModel
+            .item
+            .subscribe(
+                onNext: { [weak self] text in
+                    self?.viewModel?.appendTodo(text: text)
+                },
+                onError: { _ in }
+            )
+            .disposed(by: bag)
+        
+        route(to: ItemViewController.self, with: itemViewModel)
     }
+    
+    func onDidSelectRow(at indexPath: IndexPath) {
+        let index = indexPath.row
+        guard let itemViewModel = viewModel?.instantiateItemViewModel(forItemAt: index) else {
+            assertionFailure("Could not instantiate ListViewModel")
+            return
+        }
+        itemViewModel
+            .item
+            .subscribe(
+                onNext: { [weak self] text in
+                    self?.viewModel?.updateTodo(text: text, at: index)
+                },
+                onError: { _ in }
+            )
+            .disposed(by: bag)
+        
+        route(to: ItemViewController.self, with: itemViewModel)
+        
+    }
+    
+}
 
+extension ListViewController: Routable {
+    
+    func route<D: ViewModeled>(to destinationType: D.Type, with viewModel: D.T) {
+        let identifier = String(describing: destinationType)
+        guard let destinationViewController = storyboard?.instantiateViewController(identifier: identifier) as? D else {
+            assertionFailure("Destination View Controller has not been set!")
+            return
+        }
+        destinationViewController.viewModel = viewModel
+        navigationController?.pushViewController(destinationViewController, animated: true)
+    }
+    
+    func routeBack() {
+        // NOOP
+    }
+    
 }

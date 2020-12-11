@@ -2,7 +2,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-class LogSignViewController: UIViewController {
+final class LogSignViewController: UIViewController {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var usernameField: UITextField!
@@ -16,7 +16,7 @@ class LogSignViewController: UIViewController {
     
     private let bag = DisposeBag()
     
-    var onDismiss: (() -> Void)?
+    var completion: (() -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +41,7 @@ class LogSignViewController: UIViewController {
     }
     
     func logsignTapped() {
-        dismiss(animated: true, completion: onDismiss)
+        dismiss(animated: true, completion: completion)
     }
     
     func cancelTapped() {
