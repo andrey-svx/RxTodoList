@@ -22,7 +22,11 @@ final class LogSignViewController: UIViewController, ViewModeled {
             assertionFailure("Could not set View Model")
             return
         }
-        
+        setupWarningLabel(viewModel)
+        setupButtons()
+    }
+    
+    func setupWarningLabel(_ viewModel: LogSignViewModel) {
         viewModel.warningString
             .bind(to: warningLabel.rx.text)
             .disposed(by: bag)
@@ -31,7 +35,9 @@ final class LogSignViewController: UIViewController, ViewModeled {
             .flatMap { BehaviorSubject<Bool>(value: $0.isEmpty) }
             .bind(to: warningLabel.rx.isHidden)
             .disposed(by: bag)
-        
+    }
+    
+    func setupButtons() {
         loginButton.rx
             .tap
             .subscribe { [weak self] _ in
@@ -54,15 +60,19 @@ final class LogSignViewController: UIViewController, ViewModeled {
             .disposed(by: bag)
     }
     
-    func loginTapped() {
+}
+
+extension LogSignViewController {
+    
+    private func loginTapped() {
         backLoggedSigned()
     }
     
-    func signupTapped() {
+    private func signupTapped() {
         backLoggedSigned()
     }
     
-    func cancelTapped() {
+    private func cancelTapped() {
         back()
     }
 

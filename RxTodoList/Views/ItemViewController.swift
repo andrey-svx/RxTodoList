@@ -49,13 +49,13 @@ final class ItemViewController: UIViewController, ViewModeled {
             .disposed(by: bag)
     }
     
-    func saveTapped(_ viewModel: ItemViewModel) {
+    private func saveTapped(_ viewModel: ItemViewModel) {
         let item = viewModel.item
         item.onNext(textField.text ?? "")
         back()
     }
     
-    func cancelTapped(_ viewModel: ItemViewModel) {
+    private func cancelTapped(_ viewModel: ItemViewModel) {
         let item = viewModel.item
         item.onError(TextInputError.cancelled)
         back()

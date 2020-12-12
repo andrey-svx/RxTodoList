@@ -13,11 +13,21 @@ final class SettingsViewController: UIViewController, ViewModeled {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        guard let viewModel = viewModel else {
+            assertionFailure("Could not set View Model")
+            return
+        }
+        
+        viewModel.titleString
+            .bind(to: titleLabel.rx.text)
+            .disposed(by: bag)
         
         logoutButton.rx
             .tap
             .subscribe { [weak self] _ in
-                self?.route(to: LogSignViewController.self, with: LogSignViewModel())
+                viewModel.logOut()
+                let logSignViewModel = LogSignViewModel()
+                self?.route(to: LogSignViewController.self, with: logSignViewModel)
             }
             .disposed(by: bag)
     }

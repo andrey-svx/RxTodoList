@@ -7,6 +7,7 @@ struct TodoList {
     let todos: BehaviorRelay<[Todo]>
     
     init() {
+        
         self.todos = BehaviorRelay<[Todo]>(
             value: [
                 "Clean the apt",
@@ -16,6 +17,7 @@ struct TodoList {
                 "Call customers"
             ].map(Todo.init)
         )
+        
     }
     
     func editTodo(text: String, at index: Int) {

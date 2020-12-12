@@ -64,7 +64,7 @@ final class ListViewController: UITableViewController, ViewModeled {
 
 extension ListViewController {
     
-    func onTappedPlus() {
+    private func onTappedPlus() {
         let itemViewModel = ItemViewModel()
         itemViewModel
             .item
@@ -79,7 +79,7 @@ extension ListViewController {
         route(to: ItemViewController.self, with: itemViewModel)
     }
     
-    func onDidSelectRow(at indexPath: IndexPath) {
+    private func onDidSelectRow(at indexPath: IndexPath) {
         let index = indexPath.row
         guard let itemViewModel = viewModel?.instantiateItemViewModel(forItemAt: index) else {
             assertionFailure("Could not instantiate ListViewModel")

@@ -4,8 +4,9 @@ import RxSwift
 
 final class ListViewModel: ViewModel {
     
-    private let todoList = TodoList()
-    
+    private var user: User { (UIApplication.shared.delegate as! AppDelegate).user }
+    private var loginDetails: LoginDetails? { user.loginDetails }
+    private var todoList: TodoList { user.todoList }
     var todos: BehaviorRelay<[Todo]> { todoList.todos }
     
     func updateTodo(text: String, at index: Int) {
