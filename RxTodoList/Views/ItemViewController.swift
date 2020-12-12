@@ -52,24 +52,20 @@ final class ItemViewController: UIViewController, ViewModeled {
     func saveTapped(_ viewModel: ItemViewModel) {
         let item = viewModel.item
         item.onNext(textField.text ?? "")
-        routeBack()
+        back()
     }
     
     func cancelTapped(_ viewModel: ItemViewModel) {
         let item = viewModel.item
         item.onError(TextInputError.cancelled)
-        routeBack()
+        back()
     }
     
 }
 
-extension ItemViewController: Routable {
-    
-    func route<D: ViewModeled>(to destinationType: D.Type, with viewModel: D.T) {
-        // NOOP
-    }
-    
-    func routeBack() {
+extension ItemViewController: BackwardRoutable {
+        
+    func back() {
         navigationController?.popViewController(animated: true)
     }
     

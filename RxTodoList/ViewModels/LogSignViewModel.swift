@@ -1,13 +1,11 @@
 import RxSwift
 import Foundation
 
-protocol LogSignViewModel: ViewModel {
+final class LogSignViewModel: ViewModel {
+
+    var warningString = BehaviorSubject<String>(value: "")
     
-    var titleString: String { get }
-    var logsignButtonString: String { get }
-    var warningString: String { get set }
-    
-    var usernameInputString: String { get set }
-    var passwordInputString: String { get set }
+    var usernameInputString: String = ""
+    var passwordInputString: String = ""
     
 }

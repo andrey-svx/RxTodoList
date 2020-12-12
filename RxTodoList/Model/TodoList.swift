@@ -2,11 +2,11 @@ import Foundation
 import RxRelay
 import RxSwift
 
-final class TodoList {
+struct TodoList {
     
     let todos: BehaviorRelay<[Todo]>
     
-    required init() {
+    init() {
         self.todos = BehaviorRelay<[Todo]>(
             value: [
                 "Clean the apt",
@@ -16,11 +16,6 @@ final class TodoList {
                 "Call customers"
             ].map(Todo.init)
         )
-    }
-    
-    convenience init(_ loginDetails: (login: String, password: String)?) {
-        guard let loginDetails = loginDetails else { self.init(); return }
-        self.init()
     }
     
     func editTodo(text: String, at index: Int) {

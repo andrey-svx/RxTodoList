@@ -9,6 +9,4 @@ struct Todo {
         self.name = name
     }
     
-    static let empty = Todo("Empty")
-    
 }

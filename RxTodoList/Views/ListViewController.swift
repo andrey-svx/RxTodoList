@@ -101,9 +101,9 @@ extension ListViewController {
     
 }
 
-extension ListViewController: Routable {
+extension ListViewController: ForwardRoutable {
     
-    func route<D: ViewModeled>(to destinationType: D.Type, with viewModel: D.T) {
+    func route<D: ViewModeled>(to destinationType: D.Type, with viewModel: D.VM) {
         let identifier = String(describing: destinationType)
         guard let destinationViewController = storyboard?.instantiateViewController(identifier: identifier) as? D else {
             assertionFailure("Destination View Controller has not been set!")
@@ -112,9 +112,5 @@ extension ListViewController: Routable {
         destinationViewController.viewModel = viewModel
         navigationController?.pushViewController(destinationViewController, animated: true)
     }
-    
-    func routeBack() {
-        // NOOP
-    }
-    
+        
 }

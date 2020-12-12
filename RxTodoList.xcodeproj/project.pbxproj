@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A147D4B25855A1300C93749 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A147D4A25855A1300C93749 /* SettingsViewModel.swift */; };
 		5A26223A2576461A006C56FA /* RxTodoListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2622392576461A006C56FA /* RxTodoListTests.swift */; };
 		5A285E7B25769DFF00BC528B /* TodoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A285E7A25769DFF00BC528B /* TodoList.swift */; };
 		5A3038DE2580EB9E0042EC84 /* Routable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3038DD2580EB9E0042EC84 /* Routable.swift */; };
@@ -23,8 +24,6 @@
 		5AB90261257ED3D6009E2315 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB90260257ED3D6009E2315 /* ViewModel.swift */; };
 		5ACC572D2576A62C005C7EBB /* Todo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACC572C2576A62C005C7EBB /* Todo.swift */; };
 		5ACD2493256C4FC50068AD1A /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACD2492256C4FC50068AD1A /* ListViewController.swift */; };
-		5AEB3DA7257F878300B34DC8 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEB3DA6257F878300B34DC8 /* LoginViewModel.swift */; };
-		5AEB3DAD257F8C1000B34DC8 /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEB3DAC257F8C1000B34DC8 /* SignupViewModel.swift */; };
 		5AEB3DB3257F901900B34DC8 /* LogSignViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEB3DB2257F901900B34DC8 /* LogSignViewModel.swift */; };
 		5AF58A86257E935200731532 /* UItabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF58A85257E935200731532 /* UItabBarController.swift */; };
 		5AF58A8C257E93BD00731532 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF58A8B257E93BD00731532 /* SettingsViewController.swift */; };
@@ -44,6 +43,7 @@
 
 /* Begin PBXFileReference section */
 		1BB21E54020A34EF84B09265 /* Pods-RxTodoList.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxTodoList.debug.xcconfig"; path = "Target Support Files/Pods-RxTodoList/Pods-RxTodoList.debug.xcconfig"; sourceTree = "<group>"; };
+		5A147D4A25855A1300C93749 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		5A2622372576461A006C56FA /* RxTodoListTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RxTodoListTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A2622392576461A006C56FA /* RxTodoListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxTodoListTests.swift; sourceTree = "<group>"; };
 		5A26223B2576461A006C56FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -64,8 +64,6 @@
 		5AB90260257ED3D6009E2315 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		5ACC572C2576A62C005C7EBB /* Todo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Todo.swift; sourceTree = "<group>"; };
 		5ACD2492256C4FC50068AD1A /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
-		5AEB3DA6257F878300B34DC8 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
-		5AEB3DAC257F8C1000B34DC8 /* SignupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewModel.swift; sourceTree = "<group>"; };
 		5AEB3DB2257F901900B34DC8 /* LogSignViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogSignViewModel.swift; sourceTree = "<group>"; };
 		5AF58A85257E935200731532 /* UItabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UItabBarController.swift; sourceTree = "<group>"; };
 		5AF58A8B257E93BD00731532 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -148,6 +146,7 @@
 				5A815D1E25763747005934A1 /* ViewModels */,
 				5A815D2025763757005934A1 /* Views */,
 				5A9066962583FAAB00596324 /* Protocols */,
+				5AB41B552584238400EACEE7 /* Extensions */,
 				5A5141BF256C4B1D003B2D3A /* Assets.xcassets */,
 				5A5141C1256C4B1D003B2D3A /* LaunchScreen.storyboard */,
 				5A5141C4256C4B1D003B2D3A /* Info.plist */,
@@ -160,9 +159,8 @@
 			children = (
 				5A815D1625758D78005934A1 /* ListViewModel.swift */,
 				5A815D1A25758F62005934A1 /* ItemViewModel.swift */,
+				5A147D4A25855A1300C93749 /* SettingsViewModel.swift */,
 				5AEB3DB2257F901900B34DC8 /* LogSignViewModel.swift */,
-				5AEB3DA6257F878300B34DC8 /* LoginViewModel.swift */,
-				5AEB3DAC257F8C1000B34DC8 /* SignupViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -186,9 +184,16 @@
 				5AB90260257ED3D6009E2315 /* ViewModel.swift */,
 				5A3038EB2582A61C0042EC84 /* ViewModeled.swift */,
 				5A3038DD2580EB9E0042EC84 /* Routable.swift */,
-				5AF58A85257E935200731532 /* UItabBarController.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		5AB41B552584238400EACEE7 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				5AF58A85257E935200731532 /* UItabBarController.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		6E4C433067B227B383FA2157 /* Pods */ = {
@@ -359,13 +364,12 @@
 				5A285E7B25769DFF00BC528B /* TodoList.swift in Sources */,
 				5ACC572D2576A62C005C7EBB /* Todo.swift in Sources */,
 				5AFFD545257ECFC9008393AB /* LogSignViewController.swift in Sources */,
-				5AEB3DAD257F8C1000B34DC8 /* SignupViewModel.swift in Sources */,
 				5A815D1B25758F62005934A1 /* ItemViewModel.swift in Sources */,
+				5A147D4B25855A1300C93749 /* SettingsViewModel.swift in Sources */,
 				5A3038DE2580EB9E0042EC84 /* Routable.swift in Sources */,
 				5AEB3DB3257F901900B34DC8 /* LogSignViewModel.swift in Sources */,
 				5A5141B7256C4B1C003B2D3A /* AppDelegate.swift in Sources */,
 				5A3038E62580F5950042EC84 /* ItemTextField.swift in Sources */,
-				5AEB3DA7257F878300B34DC8 /* LoginViewModel.swift in Sources */,
 				5AF58A86257E935200731532 /* UItabBarController.swift in Sources */,
 				5ACD2493256C4FC50068AD1A /* ListViewController.swift in Sources */,
 				5AB90261257ED3D6009E2315 /* ViewModel.swift in Sources */,

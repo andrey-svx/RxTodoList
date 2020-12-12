@@ -2,8 +2,8 @@ import UIKit
 
 protocol ViewModeled where Self: UIViewController {
     
-    associatedtype T: ViewModel
+    associatedtype VM: ViewModel
     
-    var viewModel: T? { get set }
+    var viewModel: VM? { get set }
     
 }
