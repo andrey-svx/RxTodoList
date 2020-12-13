@@ -1,15 +1,14 @@
 import Foundation
+import RxSwift
 
 struct User {
     
-    var loginDetails: LoginDetails?
+    var loginDetails = BehaviorSubject<LoginDetails?>(value: nil)
     var todoList: TodoList
     
     init(loginDetails: LoginDetails? = nil, todoList: TodoList = TodoList()) {
-        
-        self.loginDetails = loginDetails
+        self.loginDetails.onNext(loginDetails)
         self.todoList = todoList
-    
     }
     
 }
