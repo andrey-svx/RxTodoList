@@ -1,5 +1,7 @@
 import XCTest
-@testable import RxTodoList
+
+@testable
+import RxTodoList
 
 class RxTodoListTests: XCTestCase {
 

@@ -1,10 +1,3 @@
-//
-//  ItemTextField.swift
-//  RxTodoList
-//
-//  Created by Андрей Исаев on 09.12.2020.
-//
-
 import UIKit
 
 final class ItemTextField: UITextField {

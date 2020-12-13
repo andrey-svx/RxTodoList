@@ -32,3 +32,9 @@ final class ItemViewModel: ViewModel {
     }
     
 }
+
+enum TextInputError: Error {
+    
+    case cancelled
+
+}

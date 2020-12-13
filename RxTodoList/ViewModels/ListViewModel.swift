@@ -26,13 +26,5 @@ final class ListViewModel: ViewModel {
         let todo = todos.value[index]
         return ItemViewModel(itemTitle: todo.name)
     }
-    
-    func subscribe(on appendViewModel: ItemViewModel) {
-        
-    }
-    
-    func subscribe(on editViewModel: ItemViewModel, at index: Int) {
-        
-    }
-    
+
 }

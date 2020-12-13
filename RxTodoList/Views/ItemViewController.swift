@@ -71,9 +71,3 @@ extension ItemViewController: BackwardRoutable {
     }
     
 }
-
-enum TextInputError: Error {
-    
-    case cancelled
-
-}
