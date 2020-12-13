@@ -19,8 +19,7 @@ final class ItemViewController: UIViewController, ViewModeled {
     override func viewDidLoad() {
         super.viewDidLoad()
         guard let viewModel = viewModel else {
-            assertionFailure("Item VM has not been set!")
-            return
+            assertionFailure("Could not set Item VM!"); return
         }
         setupTextField(viewModel)
         setupButtons(viewModel)
@@ -28,6 +27,10 @@ final class ItemViewController: UIViewController, ViewModeled {
     
     private func setupTextField(_ viewModel: ItemViewModel) {
         textField.configure(with: viewModel)
+        textField.rx.text
+            .flatMap { BehaviorSubject<String>(value: $0 ?? "") }
+            .bind(to: viewModel.itemInput)
+            .disposed(by: bag)
         textField.becomeFirstResponder()
     }
     
@@ -50,14 +53,12 @@ final class ItemViewController: UIViewController, ViewModeled {
     }
     
     private func saveTapped(_ viewModel: ItemViewModel) {
-        let item = viewModel.item
-        item.onNext(textField.text ?? "")
+        viewModel.updateItem()
         back()
     }
     
     private func cancelTapped(_ viewModel: ItemViewModel) {
-        let item = viewModel.item
-        item.onError(TextInputError.cancelled)
+        viewModel.cancelItem()
         back()
     }
     

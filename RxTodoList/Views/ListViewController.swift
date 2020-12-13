@@ -14,7 +14,7 @@ final class ListViewController: UITableViewController, ViewModeled {
     override func viewDidLoad() {
         super.viewDidLoad()
         guard let viewModel = viewModel else {
-            assertionFailure("VM has not been set!"); return
+            assertionFailure("Could not set VM!"); return
         }
         navigationItem.title = "RxTodoList"
         setupTableView(viewModel)
@@ -43,8 +43,7 @@ final class ListViewController: UITableViewController, ViewModeled {
             .modelSelected(Todo.self)
             .subscribe { [weak self] todo in
                 guard let indexPath = self?.tableView.indexPathForSelectedRow else {
-                    assertionFailure("Could not set indexPath for selected row")
-                    return
+                    assertionFailure("Could not set indexPath for selected row"); return
                 }
                 self?.onDidSelectRow(at: indexPath)
             }
@@ -54,9 +53,7 @@ final class ListViewController: UITableViewController, ViewModeled {
     private func setupPlusButton(_ viewModel: ListViewModel) {
         plusBarButtonItem.rx
             .tap
-            .subscribe(onNext: { [weak self] _ in
-                self?.onTappedPlus()
-            })
+            .subscribe(onNext: { [weak self] _ in self?.onTappedPlus() })
             .disposed(by: bag)
     }
     
@@ -68,12 +65,8 @@ extension ListViewController {
         let itemViewModel = ItemViewModel()
         itemViewModel
             .item
-            .subscribe(
-                onNext: { [weak self] text in
-                    self?.viewModel?.appendTodo(text: text)
-                },
-                onError: { _ in }
-            )
+            .subscribe(onNext: { [weak self] text in self?.viewModel?.appendTodo(text: text) },
+                       onError: { print($0) })
             .disposed(by: bag)
         
         route(to: ItemViewController.self, with: itemViewModel)
@@ -82,17 +75,13 @@ extension ListViewController {
     private func onDidSelectRow(at indexPath: IndexPath) {
         let index = indexPath.row
         guard let itemViewModel = viewModel?.instantiateItemViewModel(forItemAt: index) else {
-            assertionFailure("Could not instantiate ListViewModel")
+            assertionFailure("Could not instantiate List VM")
             return
         }
         itemViewModel
             .item
-            .subscribe(
-                onNext: { [weak self] text in
-                    self?.viewModel?.updateTodo(text: text, at: index)
-                },
-                onError: { _ in }
-            )
+            .subscribe(onNext: { [weak self] text in self?.viewModel?.updateTodo(text: text, at: index) },
+                       onError: { print($0) })
             .disposed(by: bag)
         
         route(to: ItemViewController.self, with: itemViewModel)
@@ -106,8 +95,7 @@ extension ListViewController: ForwardRoutable {
     func route<D: ViewModeled>(to destinationType: D.Type, with viewModel: D.VM) {
         let identifier = String(describing: destinationType)
         guard let destinationViewController = storyboard?.instantiateViewController(identifier: identifier) as? D else {
-            assertionFailure("Destination View Controller has not been set!")
-            return
+            assertionFailure("Could not set Destination VC!"); return
         }
         destinationViewController.viewModel = viewModel
         navigationController?.pushViewController(destinationViewController, animated: true)
