@@ -5,7 +5,6 @@ import RxSwift
 final class ListViewModel: ViewModel {
     
     private var user: User { (UIApplication.shared.delegate as! AppDelegate).user }
-    private var loginDetails: LoginDetails? { user.loginDetails }
     private var todoList: TodoList { user.todoList }
     var todos: BehaviorRelay<[Todo]> { todoList.todos }
     

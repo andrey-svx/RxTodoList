@@ -4,9 +4,8 @@ import Foundation
 final class LogSignViewModel: ViewModel {
 
     var warningString = BehaviorSubject<String>(value: "")
-    
-    var usernameInput: String = ""
-    var passwordInput: String = ""
+    var usernameInput = BehaviorSubject<String>(value: "")
+    var passwordInput = BehaviorSubject<String>(value: "")
     
     func logIn(with loginDetails: LoginDetails) {
         

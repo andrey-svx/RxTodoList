@@ -22,11 +22,26 @@ final class LogSignViewController: UIViewController, ViewModeled {
             assertionFailure("Could not set View Model")
             return
         }
+        setupTextFields(viewModel)
         setupWarningLabel(viewModel)
         setupButtons()
     }
     
-    func setupWarningLabel(_ viewModel: LogSignViewModel) {
+    private func setupTextFields(_ viewModel: LogSignViewModel) {
+        usernameField.rx
+            .text
+            .flatMap { BehaviorSubject<String>(value: $0 == nil ? "" : $0!) }
+            .bind(to: viewModel.usernameInput)
+            .disposed(by: bag)
+        
+        passwordField.rx
+            .text
+            .flatMap { BehaviorSubject<String>(value: $0 != nil ? $0! : "") }
+            .bind(to: viewModel.passwordInput)
+            .disposed(by: bag)
+    }
+    
+    private func setupWarningLabel(_ viewModel: LogSignViewModel) {
         viewModel.warningString
             .bind(to: warningLabel.rx.text)
             .disposed(by: bag)
@@ -37,7 +52,7 @@ final class LogSignViewController: UIViewController, ViewModeled {
             .disposed(by: bag)
     }
     
-    func setupButtons() {
+    private func setupButtons() {
         loginButton.rx
             .tap
             .subscribe { [weak self] _ in
@@ -65,11 +80,11 @@ final class LogSignViewController: UIViewController, ViewModeled {
 extension LogSignViewController {
     
     private func loginTapped() {
-        backLoggedSigned()
+        back()
     }
     
     private func signupTapped() {
-        backLoggedSigned()
+        back()
     }
     
     private func cancelTapped() {
@@ -82,16 +97,6 @@ extension LogSignViewController: BackwardRoutable {
     
     func back() {
         dismiss(animated: true)
-    }
-    
-    func backLoggedSigned() {
-        defer { back() }
-        guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate,
-              let rootViewController = sceneDelegate.window?.rootViewController as? UITabBarController else {
-            assertionFailure("Could not set Root View Controller")
-            return
-        }
-        rootViewController.prepareForRestart()
     }
 
 }
