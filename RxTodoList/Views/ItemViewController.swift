@@ -53,7 +53,7 @@ final class ItemViewController: UIViewController, ViewModeled {
     }
     
     private func saveTapped(_ viewModel: ItemViewModel) {
-        viewModel.updateItem()
+        viewModel.saveItem()
         back()
     }
     

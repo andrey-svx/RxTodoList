@@ -62,29 +62,29 @@ final class ListViewController: UITableViewController, ViewModeled {
 extension ListViewController {
     
     private func onTappedPlus() {
-        let itemViewModel = ItemViewModel()
-        itemViewModel
+        let appendItemViewModel = ItemViewModel()
+        appendItemViewModel
             .item
             .subscribe(onNext: { [weak self] text in self?.viewModel?.appendTodo(text: text) },
                        onError: { print($0) })
             .disposed(by: bag)
         
-        route(to: ItemViewController.self, with: itemViewModel)
+        route(to: ItemViewController.self, with: appendItemViewModel)
     }
     
     private func onDidSelectRow(at indexPath: IndexPath) {
         let index = indexPath.row
-        guard let itemViewModel = viewModel?.instantiateItemViewModel(forItemAt: index) else {
+        guard let editItemViewModel = viewModel?.instantiateItemViewModel(forItemAt: index) else {
             assertionFailure("Could not instantiate List VM")
             return
         }
-        itemViewModel
+        editItemViewModel
             .item
             .subscribe(onNext: { [weak self] text in self?.viewModel?.updateTodo(text: text, at: index) },
                        onError: { print($0) })
             .disposed(by: bag)
         
-        route(to: ItemViewController.self, with: itemViewModel)
+        route(to: ItemViewController.self, with: editItemViewModel)
         
     }
     
