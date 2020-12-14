@@ -1,6 +1,6 @@
 import Foundation
 
-struct LoginDetails {
+struct UserDetails {
     
     let username: String
     let password: String

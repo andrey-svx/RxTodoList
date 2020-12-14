@@ -25,7 +25,7 @@ final class SettingsViewController: UIViewController, ViewModeled {
         logoutButton.rx
             .tap
             .subscribe { [weak self] _ in
-                viewModel.logOut()
+                viewModel.logout()
                 let logSignViewModel = LogSignViewModel()
                 self?.route(to: LogSignViewController.self, with: logSignViewModel)
             }

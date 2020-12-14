@@ -3,7 +3,7 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    let user = User(loginDetails: LoginDetails(username: "Andrey", password: "1234"), todoList: TodoList())
+    let user = User(userDetails: UserDetails(username: "Andrey", password: "1234"))
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.

@@ -5,25 +5,37 @@ import RxSwift
 final class ListViewModel: ViewModel {
     
     private var user: User { (UIApplication.shared.delegate as! AppDelegate).user }
-    private var todoList: TodoList { user.todoList }
-    var todos: BehaviorRelay<[Todo]> { todoList.todos }
+    private var userSubject = BehaviorSubject<User>(value: User())
+    
+    let todos = BehaviorSubject<[Todo]>(value: [])
+    private let bag = DisposeBag()
+    
+    init() {
+        userSubject
+            .subscribe { [weak self] (user: User) in
+                self?.todos.onNext(user.getTodos())
+            }
+            .disposed(by: bag)
+    }
     
     func updateTodo(text: String, at index: Int) {
         if !text.isEmpty {
-            todoList.editTodo(text: text, at: index)
+            user.editTodo(at: index, with: text)
         } else {
-            todoList.deleteTodo(at: index)
+            user.deleteTodo(at: index)
         }
+        userSubject.onNext(user)
     }
 
     func appendTodo(text: String) {
         if !text.isEmpty {
-            todoList.appendTodo(text: text)
+            user.appendTodo(text: text)
         }
+        userSubject.onNext(user)
     }
     
     func instantiateItemViewModel(forItemAt index: Int) -> ItemViewModel {
-        let todo = todos.value[index]
+        let todo = user.getTodos()[index]
         return ItemViewModel(itemTitle: todo.name)
     }
 
