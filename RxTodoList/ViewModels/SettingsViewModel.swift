@@ -21,7 +21,7 @@ class SettingsViewModel: ViewModel {
     }
     
     func logout() {
-        
+        user.logout()
     }
     
 }

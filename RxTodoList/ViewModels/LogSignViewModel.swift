@@ -11,11 +11,11 @@ final class LogSignViewModel: ViewModel {
     var passwordInput = BehaviorSubject<String>(value: "")
     
     func login(with userDetails: UserDetails) {
-        
+        user.login(with: userDetails)
     }
     
     func signup(with userDetails: UserDetails) {
-        
+        user.signup(with: userDetails)
     }
     
 }

@@ -30,6 +30,8 @@ final class SettingsViewController: UIViewController, ViewModeled {
                 self?.route(to: LogSignViewController.self, with: logSignViewModel)
             }
             .disposed(by: bag)
+        
+
     }
     
 }
