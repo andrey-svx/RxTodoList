@@ -29,10 +29,6 @@ class User {
         
     }
     
-    func fetchTodos(for userDetails: UserDetails) {
-        
-    }
-    
     func getTodos() -> [Todo] {
         return todos
     }

@@ -18,20 +18,11 @@ final class ItemViewController: UIViewController, ViewModeled {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        guard let viewModel = viewModel else {
-//            assertionFailure("Could not set Item VM!"); return
-//        }
-//        setupTextField(viewModel)
-//        setupButtons(viewModel)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         guard let viewModel = viewModel else {
             assertionFailure("Could not set Item VM!"); return
         }
         setupTextField(viewModel)
-        setupButtons(viewModel)        
+        setupButtons(viewModel)
     }
     
     private func setupTextField(_ viewModel: ItemViewModel) {
