@@ -30,13 +30,13 @@ final class LogSignViewController: UIViewController, ViewModeled {
     private func setupTextFields(_ viewModel: LogSignViewModel) {
         usernameField.rx
             .text
-            .flatMap { BehaviorSubject<String>(value: $0 ?? "") }
+            .flatMap { BehaviorSubject<String>(value: $0 == nil ? "" : $0!) }
             .bind(to: viewModel.usernameInput)
             .disposed(by: bag)
         
         passwordField.rx
             .text
-            .flatMap { BehaviorSubject<String>(value: $0 ?? "") }
+            .flatMap { BehaviorSubject<String>(value: $0 != nil ? $0! : "") }
             .bind(to: viewModel.passwordInput)
             .disposed(by: bag)
     }

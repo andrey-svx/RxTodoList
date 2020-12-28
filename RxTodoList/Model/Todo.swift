@@ -1,15 +1,11 @@
 import Foundation
 
-struct Todo: Identifiable {
+struct Todo {
     
-    var name: String
-    let id = UUID()
+    let name: String
+    let uuid = UUID()
 
     init(_ name: String) {
-        self.name = name
-    }
-    
-    mutating func update(name: String) {
         self.name = name
     }
     
