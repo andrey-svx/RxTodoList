@@ -1,14 +1,28 @@
 import Foundation
 import RxSwift
 
-struct User {
+class User {
     
-    var loginDetails: LoginDetails?
-    var todoList: TodoList
+    let loginDetails = PublishSubject<LoginDetails?>()
+    let todos = PublishSubject<[Todo]>()
     
-    init(loginDetails: LoginDetails? = nil, todoList: TodoList = TodoList()) {
-        self.loginDetails = loginDetails
-        self.todoList = todoList
+    private var _loginDetails: LoginDetails? {
+        didSet { loginDetails.onNext(oldValue) }
     }
+    
+    private var _todos: [Todo] {
+        didSet { todos.onNext(oldValue) }
+    }
+    
+    init() {
+        self._loginDetails = nil
+        self._todos = []
+    }
+    
+    #if DEBUG
+    deinit {
+        print("model deinited!")
+    }
+    #endif
     
 }

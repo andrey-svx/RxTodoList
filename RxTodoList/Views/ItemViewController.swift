@@ -64,10 +64,4 @@ final class ItemViewController: UIViewController, ViewModeled {
     
 }
 
-extension ItemViewController: BackwardRoutable {
-        
-    func back() {
-        navigationController?.popViewController(animated: true)
-    }
-    
-}
+extension ItemViewController: Routable { }

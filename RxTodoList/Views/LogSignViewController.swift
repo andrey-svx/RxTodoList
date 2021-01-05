@@ -93,10 +93,4 @@ extension LogSignViewController {
 
 }
 
-extension LogSignViewController: BackwardRoutable {
-    
-    func back() {
-        dismiss(animated: true)
-    }
-
-}
+extension LogSignViewController: Routable { }

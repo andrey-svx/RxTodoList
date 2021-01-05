@@ -34,13 +34,4 @@ final class SettingsViewController: UIViewController, ViewModeled {
     
 }
 
-extension SettingsViewController: ForwardRoutable {
-    
-    func route<D: ViewModeled>(to destinationType: D.Type, with viewModel: D.VM) {
-        let identifier = String(describing: destinationType)
-        guard let destinationViewController = storyboard?.instantiateViewController(withIdentifier: identifier) as? D else { return }
-        destinationViewController.viewModel = viewModel
-        present(destinationViewController, animated: true)
-    }
-    
-}
+extension SettingsViewController: Routable { }
