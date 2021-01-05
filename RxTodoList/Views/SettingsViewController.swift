@@ -2,11 +2,12 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-final class SettingsViewController: UIViewController, ViewModeled {
+final class SettingsViewController: UIViewController, Routable {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var logoutButton: UIButton!
     
+    var state: State?
     var viewModel: SettingsViewModel? = SettingsViewModel()
     
     private let bag = DisposeBag()
@@ -26,11 +27,9 @@ final class SettingsViewController: UIViewController, ViewModeled {
             .tap
             .subscribe { [weak self] _ in
                 viewModel.logOut()
-                self?.route(to: LogSignViewController.self)
+//                self?.route(to: LogSignViewController.self, with: State)
             }
             .disposed(by: bag)
     }
     
 }
-
-extension SettingsViewController: Routable { }

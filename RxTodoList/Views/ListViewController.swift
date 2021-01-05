@@ -2,10 +2,11 @@ import RxSwift
 import RxCocoa
 import UIKit
 
-final class ListViewController: UITableViewController, ViewModeled {
+final class ListViewController: UITableViewController, Routable {
 
     @IBOutlet weak var plusBarButtonItem: UIBarButtonItem!
     
+    var state: State?
     var viewModel: ListViewModel?
     
     private let bag = DisposeBag()
@@ -13,8 +14,14 @@ final class ListViewController: UITableViewController, ViewModeled {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel = ListViewModel(
-            addTaps: plusBarButtonItem.rx.tap.asSignal(),
-            selectTaps: tableView.rx.modelSelected(Todo.self).asSignal()
+            addTaps: plusBarButtonItem.rx
+                .tap
+                .map { nil }
+                .asSignal(onErrorJustReturn: nil),
+            selectTaps: tableView.rx
+                .modelSelected(Todo.self)
+                .map { Todo?($0) }
+                .asSignal(onErrorJustReturn: nil)
         )
         guard let viewModel = viewModel else {
             assertionFailure("Could not set VM!")
@@ -35,5 +42,3 @@ final class ListViewController: UITableViewController, ViewModeled {
     }
     
 }
-
-extension ListViewController: Routable { }

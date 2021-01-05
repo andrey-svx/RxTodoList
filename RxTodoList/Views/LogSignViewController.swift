@@ -2,7 +2,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-final class LogSignViewController: UIViewController, ViewModeled {
+final class LogSignViewController: UIViewController, Routable {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var usernameField: UITextField!
@@ -12,6 +12,7 @@ final class LogSignViewController: UIViewController, ViewModeled {
     @IBOutlet weak var signupButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
     
+    var state: State?
     var viewModel: LogSignViewModel?
     
     private let bag = DisposeBag()
@@ -92,5 +93,3 @@ extension LogSignViewController {
     }
 
 }
-
-extension LogSignViewController: Routable { }

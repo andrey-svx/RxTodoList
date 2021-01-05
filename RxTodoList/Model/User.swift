@@ -14,6 +14,8 @@ class User {
         didSet { todos.onNext(_todos) }
     }
     
+    private var _editedTodo: Todo?
+    
     init() {
         self._loginDetails = nil
         self._todos = []

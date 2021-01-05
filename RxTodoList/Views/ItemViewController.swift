@@ -1,7 +1,7 @@
 import RxSwift
 import UIKit
 
-final class ItemViewController: UIViewController, ViewModeled {
+final class ItemViewController: UIViewController, Routable {
 
     @IBOutlet weak var textField: ItemTextField!
     @IBOutlet weak var saveButton: UIButton!
@@ -12,6 +12,7 @@ final class ItemViewController: UIViewController, ViewModeled {
         return cancelButton
     }()
     
+    var state: State?
     var viewModel: ItemViewModel?
 
     private let bag = DisposeBag()
@@ -63,5 +64,3 @@ final class ItemViewController: UIViewController, ViewModeled {
     }
     
 }
-
-extension ItemViewController: Routable { }
