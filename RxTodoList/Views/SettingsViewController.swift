@@ -26,8 +26,7 @@ final class SettingsViewController: UIViewController, ViewModeled {
             .tap
             .subscribe { [weak self] _ in
                 viewModel.logOut()
-                let logSignViewModel = LogSignViewModel()
-                self?.route(to: LogSignViewController.self, with: logSignViewModel)
+                self?.route(to: LogSignViewController.self)
             }
             .disposed(by: bag)
     }
