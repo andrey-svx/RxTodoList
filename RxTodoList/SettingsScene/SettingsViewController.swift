@@ -6,6 +6,8 @@ final class SettingsViewController: UIViewController, Routable {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var logoutButton: UIButton!
+    @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var signupButton: UIButton!
     
     var viewModel: SettingsViewModel?
     

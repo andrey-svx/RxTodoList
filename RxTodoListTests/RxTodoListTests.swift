@@ -22,8 +22,7 @@ class RxTodoListTests: XCTestCase {
                         "Call mom",
                         "Do the workout",
                         "Call customers",
-                        "Test todo"]
-        )
+                        "Test todo"])
         
         user.prepare()
         user.setEdited(Todo(""))
@@ -34,8 +33,7 @@ class RxTodoListTests: XCTestCase {
                         "Learn to code",
                         "Call mom",
                         "Do the workout",
-                        "Call customers"]
-        )
+                        "Call customers"])
     }
     
     func test_User_updateTodos_edit() throws {
@@ -50,8 +48,7 @@ class RxTodoListTests: XCTestCase {
                         "Learn to code",
                         "Call mom",
                         "Do the workout",
-                        "Call customers"]
-        )
+                        "Call customers"])
         
         user.prepare()
         let todoToDelete = user.getTodos()[0]
@@ -63,8 +60,15 @@ class RxTodoListTests: XCTestCase {
                        ["Learn to code",
                         "Call mom",
                         "Do the workout",
-                        "Call customers"]
-        )
+                        "Call customers"])
+    }
+    
+    func test_User_loginout() {
+        
+    }
+    
+    func test_User_signup() {
+        
     }
 
     func testPerformanceExample() throws {

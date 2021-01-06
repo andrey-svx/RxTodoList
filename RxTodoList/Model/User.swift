@@ -23,7 +23,7 @@ class User {
     }
     
     func prepare() {
-        self._loginDetails = LoginDetails(username: "andrey-svx", password: "1234")
+        self._loginDetails = nil
         self._todos =
             ["Clean the apt",
              "Learn to code",
