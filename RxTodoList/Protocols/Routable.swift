@@ -1,12 +1,8 @@
 import UIKit
 
-protocol State { }
-
 protocol Routable where Self: UIViewController {
     
-    var state: State? { get set }
-    
-    func route<D: Routable>(to destinationType: D.Type, with state: State?)
+    func route<D: Routable>(to destinationType: D.Type)
     
     func back()
 
@@ -14,13 +10,12 @@ protocol Routable where Self: UIViewController {
 
 extension Routable {
     
-    func route<D: Routable>(to destinationType: D.Type, with state: State? = nil) {
+    func route<D: Routable>(to destinationType: D.Type) {
         let identifier = String(describing: destinationType)
         guard let destinationViewController = storyboard?.instantiateViewController(identifier: identifier) as? D else {
             assertionFailure("Could not set Destination VC!")
             return
         }
-        destinationViewController.state = state
         if let navigationController = self.navigationController {
             navigationController.pushViewController(destinationViewController, animated: true)
         } else {

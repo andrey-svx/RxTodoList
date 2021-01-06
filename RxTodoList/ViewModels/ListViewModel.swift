@@ -5,7 +5,14 @@ import RxCocoa
 
 final class ListViewModel: ViewModel {
     
+    enum Destination {
+        
+        case dummy
+    
+    }
+    
     let todos: Driver<[Todo]>
+    let destination: Observable<Destination>
     
     init(
         addTaps: Signal<Todo?>,
@@ -17,12 +24,16 @@ final class ListViewModel: ViewModel {
         self.todos = user.todos
             .asDriver(onErrorJustReturn: [])
         
+        self.destination = Observable.of(addTaps, selectTaps)
+            .merge()
+            .do(onNext: { [weak user] item in user?.setEdited(item) })
+            .map {  _ -> Destination in Destination.dummy }
     }
     
-    #if DEBUG
+//    #if DEBUG
     deinit {
         print("List view model deinited!")
     }
-    #endif
+//    #endif
     
 }

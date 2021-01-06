@@ -31,6 +31,10 @@ class User {
             .map(Todo.init)
     }
     
+    func setEdited(_ todo: Todo?) {
+        self._editedTodo = todo
+    }
+    
     #if DEBUG
     deinit {
         print("model deinited!")

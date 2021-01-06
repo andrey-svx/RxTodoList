@@ -7,7 +7,6 @@ final class SettingsViewController: UIViewController, Routable {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var logoutButton: UIButton!
     
-    var state: State?
     var viewModel: SettingsViewModel? = SettingsViewModel()
     
     private let bag = DisposeBag()

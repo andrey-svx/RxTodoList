@@ -6,7 +6,6 @@ final class ListViewController: UITableViewController, Routable {
 
     @IBOutlet weak var plusBarButtonItem: UIBarButtonItem!
     
-    var state: State?
     var viewModel: ListViewModel?
     
     private let bag = DisposeBag()
@@ -37,6 +36,12 @@ final class ListViewController: UITableViewController, Routable {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "TodoCell")!
                 cell.textLabel?.text = "\(row + 1). \(element.name)"
                 return cell
+            }
+            .disposed(by: bag)
+        
+        viewModel.destination
+            .subscribe { [weak self] destination in
+                self?.route(to: ItemViewController.self)
             }
             .disposed(by: bag)
     }

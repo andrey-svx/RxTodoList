@@ -12,7 +12,6 @@ final class LogSignViewController: UIViewController, Routable {
     @IBOutlet weak var signupButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
     
-    var state: State?
     var viewModel: LogSignViewModel?
     
     private let bag = DisposeBag()

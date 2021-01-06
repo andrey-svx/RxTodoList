@@ -12,55 +12,19 @@ final class ItemViewController: UIViewController, Routable {
         return cancelButton
     }()
     
-    var state: State?
     var viewModel: ItemViewModel?
 
     private let bag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel = ItemViewModel(
+            textInput: textField.rx.textInput.text.asDriver()
+        )
         guard let viewModel = viewModel else {
             assertionFailure("Could not set Item VM!"); return
         }
-        setupTextField(viewModel)
-        setupButtons(viewModel)
     }
     
-    private func setupTextField(_ viewModel: ItemViewModel) {
-        textField.configure(with: viewModel)
-        textField.rx.text
-            .flatMap { BehaviorSubject<String>(value: $0 ?? "") }
-            .bind(to: viewModel.itemInput)
-            .disposed(by: bag)
-        textField.becomeFirstResponder()
-    }
-    
-    private func setupButtons(_ viewModel: ItemViewModel) {
-        saveButton.rx
-            .tap
-            .bind(onNext: { [weak self] _ in
-                guard let viewModel = self?.viewModel else { return }
-                self?.saveTapped(viewModel)
-            })
-            .disposed(by: bag)
-        
-        cancelButton.rx
-            .tap
-            .bind(onNext: { [weak self] _ in
-                guard let viewModel = self?.viewModel else { return }
-                self?.cancelTapped(viewModel)
-            })
-            .disposed(by: bag)
-    }
-    
-    private func saveTapped(_ viewModel: ItemViewModel) {
-        viewModel.saveItem()
-        back()
-    }
-    
-    private func cancelTapped(_ viewModel: ItemViewModel) {
-        viewModel.cancelItem()
-        back()
-    }
     
 }
