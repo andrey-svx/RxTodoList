@@ -3,7 +3,7 @@ import UIKit
 
 final class ItemViewController: UIViewController, Routable {
 
-    @IBOutlet weak var textField: ItemTextField!
+    @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var saveButton: UIButton!
     private lazy var cancelButton: UIBarButtonItem = { [weak self] in
         self?.navigationItem.setHidesBackButton(true, animated: false)
@@ -19,11 +19,33 @@ final class ItemViewController: UIViewController, Routable {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel = ItemViewModel(
-            textInput: textField.rx.textInput.text.asDriver()
+            textInput: textField.rx
+                .textInput
+                .text
+                .map { $0 ?? "" }
+                .asDriver(onErrorJustReturn: ""),
+            saveTap: saveButton.rx
+                .tap
+                .asSignal(),
+            cancelTap: cancelButton.rx
+                .tap
+                .asSignal()
         )
+        
         guard let viewModel = viewModel else {
             assertionFailure("Could not set Item VM!"); return
         }
+        viewModel.text
+            .drive(textField.rx.text)
+            .disposed(by: bag)
+        
+        viewModel.destination
+            .bind(onNext: { [weak self] destination in
+                self?.back()
+            })
+            .disposed(by: bag)
+        
+        textField.becomeFirstResponder()
     }
     
     

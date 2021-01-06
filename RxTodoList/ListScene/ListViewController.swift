@@ -40,9 +40,9 @@ final class ListViewController: UITableViewController, Routable {
             .disposed(by: bag)
         
         viewModel.destination
-            .subscribe { [weak self] destination in
+            .bind(onNext: { [weak self] destination in
                 self?.route(to: ItemViewController.self)
-            }
+            })
             .disposed(by: bag)
     }
     
