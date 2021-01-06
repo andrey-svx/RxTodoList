@@ -11,14 +11,13 @@ final class ItemViewController: UIViewController, Routable {
         self?.navigationItem.leftBarButtonItem = cancelButton
         return cancelButton
     }()
-    
-    var viewModel: ItemViewModel?
 
     private let bag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel = ItemViewModel(
+        
+        let viewModel = ItemViewModel(
             textInput: textField.rx
                 .textInput
                 .text
@@ -32,9 +31,6 @@ final class ItemViewController: UIViewController, Routable {
                 .asSignal()
         )
         
-        guard let viewModel = viewModel else {
-            assertionFailure("Could not set Item VM!"); return
-        }
         viewModel.text
             .drive(textField.rx.text)
             .disposed(by: bag)

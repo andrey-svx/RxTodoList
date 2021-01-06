@@ -6,13 +6,15 @@ final class ListViewController: UITableViewController, Routable {
 
     @IBOutlet weak var plusBarButtonItem: UIBarButtonItem!
     
-    var viewModel: ListViewModel?
-    
     private let bag = DisposeBag()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel = ListViewModel(
+        navigationItem.title = "RxTodoList"
+        tableView.dataSource = nil
+        tableView.delegate = nil
+
+        let viewModel = ListViewModel(
             addTaps: plusBarButtonItem.rx
                 .tap
                 .map { nil }
@@ -22,14 +24,6 @@ final class ListViewController: UITableViewController, Routable {
                 .map { Todo?($0) }
                 .asSignal(onErrorJustReturn: nil)
         )
-        guard let viewModel = viewModel else {
-            assertionFailure("Could not set VM!")
-            return
-        }
-        navigationItem.title = "RxTodoList"
-        
-        tableView.dataSource = nil
-        tableView.delegate = nil
         
         viewModel.todos
             .drive(tableView.rx.items) { (tableView, row, element) in

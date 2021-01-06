@@ -7,9 +7,13 @@ class RxTodoListTests: XCTestCase {
     
     let user = User()
 
-    override func setUpWithError() throws { }
+    override func setUpWithError() throws {
+        
+    }
 
-    override func tearDownWithError() throws { }
+    override func tearDownWithError() throws {
+        
+    }
 
     func test_User_updateTodos_append() throws {
         user.prepare()

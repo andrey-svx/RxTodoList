@@ -6,9 +6,7 @@ import RxSwift
 final class ItemViewModel: ViewModel {
     
     enum Destination {
-        
         case dummy
-    
     }
     
     let text: Driver<String>
@@ -42,11 +40,11 @@ final class ItemViewModel: ViewModel {
             .do(onNext: { [weak user] _ in user?.updateTodos() })
             .map { Destination.dummy }
     }
-
-}
-
-enum TextInputError: Error {
     
-    case cancelled
+    #if DEBUG
+    deinit {
+        print("Item view model deinit!")
+    }
+    #endif
 
 }

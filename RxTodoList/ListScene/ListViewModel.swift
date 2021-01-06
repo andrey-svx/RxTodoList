@@ -6,9 +6,7 @@ import RxCocoa
 final class ListViewModel: ViewModel {
     
     enum Destination {
-        
         case dummy
-    
     }
     
     let todos: Driver<[Todo]>
@@ -32,7 +30,7 @@ final class ListViewModel: ViewModel {
     
     #if DEBUG
     deinit {
-        print("List view model deinited!")
+        print("List view model deinit!")
     }
     #endif
     
