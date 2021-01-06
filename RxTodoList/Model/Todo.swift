@@ -9,6 +9,10 @@ struct Todo {
         self.name = name
     }
     
+    init() {
+        self.name = ""
+    }
+    
     mutating func update(_ name: String) {
         self.name = name
     }

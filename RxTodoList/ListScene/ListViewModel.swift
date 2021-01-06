@@ -26,7 +26,7 @@ final class ListViewModel: ViewModel {
         
         self.destination = Observable.of(addTaps, selectTaps)
             .merge()
-            .do(onNext: { [weak user] item in user?.setEdited(item) })
+            .do(onNext: { [weak user] item in user?.setEdited(item ?? Todo()) })
             .map {  _ -> Destination in Destination.dummy }
     }
     

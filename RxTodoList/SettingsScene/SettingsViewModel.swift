@@ -1,15 +1,18 @@
 import Foundation
 import RxSwift
+import RxCocoa
 
 class SettingsViewModel: ViewModel {
     
-    private var user: User { (UIApplication.shared.delegate as! AppDelegate).user }
+    let title: Driver<String>
     
-    let username = BehaviorSubject<String>(value: "")
-    let titleString = BehaviorSubject<String>(value: "Logged in as %username")
-    
-    func logOut() {
+    init() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let user = appDelegate.user
         
+        self.title = user.loginDetails
+            .map { $0 != nil ? "Logged in as \($0!.username)" : "Log in or signup" }
+            .asDriver(onErrorJustReturn: "")
     }
     
 }

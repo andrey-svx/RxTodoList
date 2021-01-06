@@ -5,7 +5,6 @@ class User {
     
     let loginDetails = BehaviorSubject<LoginDetails?>(value: nil)
     let todos = BehaviorSubject<[Todo]>(value: [])
-    let editedTodo = BehaviorSubject<Todo?>(value: nil)
     
     private var _loginDetails: LoginDetails? {
         didSet { loginDetails.onNext(_loginDetails) }
@@ -15,9 +14,7 @@ class User {
         didSet { todos.onNext(_todos) }
     }
     
-    private var _editedTodo: Todo? {
-        didSet { editedTodo.onNext(_editedTodo) }
-    }
+    private var _editedTodo: Todo?
     
     init() {
         self._loginDetails = nil
@@ -26,6 +23,7 @@ class User {
     }
     
     func prepare() {
+        self._loginDetails = LoginDetails(username: "andrey-svx", password: "1234")
         self._todos =
             ["Clean the apt",
              "Learn to code",
@@ -53,6 +51,7 @@ class User {
     
     func updateTodos() {
         guard let editedTodo = _editedTodo else { return }
+        
         if let index = _todos.firstIndex(where: { $0.id == editedTodo.id }) {
             if !editedTodo.name.isEmpty {
                 _todos[index] = editedTodo
