@@ -52,7 +52,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="tE7-TS-S82">
-                                <rect key="frame" x="25" y="94" width="364" height="69"/>
+                                <rect key="frame" x="25" y="94" width="364" height="75"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Input new to do" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="9ay-dj-9Xd">
                                         <rect key="frame" x="0.0" y="0.0" width="364" height="34"/>
@@ -60,7 +60,8 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qq9-TM-t5x">
-                                        <rect key="frame" x="0.0" y="39" width="364" height="30"/>
+                                        <rect key="frame" x="0.0" y="39" width="364" height="36"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                         <state key="normal" title="Save"/>
                                     </button>
                                 </subviews>
@@ -212,15 +213,10 @@
                                         <color key="textColor" systemColor="systemRedColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="sQK-uM-cCe">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HFr-mf-yn9">
                                         <rect key="frame" x="0.0" y="197" width="310.5" height="30"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HFr-mf-yn9">
-                                                <rect key="frame" x="0.0" y="0.0" width="310.5" height="30"/>
-                                                <state key="normal" title="Logsign"/>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
+                                        <state key="normal" title="Logsign"/>
+                                    </button>
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rK3-hp-gQv">
@@ -245,7 +241,6 @@
                         <outlet property="logsignButton" destination="HFr-mf-yn9" id="gwn-px-Npb"/>
                         <outlet property="passwordField" destination="eQO-UW-gY7" id="CX7-bS-l41"/>
                         <outlet property="signupButton" destination="X38-xF-74S" id="B2D-7x-Gif"/>
-                        <outlet property="titleLabel" destination="tQk-WX-mPA" id="gqu-mD-LIV"/>
                         <outlet property="usernameField" destination="WOa-TP-sEF" id="0Y8-fb-dcP"/>
                         <outlet property="warningLabel" destination="vqu-Bh-CmQ" id="D5Z-1X-uPD"/>
                     </connections>

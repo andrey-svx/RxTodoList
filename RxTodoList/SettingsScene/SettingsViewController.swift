@@ -9,17 +9,11 @@ final class SettingsViewController: UIViewController, Routable {
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var signupButton: UIButton!
     
-    var viewModel: SettingsViewModel?
-    
     private let bag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel = SettingsViewModel()
-        guard let viewModel = viewModel else {
-            assertionFailure("Could not set View Model")
-            return
-        }
+        let viewModel = SettingsViewModel()
         viewModel.title
             .drive(titleLabel.rx.text)
             .disposed(by: bag)
