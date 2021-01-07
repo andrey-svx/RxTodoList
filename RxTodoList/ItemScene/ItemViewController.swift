@@ -36,13 +36,10 @@ final class ItemViewController: UIViewController, Routable {
             .disposed(by: bag)
         
         viewModel.destination
-            .bind(onNext: { [weak self] destination in
-                self?.back()
-            })
+            .bind(onNext: { [weak self] destination in self?.back() })
             .disposed(by: bag)
         
-        textField.becomeFirstResponder()
+//        textField.becomeFirstResponder()
     }
-    
     
 }

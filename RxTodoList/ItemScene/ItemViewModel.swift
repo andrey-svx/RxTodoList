@@ -21,20 +21,17 @@ final class ItemViewModel: ViewModel {
         let user = appDelegate.user
         
         let initialText = user.getEdited()?.name ?? ""
-            
-        self.text = Observable
-            .of(textInput.asObservable().skip(1), Observable<String>.just(initialText))
-            .merge()
-            .do(onNext: { [weak user] text in user?.updateEdited(text) })
+  
+        self.text = textInput.asObservable()
+            .startWith(initialText)
+            .do(onNext: { [weak user] text in user?.updateEdited(text); print(text) })
             .asDriver(onErrorJustReturn: "")
         
         self.destination = Observable
             .of(
                 saveTap,
                 cancelTap
-                    .do(onNext: { [weak user] _ in
-                            user?.updateEdited(initialText)
-                    })
+                    .do(onNext: { [weak user] _ in user?.updateEdited(initialText) })
             )
             .merge()
             .do(onNext: { [weak user] _ in user?.updateTodos() })
