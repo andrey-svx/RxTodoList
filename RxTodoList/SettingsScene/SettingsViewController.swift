@@ -15,7 +15,13 @@ final class SettingsViewController: UIViewController, Routable {
         super.viewDidLoad()
         
         let viewModel = SettingsViewModel(
-            logoutTap: loginButton.rx
+            logoutTap: logoutButton.rx
+                .tap
+                .asSignal(),
+            loginTap: loginButton.rx
+                .tap
+                .asSignal(),
+            signupTap: signupButton.rx
                 .tap
                 .asSignal()
         )

@@ -23,7 +23,7 @@ class User {
     }
     
     func prepare() {
-        self._loginDetails = LoginDetails(username: "test_user", password: "test_password")
+        self._loginDetails = LoginDetails(username: "initial_user", password: "1234")
         self._todos =
             ["Clean the apt",
              "Learn to code",
@@ -76,22 +76,31 @@ extension User {
     @discardableResult
     func logout() -> Observable<LoginDetails?> {
         Observable<LoginDetails?>.just(nil)
-            .do(onNext: { [weak self] _ in sleep(3); self?._loginDetails = nil })
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+            .do(onNext: { [weak self] _ in sleep(1); self?._loginDetails = nil })
             .map { [weak self] _ in self?._loginDetails }
     }
     
     func loginAs(_ username: String, _ password: String) -> Observable<LoginDetails?> {
         Observable<(String, String)>
             .of((username, password))
-            .do(onNext: { _ in sleep(3); print("Logging in...") })
-            .map { LoginDetails(username: $0.0, password: $0.1) }
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+            .do(onNext: { [weak self] (username, password) in
+                    sleep(1)
+                    self?._loginDetails = LoginDetails(username: username, password: password)
+            })
+            .map { [weak self] _ in self?._loginDetails }
     }
     
     func signupAs(_ username: String, _ password: String) -> Observable<LoginDetails?> {
         Observable<(String, String)>
             .of((username, password))
-            .do(onNext: { _ in sleep(3); print("Signing up...") })
-            .map { LoginDetails(username: $0.0, password: $0.1) }
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+            .do(onNext: { [weak self] (username, password) in
+                    sleep(1)
+                    self?._loginDetails = LoginDetails(username: username, password: password)
+            })
+            .map { [weak self] _ in self?._loginDetails }
     }
     
 }

@@ -37,11 +37,5 @@ final class ItemViewModel: ViewModel {
             .do(onNext: { [weak user] _ in user?.updateTodos() })
             .map { Destination.dummy }
     }
-    
-    #if DEBUG
-    deinit {
-        print("Item view model deinit!")
-    }
-    #endif
 
 }

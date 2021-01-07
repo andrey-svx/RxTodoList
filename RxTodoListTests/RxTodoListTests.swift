@@ -68,7 +68,7 @@ class RxTodoListTests: XCTestCase {
                         "Call customers"])
     }
     
-    func test_logout() {
+    func test_User_logout() {
         user.prepare()
         let testLogout = try! user.logout()
             .toBlocking().first()!
@@ -77,18 +77,18 @@ class RxTodoListTests: XCTestCase {
     
     func test_User_loginAs() {
         user.prepare()
-        let testLogin = try! user.loginAs("testUsername", "testPassword")
+        let testLogin = try! user.loginAs("test_username", "test_password")
             .toBlocking().first()!
         XCTAssertEqual(testLogin,
-                       LoginDetails(username: "testUsername", password: "testPassword"))
+                       LoginDetails(username: "test_username", password: "test_password"))
     }
     
     func test_User_signupAs() {
         user.prepare()
-        let testSignup = try! user.loginAs("testUsername", "testPassword")
+        let testSignup = try! user.loginAs("test_username", "test_password")
             .toBlocking().first()!
         XCTAssertEqual(testSignup,
-                       LoginDetails(username: "testUsername", password: "testPassword"))
+                       LoginDetails(username: "test_username", password: "test_password"))
     }
 
     func testPerformanceExample() throws {

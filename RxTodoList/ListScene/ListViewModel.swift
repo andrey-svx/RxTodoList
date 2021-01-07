@@ -28,10 +28,4 @@ final class ListViewModel: ViewModel {
             .map {  _ -> Destination in Destination.dummy }
     }
     
-    #if DEBUG
-    deinit {
-        print("List view model deinit!")
-    }
-    #endif
-    
 }

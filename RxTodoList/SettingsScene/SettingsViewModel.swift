@@ -9,24 +9,45 @@ class SettingsViewModel: ViewModel {
     let loginIsEnabled: Driver<Bool>
     let signupIsEnabled: Driver<Bool>
     
-    init(logoutTap: Signal<()>) {
+    private let bag = DisposeBag()
+    
+    init(
+        logoutTap: Signal<()>,
+        loginTap: Signal<()>,
+        signupTap: Signal<()>
+    ) {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let user = appDelegate.user
         
         self.title = user.loginDetails
-            .map { $0 != nil ? "Logged in as \($0!.username)" : "Log in or signup" }
+            .map {
+                if let username = $0?.username {
+                    return "Logged in as \(username)"
+                } else {
+                    return "Log in or sign up"
+                }
+            }
             .asDriver(onErrorJustReturn: "")
         
-        self.logoutIsEnabled = user.loginDetails
-            .map { $0 != nil ? true : false }
+        self.logoutIsEnabled = logoutTap.asObservable()
+            .flatMap { [unowned user] _ -> Observable<LoginDetails?> in
+                user.logout()
+            }
+            .map { $0 == nil ? false : true }
             .asDriver(onErrorJustReturn: false)
         
-        self.loginIsEnabled = user.loginDetails
-            .map { $0 != nil ? false : true }
+        self.loginIsEnabled = loginTap.asObservable()
+            .flatMap{ _ -> Observable<LoginDetails?> in
+                user.loginAs("current_user", "1234")
+            }
+            .map { $0 == nil ? true : false }
             .asDriver(onErrorJustReturn: true)
         
-        self.signupIsEnabled = user.loginDetails
-            .map { $0 != nil ? false : true }
+        self.signupIsEnabled = signupTap.asObservable()
+            .flatMap{ _ -> Observable<LoginDetails?> in
+                user.loginAs("new_user", "1234")
+            }
+            .map { $0 == nil ? true : false }
             .asDriver(onErrorJustReturn: true)
     }
     
