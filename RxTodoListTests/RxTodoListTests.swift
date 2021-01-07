@@ -75,7 +75,7 @@ class RxTodoListTests: XCTestCase {
         XCTAssertEqual(testLogout, nil)
     }
     
-    func test_User_loginout() {
+    func test_User_loginAs() {
         user.prepare()
         let testLogin = try! user.loginAs("testUsername", "testPassword")
             .toBlocking().first()!
@@ -83,7 +83,7 @@ class RxTodoListTests: XCTestCase {
                        LoginDetails(username: "testUsername", password: "testPassword"))
     }
     
-    func test_User_signup() {
+    func test_User_signupAs() {
         user.prepare()
         let testSignup = try! user.loginAs("testUsername", "testPassword")
             .toBlocking().first()!

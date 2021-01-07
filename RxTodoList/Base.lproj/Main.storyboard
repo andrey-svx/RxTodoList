@@ -170,9 +170,9 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Settings" image="gear" catalog="system" id="AKy-dD-ILf"/>
                     <connections>
-                        <outlet property="loginButton" destination="TL5-LZ-0Vm" id="hw7-3b-0pz"/>
-                        <outlet property="logoutButton" destination="bWt-EM-ICe" id="arj-ff-P4P"/>
-                        <outlet property="signupButton" destination="X38-xF-74S" id="rf5-tn-U91"/>
+                        <outlet property="loginButton" destination="TL5-LZ-0Vm" id="0WY-VC-eUi"/>
+                        <outlet property="logoutButton" destination="bWt-EM-ICe" id="Fli-op-5Ka"/>
+                        <outlet property="signupButton" destination="X38-xF-74S" id="pYu-mv-TZO"/>
                         <outlet property="titleLabel" destination="2XA-nk-inX" id="D6M-7x-Svu"/>
                     </connections>
                 </viewController>
