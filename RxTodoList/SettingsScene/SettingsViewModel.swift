@@ -18,8 +18,11 @@ class SettingsViewModel: ViewModel {
     ) {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let user = appDelegate.user
+        let loginDetails = Observable
+            .of(user.loginDetails)
+            .flatMap { $0 }
         
-        self.title = user.loginDetails
+        self.title = loginDetails
             .map {
                 if let username = $0?.username {
                     return "Logged in as \(username)"
