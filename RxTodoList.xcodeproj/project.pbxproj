@@ -27,6 +27,7 @@
 		5AF58A8C257E93BD00731532 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF58A8B257E93BD00731532 /* SettingsViewController.swift */; };
 		5AFFD545257ECFC9008393AB /* LogSignViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFFD544257ECFC9008393AB /* LogSignViewController.swift */; };
 		94311BC4F2D660CFF5846108 /* Pods_RxTodoList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBAA1B36BA2D6A0DEE76EB5F /* Pods_RxTodoList.framework */; };
+		EBBF13F2CD45EA9B22F607A3 /* Pods_RxTodoListTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DC8B817F0929037E08A0143 /* Pods_RxTodoListTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +42,7 @@
 
 /* Begin PBXFileReference section */
 		1BB21E54020A34EF84B09265 /* Pods-RxTodoList.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxTodoList.debug.xcconfig"; path = "Target Support Files/Pods-RxTodoList/Pods-RxTodoList.debug.xcconfig"; sourceTree = "<group>"; };
+		5528E5D9B0AFD69B67F30C93 /* Pods-RxTodoListTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxTodoListTests.release.xcconfig"; path = "Target Support Files/Pods-RxTodoListTests/Pods-RxTodoListTests.release.xcconfig"; sourceTree = "<group>"; };
 		5A147D4A25855A1300C93749 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		5A147D502585619600C93749 /* LoginDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDetails.swift; sourceTree = "<group>"; };
 		5A147D542585658900C93749 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -64,6 +66,8 @@
 		5AEB3DB2257F901900B34DC8 /* LogSignViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogSignViewModel.swift; sourceTree = "<group>"; };
 		5AF58A8B257E93BD00731532 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		5AFFD544257ECFC9008393AB /* LogSignViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogSignViewController.swift; sourceTree = "<group>"; };
+		760E63E71F1D6DACAE21CC53 /* Pods-RxTodoListTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxTodoListTests.debug.xcconfig"; path = "Target Support Files/Pods-RxTodoListTests/Pods-RxTodoListTests.debug.xcconfig"; sourceTree = "<group>"; };
+		9DC8B817F0929037E08A0143 /* Pods_RxTodoListTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RxTodoListTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0FEB86C72158345843B5853 /* Pods-RxTodoList.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxTodoList.release.xcconfig"; path = "Target Support Files/Pods-RxTodoList/Pods-RxTodoList.release.xcconfig"; sourceTree = "<group>"; };
 		DBAA1B36BA2D6A0DEE76EB5F /* Pods_RxTodoList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RxTodoList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -73,6 +77,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EBBF13F2CD45EA9B22F607A3 /* Pods_RxTodoListTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,6 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				DBAA1B36BA2D6A0DEE76EB5F /* Pods_RxTodoList.framework */,
+				9DC8B817F0929037E08A0143 /* Pods_RxTodoListTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -203,6 +209,8 @@
 			children = (
 				1BB21E54020A34EF84B09265 /* Pods-RxTodoList.debug.xcconfig */,
 				C0FEB86C72158345843B5853 /* Pods-RxTodoList.release.xcconfig */,
+				760E63E71F1D6DACAE21CC53 /* Pods-RxTodoListTests.debug.xcconfig */,
+				5528E5D9B0AFD69B67F30C93 /* Pods-RxTodoListTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -214,9 +222,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5A2622402576461A006C56FA /* Build configuration list for PBXNativeTarget "RxTodoListTests" */;
 			buildPhases = (
+				5B03B9E9052E1A6AAB791C1C /* [CP] Check Pods Manifest.lock */,
 				5A2622332576461A006C56FA /* Sources */,
 				5A2622342576461A006C56FA /* Frameworks */,
 				5A2622352576461A006C56FA /* Resources */,
+				E38A1D036E5537DB4E9F7AEB /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -322,6 +332,28 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RxTodoList/Pods-RxTodoList-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		5B03B9E9052E1A6AAB791C1C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RxTodoListTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		67D1451A75B94E12E847F100 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -342,6 +374,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E38A1D036E5537DB4E9F7AEB /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RxTodoListTests/Pods-RxTodoListTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RxTodoListTests/Pods-RxTodoListTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RxTodoListTests/Pods-RxTodoListTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -409,6 +458,7 @@
 /* Begin XCBuildConfiguration section */
 		5A26223E2576461A006C56FA /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 760E63E71F1D6DACAE21CC53 /* Pods-RxTodoListTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -430,6 +480,7 @@
 		};
 		5A26223F2576461A006C56FA /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5528E5D9B0AFD69B67F30C93 /* Pods-RxTodoListTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;

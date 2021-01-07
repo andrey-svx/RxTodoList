@@ -6,3 +6,5 @@ struct LoginDetails {
     let password: String
     
 }
+
+extension LoginDetails: Equatable { }

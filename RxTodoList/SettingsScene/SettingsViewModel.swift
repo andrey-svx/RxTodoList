@@ -13,6 +13,7 @@ class SettingsViewModel: ViewModel {
         self.title = user.loginDetails
             .map { $0 != nil ? "Logged in as \($0!.username)" : "Log in or signup" }
             .asDriver(onErrorJustReturn: "")
+        
     }
     
 }

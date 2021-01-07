@@ -5,3 +5,7 @@ target 'RxTodoList' do
   pod 'RxSwift', '~> 5.0.0'
   pod 'RxCocoa', '~> 5.0.0'
 end
+
+target 'RxTodoListTests' do
+  pod 'RxBlocking'
+end

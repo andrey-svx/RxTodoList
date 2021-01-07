@@ -24,7 +24,7 @@ final class ItemViewModel: ViewModel {
   
         self.text = textInput.asObservable()
             .startWith(initialText)
-            .do(onNext: { [weak user] text in user?.updateEdited(text); print(text) })
+            .do(onNext: { [weak user] text in user?.updateEdited(text) })
             .asDriver(onErrorJustReturn: "")
         
         self.destination = Observable

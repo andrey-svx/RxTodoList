@@ -1,4 +1,5 @@
 import XCTest
+import RxBlocking
 
 @testable
 import RxTodoList
@@ -67,12 +68,27 @@ class RxTodoListTests: XCTestCase {
                         "Call customers"])
     }
     
+    func test_logout() {
+        user.prepare()
+        let testLogout = try! user.logout()
+            .toBlocking().first()!
+        XCTAssertEqual(testLogout, nil)
+    }
+    
     func test_User_loginout() {
-        
+        user.prepare()
+        let testLogin = try! user.loginAs("testUsername", "testPassword")
+            .toBlocking().first()!
+        XCTAssertEqual(testLogin,
+                       LoginDetails(username: "testUsername", password: "testPassword"))
     }
     
     func test_User_signup() {
-        
+        user.prepare()
+        let testSignup = try! user.loginAs("testUsername", "testPassword")
+            .toBlocking().first()!
+        XCTAssertEqual(testSignup,
+                       LoginDetails(username: "testUsername", password: "testPassword"))
     }
 
     func testPerformanceExample() throws {
