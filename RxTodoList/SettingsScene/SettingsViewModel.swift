@@ -18,11 +18,26 @@ class SettingsViewModel: ViewModel {
     ) {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let user = appDelegate.user
-        let loginDetails = Observable
+        let loginDetailsObservable = Observable
             .of(user.loginDetails)
             .flatMap { $0 }
         
-        self.title = loginDetails
+        let logoutTapObservable = logoutTap.asObservable()
+            .flatMap { [unowned user] _ -> Observable<LoginDetails?> in
+                user.logout()
+            }
+        
+        let loginTapObservable = loginTap.asObservable()
+            .flatMap{ _ -> Observable<LoginDetails?> in
+                user.loginAs("current_user", "1234")
+            }
+        
+        let signupTapObservable = signupTap.asObservable()
+            .flatMap{ _ -> Observable<LoginDetails?> in
+                user.loginAs("new_user", "1234")
+            }
+        
+        self.title = loginDetailsObservable
             .map {
                 if let username = $0?.username {
                     return "Logged in as \(username)"
@@ -32,24 +47,19 @@ class SettingsViewModel: ViewModel {
             }
             .asDriver(onErrorJustReturn: "")
         
-        self.logoutIsEnabled = logoutTap.asObservable()
-            .flatMap { [unowned user] _ -> Observable<LoginDetails?> in
-                user.logout()
-            }
+        self.logoutIsEnabled = Observable.of(loginDetailsObservable, logoutTapObservable)
+            .merge()
             .map { $0 == nil ? false : true }
             .asDriver(onErrorJustReturn: false)
         
-        self.loginIsEnabled = loginTap.asObservable()
-            .flatMap{ _ -> Observable<LoginDetails?> in
-                user.loginAs("current_user", "1234")
-            }
+        
+        self.loginIsEnabled = Observable.of(loginDetailsObservable, loginTapObservable)
+            .merge()
             .map { $0 == nil ? true : false }
             .asDriver(onErrorJustReturn: true)
         
-        self.signupIsEnabled = signupTap.asObservable()
-            .flatMap{ _ -> Observable<LoginDetails?> in
-                user.loginAs("new_user", "1234")
-            }
+        self.signupIsEnabled = Observable.of(loginDetailsObservable, signupTapObservable)
+            .merge()
             .map { $0 == nil ? true : false }
             .asDriver(onErrorJustReturn: true)
     }

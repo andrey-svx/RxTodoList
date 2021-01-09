@@ -17,7 +17,7 @@ class RxTodoListTests: XCTestCase {
     }
 
     func test_User_updateTodos_append() throws {
-        user.prepare()
+        user.configure()
         user.setEdited(Todo("Test todo"))
         user.updateTodos()
         XCTAssertEqual(user.getTodos()
@@ -29,7 +29,7 @@ class RxTodoListTests: XCTestCase {
                         "Call customers",
                         "Test todo"])
         
-        user.prepare()
+        user.configure()
         user.setEdited(Todo(""))
         user.updateTodos()
         XCTAssertEqual(user.getTodos()
@@ -42,7 +42,7 @@ class RxTodoListTests: XCTestCase {
     }
     
     func test_User_updateTodos_edit() throws {
-        user.prepare()
+        user.configure()
         let todoToEdit = user.getTodos()[0]
         user.setEdited(todoToEdit)
         user.updateEdited("Test todo")
@@ -55,7 +55,7 @@ class RxTodoListTests: XCTestCase {
                         "Do the workout",
                         "Call customers"])
         
-        user.prepare()
+        user.configure()
         let todoToDelete = user.getTodos()[0]
         user.setEdited(todoToDelete)
         user.updateEdited("")
@@ -69,14 +69,14 @@ class RxTodoListTests: XCTestCase {
     }
     
     func test_User_logout() {
-        user.prepare()
+        user.configure()
         let testLogout = try! user.logout()
             .toBlocking().first()!
         XCTAssertEqual(testLogout, nil)
     }
     
     func test_User_loginAs() {
-        user.prepare()
+        user.configure()
         let testLogin = try! user.loginAs("test_username", "test_password")
             .toBlocking().first()!
         XCTAssertEqual(testLogin,
@@ -84,7 +84,7 @@ class RxTodoListTests: XCTestCase {
     }
     
     func test_User_signupAs() {
-        user.prepare()
+        user.configure()
         let testSignup = try! user.loginAs("test_username", "test_password")
             .toBlocking().first()!
         XCTAssertEqual(testSignup,

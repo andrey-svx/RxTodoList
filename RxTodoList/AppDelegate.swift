@@ -6,7 +6,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let user = User()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        user.prepare()
+        user.configure()
         return true
     }
 

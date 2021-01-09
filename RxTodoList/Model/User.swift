@@ -22,7 +22,7 @@ class User {
         self._editedTodo = nil
     }
     
-    func prepare() {
+    func configure() {
         self._loginDetails = LoginDetails(username: "initial_user", password: "1234")
         self._todos =
             ["Clean the apt",
