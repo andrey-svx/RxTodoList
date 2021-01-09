@@ -21,7 +21,7 @@ final class ListViewController: UITableViewController, Routable {
                 .asSignal(onErrorJustReturn: nil),
             selectTaps: tableView.rx
                 .modelSelected(Todo.self)
-                .map { Todo?($0) }
+                .map(Optional.init)
                 .asSignal(onErrorJustReturn: nil)
         )
         

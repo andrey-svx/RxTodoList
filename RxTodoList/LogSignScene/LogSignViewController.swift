@@ -14,7 +14,30 @@ final class LogSignViewController: UIViewController, Routable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let viewModel = LogSignViewModel()
+        
+        let viewModel = LogSignViewModel(
+            usernameInput: usernameField.rx
+                .textInput
+                .text
+                .asDriver(),
+            passwordInput: passwordField.rx
+                .textInput
+                .text
+                .asDriver(),
+            logsignTap: logsignButton.rx
+                .tap
+                .asSignal(),
+            dismissTap: dismissButton.rx
+                .tap
+                .asSignal()
+        )
+        
+        viewModel.warningIsHidden
+            .drive(warningLabel.rx.isHidden)
+            .disposed(by: bag)
+        viewModel.warning
+            .drive(warningLabel.rx.text)
+            .disposed(by: bag)
     }
     
 }

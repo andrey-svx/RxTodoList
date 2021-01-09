@@ -63,6 +63,8 @@ class User {
         }
     }
     
+    var logSign: ((String, String) -> Observable<LoginDetails?>)?
+    
     #if DEBUG
     deinit {
         print("model deinited!")
