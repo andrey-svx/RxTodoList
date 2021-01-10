@@ -10,6 +10,7 @@ final class ItemViewModel: ViewModel {
     }
     
     let text: Driver<String>
+    
     let destination: Observable<Destination>
     
     init(
@@ -27,15 +28,21 @@ final class ItemViewModel: ViewModel {
             .do(onNext: { [weak user] text in user?.updateEdited(text) })
             .asDriver(onErrorJustReturn: "")
         
-        self.destination = Observable
-            .of(
-                saveTap,
-                cancelTap
-                    .do(onNext: { [weak user] _ in user?.updateEdited(initialText) })
-            )
-            .merge()
-            .do(onNext: { [weak user] _ in user?.updateTodos() })
+        let saveTapObservable = saveTap.asObservable()
+            .do(onNext: { [weak user] _ in
+                user?.updateTodos()
+            })
             .map { Destination.dummy }
+        
+        let cancelTapObservable = cancelTap.asObservable()
+            .do(onNext: { [weak user] _ in
+                user?.updateEdited(initialText)
+                user?.updateTodos()
+            })
+            .map { Destination.dummy }
+        
+        self.destination = Observable.of(saveTapObservable, cancelTapObservable)
+            .merge()
     }
 
 }

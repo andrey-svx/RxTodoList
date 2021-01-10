@@ -213,7 +213,7 @@
                                         <color key="textColor" systemColor="systemRedColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HFr-mf-yn9">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HFr-mf-yn9" userLabel="Logsign Button">
                                         <rect key="frame" x="0.0" y="197" width="310.5" height="30"/>
                                         <state key="normal" title="Logsign"/>
                                     </button>
@@ -235,7 +235,6 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="cancelButton" destination="HFr-mf-yn9" id="fIq-Jh-Hgz"/>
                         <outlet property="dismissButton" destination="rK3-hp-gQv" id="KQx-V4-Jnh"/>
                         <outlet property="loginButton" destination="TL5-LZ-0Vm" id="T3t-Oe-ZiM"/>
                         <outlet property="logsignButton" destination="HFr-mf-yn9" id="gwn-px-Npb"/>

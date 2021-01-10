@@ -15,14 +15,12 @@ final class ListViewController: UITableViewController, Routable {
         tableView.delegate = nil
 
         let viewModel = ListViewModel(
-            addTaps: plusBarButtonItem.rx
+            addTap: plusBarButtonItem.rx
                 .tap
-                .map { nil }
-                .asSignal(onErrorJustReturn: nil),
-            selectTaps: tableView.rx
+                .asSignal(),
+            selectTap: tableView.rx
                 .modelSelected(Todo.self)
-                .map(Optional.init)
-                .asSignal(onErrorJustReturn: nil)
+                .asSignal()
         )
         
         viewModel.todos
@@ -35,9 +33,7 @@ final class ListViewController: UITableViewController, Routable {
         
         viewModel.destination
             .observeOn(MainScheduler.instance)
-            .bind(onNext: { [weak self] destination in
-                self?.route(to: ItemViewController.self)
-            })
+            .bind(onNext: { [weak self] destination in self?.route(to: ItemViewController.self) })
             .disposed(by: bag)
     }
     

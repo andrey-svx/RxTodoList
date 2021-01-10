@@ -4,8 +4,14 @@ import Foundation
 
 final class LogSignViewModel: ViewModel {
     
+    enum Destination {
+        case dummy
+    }
+    
     let warning: Driver<String>
     let warningIsHidden: Driver<Bool>
+    
+    let destination: Observable<Destination>
     
     init(
         usernameInput: Driver<String?>,
@@ -18,6 +24,10 @@ final class LogSignViewModel: ViewModel {
         
         self.warning = Observable.just("No warning for now")
             .asDriver(onErrorJustReturn: "Empty")
+        
+        self.destination = Observable.of(logsignTap.asObservable(), dismissTap.asObservable())
+            .merge()
+            .map { Destination.dummy }
     }
     
 }

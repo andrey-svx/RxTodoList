@@ -10,11 +10,12 @@ final class ListViewModel: ViewModel {
     }
     
     let todos: Driver<[Todo]>
+    
     let destination: Observable<Destination>
     
     init(
-        addTaps: Signal<Todo?>,
-        selectTaps: Signal<Todo?>
+        addTap: Signal<()>,
+        selectTap: Signal<Todo>
     ) {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let user = appDelegate.user
@@ -22,10 +23,16 @@ final class ListViewModel: ViewModel {
         self.todos = user.todos
             .asDriver(onErrorJustReturn: [])
         
-        self.destination = Observable.of(addTaps, selectTaps)
+        let addTapObservable = addTap.asObservable()
+            .do(onNext: { [weak user] _ in user?.setEdited(Todo()) })
+            .map { _ in Destination.dummy }
+        
+        let selectTapObservable = selectTap.asObservable()
+            .do(onNext: { [weak user] todo in user?.setEdited(todo) })
+            .map { _ in Destination.dummy }
+        
+        self.destination = Observable.of(addTapObservable, selectTapObservable)
             .merge()
-            .do(onNext: { [weak user] item in user?.setEdited(item ?? Todo()) })
-            .map {  _ -> Destination in Destination.dummy }
     }
     
 }

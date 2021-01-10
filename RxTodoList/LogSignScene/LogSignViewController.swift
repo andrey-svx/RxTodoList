@@ -38,6 +38,10 @@ final class LogSignViewController: UIViewController, Routable {
         viewModel.warning
             .drive(warningLabel.rx.text)
             .disposed(by: bag)
+        viewModel.destination
+            .observeOn(MainScheduler.instance)
+            .bind(onNext: { [weak self] destination in self?.back() })
+            .disposed(by: bag)
     }
     
 }
