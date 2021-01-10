@@ -5,10 +5,6 @@ import RxCocoa
 
 final class ListViewModel: ViewModel {
     
-    enum Destination {
-        case dummy
-    }
-    
     let todos: Driver<[Todo]>
     
     let destination: Observable<Destination>
@@ -25,11 +21,11 @@ final class ListViewModel: ViewModel {
         
         let addTapObservable = addTap.asObservable()
             .do(onNext: { [weak user] _ in user?.setEdited(Todo()) })
-            .map { _ in Destination.dummy }
+            .map { _ in Destination.route }
         
         let selectTapObservable = selectTap.asObservable()
             .do(onNext: { [weak user] todo in user?.setEdited(todo) })
-            .map { _ in Destination.dummy }
+            .map { _ in Destination.route }
         
         self.destination = Observable.of(addTapObservable, selectTapObservable)
             .merge()

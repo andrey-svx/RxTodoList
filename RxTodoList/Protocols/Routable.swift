@@ -32,3 +32,11 @@ extension Routable {
     }
     
 }
+
+enum Destination {
+    
+    case none
+    case back
+    case route
+
+}

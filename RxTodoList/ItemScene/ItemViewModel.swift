@@ -5,10 +5,6 @@ import RxSwift
 
 final class ItemViewModel: ViewModel {
     
-    enum Destination {
-        case dummy
-    }
-    
     let text: Driver<String>
     
     let destination: Observable<Destination>
@@ -32,14 +28,14 @@ final class ItemViewModel: ViewModel {
             .do(onNext: { [weak user] _ in
                 user?.updateTodos()
             })
-            .map { Destination.dummy }
+            .map { Destination.back }
         
         let cancelTapObservable = cancelTap.asObservable()
             .do(onNext: { [weak user] _ in
                 user?.updateEdited(initialText)
                 user?.updateTodos()
             })
-            .map { Destination.dummy }
+            .map { Destination.back }
         
         self.destination = Observable.of(saveTapObservable, cancelTapObservable)
             .merge()

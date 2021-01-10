@@ -276,7 +276,7 @@
 				};
 			};
 			buildConfigurationList = 5A5141AE256C4B1C003B2D3A /* Build configuration list for PBXProject "RxTodoList" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 10.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (

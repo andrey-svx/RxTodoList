@@ -4,10 +4,6 @@ import RxCocoa
 
 class SettingsViewModel: ViewModel {
     
-    enum Destination {
-        case dummy
-    }
-    
     let title: Driver<String>
     let logoutIsEnabled: Driver<Bool>
     let loginIsEnabled: Driver<Bool>
@@ -57,11 +53,11 @@ class SettingsViewModel: ViewModel {
         
         let loginTapObservable = loginTap.asObservable()
             .do(onNext: { [weak user] _ in user?.logSign = user?.loginAs(_:_:) })
-            .map { Destination.dummy }
+            .map { Destination.route }
         
         let signupTapObservable = signupTap.asObservable()
             .do(onNext: { [weak user] _ in user?.logSign = user?.signupAs(_:_:) })
-            .map { Destination.dummy }
+            .map { Destination.route }
         
         self.destination = Observable.of(loginTapObservable, signupTapObservable)
             .merge()

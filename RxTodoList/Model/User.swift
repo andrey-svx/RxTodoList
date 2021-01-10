@@ -79,7 +79,10 @@ extension User {
     func logout() -> Observable<LoginDetails?> {
         Observable<LoginDetails?>.just(nil)
             .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .do(onNext: { [weak self] _ in sleep(1); self?._loginDetails = nil })
+            .do(onNext: { [weak self] _ in
+                    sleep(1)
+                    self?._loginDetails = nil
+            })
             .map { [weak self] _ in self?._loginDetails }
     }
     
