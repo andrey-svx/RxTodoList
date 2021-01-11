@@ -20,12 +20,20 @@ final class ListViewModel: ViewModel {
             .asDriver(onErrorJustReturn: [])
         
         let addTapObservable = addTap.asObservable()
-            .do(onNext: { [weak user] _ in user?.setEdited(Todo()) })
+            .do(onNext: { [unowned user] _ in
+                user.appendEdit = user.appendTodo
+                user.setEdited(user.newTodo())
+            })
             .map { _ in Destination.route }
+            .share()
         
         let selectTapObservable = selectTap.asObservable()
-            .do(onNext: { [weak user] todo in user?.setEdited(todo) })
+            .do(onNext: { [unowned user] todo in
+                user.appendEdit = user.editTodo
+                user.setEdited(todo)
+            })
             .map { _ in Destination.route }
+            .share()
         
         self.destination = Observable.of(addTapObservable, selectTapObservable)
             .merge()

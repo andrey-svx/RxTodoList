@@ -1,12 +1,24 @@
 import UIKit
+import CoreData
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     let user = User()
+    
+    lazy var backgroundContext: NSManagedObjectContext = {
+        let container = NSPersistentContainer(name: "TodoList")
+        container.loadPersistentStores { _, error in
+            if let error = error as NSError? {
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            }
+        }
+        let context = container.newBackgroundContext()
+        return context
+    }()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        user.configure()
+        user.configure(with: backgroundContext)
         return true
     }
 

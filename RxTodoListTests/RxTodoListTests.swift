@@ -1,4 +1,5 @@
 import XCTest
+import CoreData
 import RxBlocking
 
 @testable
@@ -7,6 +8,17 @@ import RxTodoList
 class RxTodoListTests: XCTestCase {
     
     let user = User()
+    
+    lazy var backgroundContext: NSManagedObjectContext = {
+        let container = NSPersistentContainer(name: "TodoList")
+        container.loadPersistentStores { _, error in
+            if let error = error as NSError? {
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            }
+        }
+        let context = container.newBackgroundContext()
+        return context
+    }()
 
     override func setUpWithError() throws {
         
@@ -17,8 +29,8 @@ class RxTodoListTests: XCTestCase {
     }
 
     func test_User_updateTodos_append() throws {
-        user.configure()
-        user.setEdited(Todo("Test todo"))
+        user.configure(with: backgroundContext)
+        user.setEdited(user.newTodo("Test todo"))
         user.updateTodos()
         XCTAssertEqual(user.getTodos()
                         .map { $0.name },
@@ -29,8 +41,8 @@ class RxTodoListTests: XCTestCase {
                         "Call customers",
                         "Test todo"])
         
-        user.configure()
-        user.setEdited(Todo(""))
+        user.configure(with: backgroundContext)
+        user.setEdited(user.newTodo())
         user.updateTodos()
         XCTAssertEqual(user.getTodos()
                         .map { $0.name },
@@ -42,7 +54,7 @@ class RxTodoListTests: XCTestCase {
     }
     
     func test_User_updateTodos_edit() throws {
-        user.configure()
+        user.configure(with: backgroundContext)
         let todoToEdit = user.getTodos()[0]
         user.setEdited(todoToEdit)
         user.updateEdited("Test todo")
@@ -55,7 +67,7 @@ class RxTodoListTests: XCTestCase {
                         "Do the workout",
                         "Call customers"])
         
-        user.configure()
+        user.configure(with: backgroundContext)
         let todoToDelete = user.getTodos()[0]
         user.setEdited(todoToDelete)
         user.updateEdited("")
@@ -69,14 +81,14 @@ class RxTodoListTests: XCTestCase {
     }
     
     func test_User_logout() {
-        user.configure()
+        user.configure(with: backgroundContext)
         let testLogout = try! user.logout()
             .toBlocking().first()!
         XCTAssertEqual(testLogout, nil)
     }
     
     func test_User_loginAs() {
-        user.configure()
+        user.configure(with: backgroundContext)
         let testLogin = try! user.loginAs("test_username", "test_password")
             .toBlocking().first()!
         XCTAssertEqual(testLogin,
@@ -84,7 +96,7 @@ class RxTodoListTests: XCTestCase {
     }
     
     func test_User_signupAs() {
-        user.configure()
+        user.configure(with: backgroundContext)
         let testSignup = try! user.loginAs("test_username", "test_password")
             .toBlocking().first()!
         XCTAssertEqual(testSignup,

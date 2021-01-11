@@ -1,4 +1,5 @@
 import Foundation
+import CoreData
 import RxSwift
 
 class User {
@@ -16,21 +17,41 @@ class User {
     
     private var _editedTodo: Todo?
     
+    private var context: NSManagedObjectContext?
+    
     init() {
         self._loginDetails = nil
         self._todos = []
         self._editedTodo = nil
     }
     
-    func configure() {
-        self._loginDetails = LoginDetails(username: "initial_user", password: "1234")
+    func configure(with context: NSManagedObjectContext) {
+        self.context = context
+        self._loginDetails = LoginDetails(username: "initial_user", password: "1234")            
         self._todos =
             ["Clean the apt",
              "Learn to code",
              "Call mom",
              "Do the workout",
              "Call customers"]
-            .map(Todo.init)
+            .map { [unowned self] name in self.newTodo(name) }
+    }
+    
+    func newTodo(_ name: String = "") -> Todo {
+        guard let context = self.context else { fatalError("Could not find context!") }
+        let todo = Todo(context: context)
+        todo.id = UUID()
+        todo.date = Date()
+        todo.name = name
+        return todo
+    }
+    
+    func copyTodo(_ todo: Todo) -> Todo {
+        let copy = newTodo()
+        copy.name = todo.name
+        copy.id = todo.id
+        copy.date = todo.date
+        return copy
     }
     
     func getEdited() -> Todo? {
@@ -49,25 +70,31 @@ class User {
         _todos
     }
     
-    func updateTodos() {
-        guard let editedTodo = _editedTodo else { return }
+    var appendEdit: (() -> Void)?
+    var logSign: ((String, String) -> Observable<LoginDetails?>)?
+    
+    func editTodo() {
+        guard let editedTodo = _editedTodo,
+              let index = _todos.firstIndex(where: { $0.id == editedTodo.id }) else { return }
         
-        if let index = _todos.firstIndex(where: { $0.id == editedTodo.id }) {
-            if !editedTodo.name.isEmpty {
-                _todos[index] = editedTodo
-            } else {
-                _todos.remove(at: index)
-            }
-        } else if !editedTodo.name.isEmpty {
-            _todos.append(editedTodo)
+        if !editedTodo.name.isEmpty {
+            _todos[index] = copyTodo(editedTodo)
+        } else {
+            _todos.remove(at: index)
         }
     }
     
-    var logSign: ((String, String) -> Observable<LoginDetails?>)?
+    func appendTodo() {
+        guard let editedTodo = _editedTodo,
+              !editedTodo.name.isEmpty else { return }
+        let appendedTodo = copyTodo(editedTodo)
+        _todos.append(appendedTodo)
+    }
+    
     
     #if DEBUG
     deinit {
-        print("model deinited!")
+        print("Model deinited!")
     }
     #endif
     
