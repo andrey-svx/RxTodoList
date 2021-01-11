@@ -215,7 +215,7 @@
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HFr-mf-yn9" userLabel="Logsign Button">
                                         <rect key="frame" x="0.0" y="197" width="310.5" height="30"/>
-                                        <state key="normal" title="Logsign"/>
+                                        <state key="normal" title="LogOrSign"/>
                                     </button>
                                 </subviews>
                             </stackView>

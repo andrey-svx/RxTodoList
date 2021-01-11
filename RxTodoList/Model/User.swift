@@ -70,8 +70,8 @@ class User {
         _todos
     }
     
-    var appendEdit: (() -> Void)?
-    var logSign: ((String, String) -> Observable<LoginDetails?>)?
+    var appendOrEdit: (() -> Void)?
+    var logOrSign: ((String, String) -> Observable<LoginDetails?>)?
     
     func editTodo() {
         guard let editedTodo = _editedTodo,

@@ -27,7 +27,7 @@ final class ItemViewModel: ViewModel {
         
         let saveTapObservable = saveTap.asObservable()
             .do(onNext: { [weak user] _ in
-                user?.appendEdit?()
+                user?.appendOrEdit?()
             })
             .map { Destination.back }
             .share()
@@ -35,7 +35,7 @@ final class ItemViewModel: ViewModel {
         let cancelTapObservable = cancelTap.asObservable()
             .do(onNext: { [weak user] _ in
                 user?.updateEdited(initialText)
-                user?.appendEdit?()
+                user?.appendOrEdit?()
             })
             .map { Destination.back }
             .share()
