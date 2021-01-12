@@ -22,6 +22,4 @@ extension CDTodo {
 
 }
 
-extension CDTodo : Identifiable {
-
-}
+extension CDTodo : Identifiable { }

@@ -11,21 +11,15 @@ class User {
         didSet { loginDetails.onNext(_loginDetails) }
     }
     
-    private var _todos: [Todo] {
+    var _todos: [Todo] {
         didSet { todos.onNext(_todos) }
     }
     
     private var _editedTodo: Todo?
     
-    private lazy var context: NSManagedObjectContext = {
-        let container = NSPersistentContainer(name: "CDTodoList")
-        container.loadPersistentStores { _, error in
-            if let error = error as NSError? {
-                fatalError("Unresolved error \(error), \(error.userInfo)")
-            }
-        }
-        let context = container.newBackgroundContext()
-        return context
+    lazy var context: NSManagedObjectContext = {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        return appDelegate.context
     }()
     
     init() {

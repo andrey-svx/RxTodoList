@@ -5,6 +5,17 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     let user = User()
+    
+    lazy var context: NSManagedObjectContext = {
+        let container = NSPersistentContainer(name: "CDTodoList")
+        container.loadPersistentStores { _, error in
+            if let error = error {
+                fatalError("Unresolved error!")
+            }
+        }
+        let context = container.newBackgroundContext()
+        return context
+    }()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         user.configure()
