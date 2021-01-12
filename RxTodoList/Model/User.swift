@@ -89,49 +89,6 @@ extension User {
 
 extension User {
     
-    func fetch<T>(request: NSFetchRequest<T>) -> Observable<[T]> {
-        Observable.create { [weak self] observer -> Disposable in
-            self?.context.performAndWait {
-                do {
-                    let nsObjects = try self?.context.fetch(request) ?? Array<T>()
-                    observer.onNext(nsObjects)
-                } catch {
-                    observer.onError(error)
-                }
-            }
-            return Disposables.create()
-        }
-    }
-    
-    func save<T: NSManagedObject>() -> Observable<[T]> {
-        guard context.hasChanges else { return Observable.just([]) }
-        return Observable.create { [weak self] observer -> Disposable in
-            self?.context.performAndWait {
-                do {
-                    try self?.context.save()
-                    observer.onNext([])
-                } catch {
-                    observer.onError(NSError())
-                }
-            }
-            return Disposables.create()
-        }
-    }
-    
-    func delete<T: NSManagedObject>(_ object: T) -> Observable<T> {
-        Observable.create { [weak self] observer -> Disposable in
-            self?.context.performAndWait {
-                self?.context.delete(object)
-                observer.onNext(object)
-            }
-            return Disposables.create()
-        }
-    }
-    
-}
-
-extension User {
-    
     @discardableResult
     func logout() -> Observable<LoginDetails?> {
         Observable<LoginDetails?>.just(nil)

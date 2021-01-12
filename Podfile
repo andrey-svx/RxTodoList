@@ -8,4 +8,5 @@ end
 
 target 'RxTodoListTests' do
   pod 'RxBlocking'
+  pod 'RxCocoa', '~> 5.0.0'
 end

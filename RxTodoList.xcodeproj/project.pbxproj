@@ -28,6 +28,7 @@
 		5AA410DB25ADEB29001EFAAB /* CDTodo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA410D925ADEB29001EFAAB /* CDTodo+CoreDataProperties.swift */; };
 		5ACD2493256C4FC50068AD1A /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACD2492256C4FC50068AD1A /* ListViewController.swift */; };
 		5AEB3DB3257F901900B34DC8 /* LogSignViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEB3DB2257F901900B34DC8 /* LogSignViewModel.swift */; };
+		5AED0BAF25AE3A0800F21225 /* NSManagedObjectContext+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AED0BAB25AE3A0300F21225 /* NSManagedObjectContext+Rx.swift */; };
 		5AF58A8C257E93BD00731532 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF58A8B257E93BD00731532 /* SettingsViewController.swift */; };
 		5AFFD545257ECFC9008393AB /* LogSignViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFFD544257ECFC9008393AB /* LogSignViewController.swift */; };
 		94311BC4F2D660CFF5846108 /* Pods_RxTodoList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBAA1B36BA2D6A0DEE76EB5F /* Pods_RxTodoList.framework */; };
@@ -72,6 +73,7 @@
 		5AA410D925ADEB29001EFAAB /* CDTodo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDTodo+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		5ACD2492256C4FC50068AD1A /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		5AEB3DB2257F901900B34DC8 /* LogSignViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogSignViewModel.swift; sourceTree = "<group>"; };
+		5AED0BAB25AE3A0300F21225 /* NSManagedObjectContext+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Rx.swift"; sourceTree = "<group>"; };
 		5AF58A8B257E93BD00731532 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		5AFFD544257ECFC9008393AB /* LogSignViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogSignViewController.swift; sourceTree = "<group>"; };
 		760E63E71F1D6DACAE21CC53 /* Pods-RxTodoListTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxTodoListTests.debug.xcconfig"; path = "Target Support Files/Pods-RxTodoListTests/Pods-RxTodoListTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -167,6 +169,7 @@
 				5AE6BA7D25A5BB4300C1BA64 /* SettingsScene */,
 				5A815D1E25763747005934A1 /* LogSignScene */,
 				5A9066962583FAAB00596324 /* Protocols */,
+				5AED0BB225AE3B3E00F21225 /* Extensions */,
 			);
 			path = RxTodoList;
 			sourceTree = "<group>";
@@ -214,6 +217,14 @@
 				5AF58A8B257E93BD00731532 /* SettingsViewController.swift */,
 			);
 			path = SettingsScene;
+			sourceTree = "<group>";
+		};
+		5AED0BB225AE3B3E00F21225 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				5AED0BAB25AE3A0300F21225 /* NSManagedObjectContext+Rx.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		6E4C433067B227B383FA2157 /* Pods */ = {
@@ -429,6 +440,7 @@
 				5AFFD545257ECFC9008393AB /* LogSignViewController.swift in Sources */,
 				5A815D1B25758F62005934A1 /* ItemViewModel.swift in Sources */,
 				5A147D4B25855A1300C93749 /* SettingsViewModel.swift in Sources */,
+				5AED0BAF25AE3A0800F21225 /* NSManagedObjectContext+Rx.swift in Sources */,
 				5A3038DE2580EB9E0042EC84 /* Routable.swift in Sources */,
 				5A7D2A0025ACF19500C09B9D /* TodoList.swift in Sources */,
 				5AEB3DB3257F901900B34DC8 /* LogSignViewModel.swift in Sources */,
