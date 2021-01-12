@@ -18,7 +18,7 @@ class User {
     private var _editedTodo: Todo?
     
     private lazy var context: NSManagedObjectContext = {
-        let container = NSPersistentContainer(name: "TodoList")
+        let container = NSPersistentContainer(name: "CDTodoList")
         container.loadPersistentStores { _, error in
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
