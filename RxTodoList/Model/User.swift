@@ -17,7 +17,16 @@ class User {
     
     private var _editedTodo: Todo?
     
-    private var context: NSManagedObjectContext?
+    private lazy var context: NSManagedObjectContext = {
+        let container = NSPersistentContainer(name: "TodoList")
+        container.loadPersistentStores { _, error in
+            if let error = error as NSError? {
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            }
+        }
+        let context = container.newBackgroundContext()
+        return context
+    }()
     
     init() {
         self._loginDetails = nil
@@ -25,8 +34,7 @@ class User {
         self._editedTodo = nil
     }
     
-    func configure(with context: NSManagedObjectContext) {
-        self.context = context
+    func configure() {
         self._loginDetails = LoginDetails(username: "initial_user", password: "1234")            
         self._todos =
             ["Clean the apt",
@@ -34,26 +42,9 @@ class User {
              "Call mom",
              "Do the workout",
              "Call customers"]
-            .map { [unowned self] name in self.newTodo(name) }
+            .map(Todo.init)
     }
-    
-    func newTodo(_ name: String = "") -> Todo {
-        guard let context = self.context else { fatalError("Could not find context!") }
-        let todo = Todo(context: context)
-        todo.id = UUID()
-        todo.date = Date()
-        todo.name = name
-        return todo
-    }
-    
-    func copyTodo(_ todo: Todo) -> Todo {
-        let copy = newTodo()
-        copy.name = todo.name
-        copy.id = todo.id
-        copy.date = todo.date
-        return copy
-    }
-    
+        
     func getEdited() -> Todo? {
         self._editedTodo
     }
@@ -78,7 +69,7 @@ class User {
               let index = _todos.firstIndex(where: { $0.id == editedTodo.id }) else { return }
         
         if !editedTodo.name.isEmpty {
-            _todos[index] = copyTodo(editedTodo)
+            _todos[index] = editedTodo
         } else {
             _todos.remove(at: index)
         }
@@ -87,7 +78,7 @@ class User {
     func appendTodo() {
         guard let editedTodo = _editedTodo,
               !editedTodo.name.isEmpty else { return }
-        let appendedTodo = copyTodo(editedTodo)
+        let appendedTodo = editedTodo
         _todos.append(appendedTodo)
     }
     
@@ -106,10 +97,7 @@ extension User {
     func logout() -> Observable<LoginDetails?> {
         Observable<LoginDetails?>.just(nil)
             .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .do(onNext: { [weak self] _ in
-                    sleep(1)
-                    self?._loginDetails = nil
-            })
+            .do(onNext: { [weak self] _ in sleep(1); self?._loginDetails = nil })
             .map { [weak self] _ in self?._loginDetails }
     }
     
