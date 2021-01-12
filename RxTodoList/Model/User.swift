@@ -32,6 +32,7 @@ class User {
         self._loginDetails = nil
         self._todos = []
         self._editedTodo = nil
+        print("init")
     }
     
     func configure() {
