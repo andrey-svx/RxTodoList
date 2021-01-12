@@ -35,16 +35,29 @@ class User {
     }
     
     func configure() {
-        self._loginDetails = LoginDetails(username: "initial_user", password: "1234")            
+        self._loginDetails = LoginDetails(username: "initial_user", password: "1234")
         self._todos =
             ["Clean the apt",
              "Learn to code",
              "Call mom",
              "Do the workout",
              "Call customers"]
-            .map(Todo.init)
+            .map { Todo($0) }
     }
-        
+    
+    var appendOrEdit: (() -> Void)?
+    var logOrSign: ((String, String) -> Observable<LoginDetails?>)?
+    
+    #if DEBUG
+    deinit {
+        print("Model deinited!")
+    }
+    #endif
+    
+}
+
+extension User {
+    
     func getEdited() -> Todo? {
         self._editedTodo
     }
@@ -61,9 +74,6 @@ class User {
         _todos
     }
     
-    var appendOrEdit: (() -> Void)?
-    var logOrSign: ((String, String) -> Observable<LoginDetails?>)?
-    
     func editTodo() {
         guard let editedTodo = _editedTodo,
               let index = _todos.firstIndex(where: { $0.id == editedTodo.id }) else { return }
@@ -71,23 +81,58 @@ class User {
         if !editedTodo.name.isEmpty {
             _todos[index] = editedTodo
         } else {
+            let removedTodo = _todos[index]
             _todos.remove(at: index)
         }
     }
     
     func appendTodo() {
-        guard let editedTodo = _editedTodo,
-              !editedTodo.name.isEmpty else { return }
-        let appendedTodo = editedTodo
-        _todos.append(appendedTodo)
+        guard let editedTodo = _editedTodo, !editedTodo.name.isEmpty else { return }
+        _todos.append(editedTodo)
     }
     
+}
+
+extension User {
     
-    #if DEBUG
-    deinit {
-        print("Model deinited!")
+    func fetch<T>(request: NSFetchRequest<T>) -> Observable<[T]> {
+        Observable.create { [weak self] observer -> Disposable in
+            self?.context.performAndWait {
+                do {
+                    let nsObjects = try self?.context.fetch(request) ?? Array<T>()
+                    observer.onNext(nsObjects)
+                } catch {
+                    observer.onError(error)
+                }
+            }
+            return Disposables.create()
+        }
     }
-    #endif
+    
+    func save<T: NSManagedObject>() -> Observable<[T]> {
+        guard context.hasChanges else { return Observable.just([]) }
+        return Observable.create { [weak self] observer -> Disposable in
+            self?.context.performAndWait {
+                do {
+                    try self?.context.save()
+                    observer.onNext([])
+                } catch {
+                    observer.onError(NSError())
+                }
+            }
+            return Disposables.create()
+        }
+    }
+    
+    func delete<T: NSManagedObject>(_ object: T) -> Observable<T> {
+        Observable.create { [weak self] observer -> Disposable in
+            self?.context.performAndWait {
+                self?.context.delete(object)
+                observer.onNext(object)
+            }
+            return Disposables.create()
+        }
+    }
     
 }
 
