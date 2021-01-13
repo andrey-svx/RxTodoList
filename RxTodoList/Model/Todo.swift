@@ -26,3 +26,11 @@ struct Todo {
         self.name = name
     }
 }
+
+extension Todo: Equatable {
+    
+    static func == (lhs: Todo, rhs: Todo) -> Bool {
+            lhs.id == rhs.id
+        }
+
+}

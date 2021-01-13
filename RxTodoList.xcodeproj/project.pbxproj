@@ -27,6 +27,8 @@
 		5AA410C925ADEA32001EFAAB /* CDTodoList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5AA410C725ADEA32001EFAAB /* CDTodoList.xcdatamodeld */; };
 		5AA410DA25ADEB29001EFAAB /* CDTodo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA410D825ADEB29001EFAAB /* CDTodo+CoreDataClass.swift */; };
 		5AA410DB25ADEB29001EFAAB /* CDTodo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA410D925ADEB29001EFAAB /* CDTodo+CoreDataProperties.swift */; };
+		5ABE990825AF72D1000A7B4D /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABE990725AF72D1000A7B4D /* StoreManager.swift */; };
+		5ABE990C25AF735D000A7B4D /* StoreManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABE990B25AF735D000A7B4D /* StoreManagerTests.swift */; };
 		5ACD2493256C4FC50068AD1A /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACD2492256C4FC50068AD1A /* ListViewController.swift */; };
 		5AEB3DB3257F901900B34DC8 /* LogSignViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEB3DB2257F901900B34DC8 /* LogSignViewModel.swift */; };
 		5AED0BAF25AE3A0800F21225 /* NSManagedObjectContext+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AED0BAB25AE3A0300F21225 /* NSManagedObjectContext+Rx.swift */; };
@@ -73,6 +75,8 @@
 		5AA410C825ADEA32001EFAAB /* CDTodoList.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CDTodoList.xcdatamodel; sourceTree = "<group>"; };
 		5AA410D825ADEB29001EFAAB /* CDTodo+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDTodo+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		5AA410D925ADEB29001EFAAB /* CDTodo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDTodo+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		5ABE990725AF72D1000A7B4D /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
+		5ABE990B25AF735D000A7B4D /* StoreManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManagerTests.swift; sourceTree = "<group>"; };
 		5ACD2492256C4FC50068AD1A /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		5AEB3DB2257F901900B34DC8 /* LogSignViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogSignViewModel.swift; sourceTree = "<group>"; };
 		5AED0BAB25AE3A0300F21225 /* NSManagedObjectContext+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Rx.swift"; sourceTree = "<group>"; };
@@ -118,6 +122,7 @@
 			children = (
 				5A2622392576461A006C56FA /* RxTodoListTests.swift */,
 				5A04164025AEF1DF006134EB /* NSManagedObjectContext+RxTests.swift */,
+				5ABE990B25AF735D000A7B4D /* StoreManagerTests.swift */,
 				5A26223B2576461A006C56FA /* Info.plist */,
 			);
 			path = RxTodoListTests;
@@ -127,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				5A147D542585658900C93749 /* User.swift */,
+				5ABE990725AF72D1000A7B4D /* StoreManager.swift */,
 				5A7D2A3525ADDD0500C09B9D /* Todo.swift */,
 				5A7D29FF25ACF19500C09B9D /* TodoList.swift */,
 				5A147D502585619600C93749 /* LoginDetails.swift */,
@@ -428,6 +434,7 @@
 			files = (
 				5A26223A2576461A006C56FA /* RxTodoListTests.swift in Sources */,
 				5A04164125AEF1DF006134EB /* NSManagedObjectContext+RxTests.swift in Sources */,
+				5ABE990C25AF735D000A7B4D /* StoreManagerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -450,6 +457,7 @@
 				5AEB3DB3257F901900B34DC8 /* LogSignViewModel.swift in Sources */,
 				5AA410DB25ADEB29001EFAAB /* CDTodo+CoreDataProperties.swift in Sources */,
 				5A7D2A3625ADDD0500C09B9D /* Todo.swift in Sources */,
+				5ABE990825AF72D1000A7B4D /* StoreManager.swift in Sources */,
 				5A5141B7256C4B1C003B2D3A /* AppDelegate.swift in Sources */,
 				5AA410DA25ADEB29001EFAAB /* CDTodo+CoreDataClass.swift in Sources */,
 				5ACD2493256C4FC50068AD1A /* ListViewController.swift in Sources */,

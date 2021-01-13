@@ -15,6 +15,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         return container
     }()
+    
+    lazy var context: NSManagedObjectContext = {
+        let context = container.newBackgroundContext()
+        return context
+    }()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         user.configure()

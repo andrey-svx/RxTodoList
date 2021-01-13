@@ -5,17 +5,20 @@ import RxSwift
 class User {
     
     let loginDetails = BehaviorSubject<LoginDetails?>(value: nil)
+    
     let todos = BehaviorSubject<[Todo]>(value: [])
     
     private var _loginDetails: LoginDetails? {
         didSet { loginDetails.onNext(_loginDetails) }
     }
     
-    var _todos: [Todo] {
+    private var _todos: [Todo] {
         didSet { todos.onNext(_todos) }
     }
     
     private var _editedTodo: Todo?
+    
+    private let storeManager = StoreManager()
     
     init() {
         self._loginDetails = nil
@@ -24,14 +27,23 @@ class User {
     }
     
     func configure() {
-        self._loginDetails = LoginDetails(username: "initial_user", password: "1234")
-        self._todos =
-            ["Clean the apt",
-             "Learn to code",
-             "Call mom",
-             "Do the workout",
-             "Call customers"]
-            .map { Todo($0) }
+        _loginDetails = LoginDetails(username: "initial_user", password: "1234")
+        storeManager
+            .fetchTodos()
+            .bind { [weak self] todos in
+                if todos.isEmpty {
+                    self?._todos =
+                        ["Clean the apt",
+                         "Learn to code",
+                         "Call mom",
+                         "Do the workout",
+                         "Call customers"]
+                        .map { Todo($0) }
+                } else {
+                    self?._todos = todos
+                }
+            }
+            .disposed(by: DisposeBag())
     }
     
     var appendOrEdit: (() -> Void)?
@@ -39,7 +51,7 @@ class User {
     
     #if DEBUG
     deinit {
-        print("Model deinited!")
+        print("Deinit: " + String(describing: Self.self))
     }
     #endif
     

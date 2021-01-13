@@ -6,7 +6,7 @@ extension Reactive where Base: NSManagedObjectContext {
     
     func fetch<T>(_ request: NSFetchRequest<T>) -> Observable<[T]> {
         guard self.base.concurrencyType == .privateQueueConcurrencyType else {
-            return Observable.error(NSManagedObjectContext.Error.queue)
+            fatalError("The function is only available for private queue!")
         }
         return Observable.create { observer -> Disposable in
             self.base.performAndWait {
@@ -15,7 +15,7 @@ extension Reactive where Base: NSManagedObjectContext {
                     observer.onNext(nsObjects)
                     observer.onCompleted()
                 } catch {
-                    observer.onError(NSManagedObjectContext.Error.fetch)
+                    observer.onError(NSManagedObjectContext.ReactiveError.fetch)
                 }
             }
             return Disposables.create()
@@ -24,7 +24,7 @@ extension Reactive where Base: NSManagedObjectContext {
     
     func save() -> Observable<Void> {
         guard self.base.concurrencyType == .privateQueueConcurrencyType else {
-            return Observable.error(NSManagedObjectContext.Error.queue)
+            fatalError("The function is only available for private queue!")
         }
         guard base.hasChanges else { return Observable.just(()) }
         return Observable.create { observer -> Disposable in
@@ -34,7 +34,7 @@ extension Reactive where Base: NSManagedObjectContext {
                     observer.onNext(())
                     observer.onCompleted()
                 } catch {
-                    observer.onError(NSManagedObjectContext.Error.save)
+                    observer.onError(NSManagedObjectContext.ReactiveError.save)
                 }
             }
             return Disposables.create()
@@ -43,7 +43,7 @@ extension Reactive where Base: NSManagedObjectContext {
     
     func insert<T: NSManagedObject>(_ object: T) -> Observable<Void> {
         guard self.base.concurrencyType == .privateQueueConcurrencyType else {
-            return Observable.error(NSManagedObjectContext.Error.queue)
+            fatalError("The function is only available for private queue!")
         }
         return Observable.create { observer -> Disposable in
             self.base.performAndWait {
@@ -57,7 +57,7 @@ extension Reactive where Base: NSManagedObjectContext {
     
     func delete<T: NSManagedObject>(_ object: T) -> Observable<Void> {
         guard self.base.concurrencyType == .privateQueueConcurrencyType else {
-            return Observable.error(NSManagedObjectContext.Error.queue)
+            fatalError("The function is only available for private queue!")
         }
         return Observable.create { observer -> Disposable in
             self.base.performAndWait {
@@ -73,9 +73,8 @@ extension Reactive where Base: NSManagedObjectContext {
 
 extension NSManagedObjectContext {
     
-    enum Error: Swift.Error {
+    enum ReactiveError: Swift.Error {
         
-        case queue
         case fetch
         case save
         case unknown

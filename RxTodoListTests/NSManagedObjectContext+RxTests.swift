@@ -10,75 +10,16 @@ import RxTodoList
 
 class NSManagedObjectContext_RxTests: XCTestCase {
     
-    let user = User()
-    
-    lazy var container: NSPersistentContainer = {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        return appDelegate.container
-    }()
-    
     lazy var context: NSManagedObjectContext = {
-        let context = container.newBackgroundContext()
-        return context
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        return appDelegate.context
     }()
 
     override func setUpWithError() throws {
-        user.configure()
+        
     }
 
     override func tearDownWithError() throws {
-        
-    }
-    
-    func test_NSManagedObjectContext_wrongQueue() throws {
-        
-        let wrongQueueContext = container.viewContext
-        let request = CDTodo.fetchRequest() as NSFetchRequest<CDTodo>
-        
-        let testCDTodo = ["Test todo"]
-            .map { Todo($0) }
-            .map { todo -> CDTodo in
-                let cdTodo = CDTodo(context: context)
-                cdTodo.name = todo.name
-                cdTodo.date = todo.date
-                cdTodo.id = todo.id
-                return cdTodo
-            }
-            .first!
-        
-        let bag = DisposeBag()
-        
-        wrongQueueContext.rx
-            .fetch(request)
-            .subscribe(onError: { error in
-                let fetchError = error as! NSManagedObjectContext.Error
-                XCTAssertEqual(fetchError, NSManagedObjectContext.Error.queue)
-            })
-            .disposed(by: bag)
-        
-        wrongQueueContext.rx
-            .save()
-            .subscribe(onError: { error in
-                let fetchError = error as! NSManagedObjectContext.Error
-                XCTAssertEqual(fetchError, NSManagedObjectContext.Error.queue)
-            })
-            .disposed(by: bag)
-        
-        wrongQueueContext.rx
-            .delete(testCDTodo)
-            .subscribe(onError: { error in
-                let fetchError = error as! NSManagedObjectContext.Error
-                XCTAssertEqual(fetchError, NSManagedObjectContext.Error.queue)
-            })
-            .disposed(by: bag)
-        
-        wrongQueueContext.rx
-            .insert(testCDTodo)
-            .subscribe(onError: { error in
-                let fetchError = error as! NSManagedObjectContext.Error
-                XCTAssertEqual(fetchError, NSManagedObjectContext.Error.queue)
-            })
-            .disposed(by: bag)
         
     }
     
@@ -122,7 +63,7 @@ class NSManagedObjectContext_RxTests: XCTestCase {
         
         context.performAndWait {
             do {
-                testCDTodos.forEach(context.delete)
+                context.registeredObjects.forEach(context.delete)
                 try context.save()
             } catch {
                 print(error)
@@ -158,7 +99,7 @@ class NSManagedObjectContext_RxTests: XCTestCase {
                         
                         XCTAssertEqual(testCDTodos, fetchedCDTodos)
                         
-                        testCDTodos.forEach(self.context.delete)
+                        self.context.registeredObjects.forEach(self.context.delete)
                         try self.context.save()
                     } catch {
                         print(error)
@@ -221,7 +162,7 @@ class NSManagedObjectContext_RxTests: XCTestCase {
                         
                         XCTAssertEqual(fetchedCDTodos, [testCDTodo, insertedCDTodo])
                         
-                        [testCDTodo, insertedCDTodo].forEach(self.context.delete)
+                        self.context.registeredObjects.forEach(self.context.delete)
                         try self.context.save()
                         
                     } catch {
@@ -272,7 +213,7 @@ class NSManagedObjectContext_RxTests: XCTestCase {
                             
                             XCTAssertEqual(fetchedCDTodos, [testCDTodos[0]])
                             
-                            testCDTodos.forEach(self.context.delete)
+                            self.context.registeredObjects.forEach(self.context.delete)
                             try self.context.save()
                             
                         } catch {

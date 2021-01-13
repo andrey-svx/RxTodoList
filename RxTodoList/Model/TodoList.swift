@@ -4,10 +4,30 @@ import Foundation
 
 class TodoList {
     
-    private let observer: BehaviorSubject<[Todo]>
+    weak var delegate: TodoListDelegate?
+
+}
+
+protocol TodoListDelegate: AnyObject {
     
-    init(_ observer: BehaviorSubject<[Todo]>) {
-        self.observer = observer
+    var todos: BehaviorSubject<[Todo]> { get }
+    var editedItem: Todo? { get set }
+    
+    var todoList: TodoList { get }
+    
+    func update(todos: [Todo])
+    func update(editedItem: Todo?)
+    
+}
+
+extension TodoListDelegate {
+    
+    func update(todos: [Todo]) {
+        self.todos.onNext(todos)
+    }
+    
+    func update(editedItem: Todo?) {
+        self.editedItem = editedItem
     }
     
 }
