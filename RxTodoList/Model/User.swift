@@ -17,11 +17,6 @@ class User {
     
     private var _editedTodo: Todo?
     
-    lazy var context: NSManagedObjectContext = {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        return appDelegate.context
-    }()
-    
     init() {
         self._loginDetails = nil
         self._todos = []

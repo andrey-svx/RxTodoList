@@ -6,15 +6,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     let user = User()
     
-    lazy var context: NSManagedObjectContext = {
+    lazy var container: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "CDTodoList")
         container.loadPersistentStores { _, error in
             if let error = error {
                 fatalError("Unresolved error!")
             }
         }
-        let context = container.newBackgroundContext()
-        return context
+        return container
     }()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
