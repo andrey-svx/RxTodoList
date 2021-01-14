@@ -2,7 +2,7 @@ import Foundation
 import RxSwift
 import CoreData
 
-class StoreManager {
+class PersistenceManager {
     
     private lazy var context: NSManagedObjectContext = {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -16,10 +16,7 @@ class StoreManager {
         request.returnsObjectsAsFaults = false
         return context.rx
             .fetch(request)
-            .map { cdTodos -> [Todo] in
-                cdTodos
-                    .map { Todo($0.name, id: $0.id, date: $0.date, objectID: $0.objectID) }
-            }
+            .map { $0.map { Todo($0.name, id: $0.id, date: $0.date, objectID: $0.objectID) } }
     }
     
     func fetchTodo(_ todo: Todo) -> Observable<Todo?> {
@@ -37,11 +34,6 @@ class StoreManager {
             }
     }
     
-//    private func saveTodos() -> Observable<Void> {
-//        return context.rx
-//            .save()
-//    }
-    
     func removeTodo(_ todo: Todo) -> Observable<Void> {
         guard let objectID = todo.objectID else { return Observable<Void>.error(Error.some) }
         let cdTodo = context.object(with: objectID)
@@ -58,10 +50,11 @@ class StoreManager {
     
         return context.rx
             .insert(cdTodo)
+            .flatMap(context.rx.save)
     }
     
-    func editTodo() {
-        
+    func editTodo(_ todo: Todo, with editedTodo: Todo) -> Observable<Void> {
+        Observable.just(())
     }
     
     enum Error: Swift.Error {

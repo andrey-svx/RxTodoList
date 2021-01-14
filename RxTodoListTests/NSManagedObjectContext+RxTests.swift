@@ -16,7 +16,15 @@ class NSManagedObjectContext_RxTests: XCTestCase {
     }()
 
     override func setUpWithError() throws {
-        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "CDTodo")
+        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: request)
+        context.performAndWait {
+            do {
+                try self.context.execute(batchDeleteRequest)
+            } catch {
+                print(error)
+            }
+        }
     }
 
     override func tearDownWithError() throws {
@@ -61,15 +69,6 @@ class NSManagedObjectContext_RxTests: XCTestCase {
         
         XCTAssertEqual(fetchedCDTodos, testCDTodos)
         
-        context.performAndWait {
-            do {
-                context.registeredObjects.forEach(context.delete)
-                try context.save()
-            } catch {
-                print(error)
-            }
-        }
-        
     }
     
     func test_NSManagedObjectContext_save() throws {
@@ -99,8 +98,6 @@ class NSManagedObjectContext_RxTests: XCTestCase {
                         
                         XCTAssertEqual(testCDTodos, fetchedCDTodos)
                         
-                        self.context.registeredObjects.forEach(self.context.delete)
-                        try self.context.save()
                     } catch {
                         print(error)
                     }
@@ -162,9 +159,6 @@ class NSManagedObjectContext_RxTests: XCTestCase {
                         
                         XCTAssertEqual(fetchedCDTodos, [testCDTodo, insertedCDTodo])
                         
-                        self.context.registeredObjects.forEach(self.context.delete)
-                        try self.context.save()
-                        
                     } catch {
                         print(error)
                     }
@@ -212,9 +206,6 @@ class NSManagedObjectContext_RxTests: XCTestCase {
                             let fetchedCDTodos = try self.context.fetch(request)
                             
                             XCTAssertEqual(fetchedCDTodos, [testCDTodos[0]])
-                            
-                            self.context.registeredObjects.forEach(self.context.delete)
-                            try self.context.save()
                             
                         } catch {
                             print(error)

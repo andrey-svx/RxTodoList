@@ -18,7 +18,7 @@ class User {
     
     private var _editedTodo: Todo?
     
-    private let storeManager = StoreManager()
+    private let persistenceManager = PersistenceManager()
     
     init() {
         self._loginDetails = nil
@@ -28,7 +28,7 @@ class User {
     
     func configure() {
         _loginDetails = LoginDetails(username: "initial_user", password: "1234")
-        storeManager
+        persistenceManager
             .fetchTodos()
             .bind { [weak self] todos in
                 if todos.isEmpty {

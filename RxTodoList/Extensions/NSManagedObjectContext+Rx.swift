@@ -5,10 +5,7 @@ import RxSwift
 extension Reactive where Base: NSManagedObjectContext {
     
     func fetch<T>(_ request: NSFetchRequest<T>) -> Observable<[T]> {
-        guard self.base.concurrencyType == .privateQueueConcurrencyType else {
-            fatalError("The function is only available for private queue!")
-        }
-        return Observable.create { observer -> Disposable in
+        Observable.create { observer -> Disposable in
             self.base.performAndWait {
                 do {
                     let nsObjects = try self.base.fetch(request) 
@@ -23,9 +20,6 @@ extension Reactive where Base: NSManagedObjectContext {
     }
     
     func save() -> Observable<Void> {
-        guard self.base.concurrencyType == .privateQueueConcurrencyType else {
-            fatalError("The function is only available for private queue!")
-        }
         guard base.hasChanges else { return Observable.just(()) }
         return Observable.create { observer -> Disposable in
             self.base.performAndWait {
@@ -42,10 +36,7 @@ extension Reactive where Base: NSManagedObjectContext {
     }
     
     func insert<T: NSManagedObject>(_ object: T) -> Observable<Void> {
-        guard self.base.concurrencyType == .privateQueueConcurrencyType else {
-            fatalError("The function is only available for private queue!")
-        }
-        return Observable.create { observer -> Disposable in
+        Observable.create { observer -> Disposable in
             self.base.performAndWait {
                 self.base.insert(object)
                 observer.onNext(())
@@ -56,10 +47,7 @@ extension Reactive where Base: NSManagedObjectContext {
     }
     
     func delete<T: NSManagedObject>(_ object: T) -> Observable<Void> {
-        guard self.base.concurrencyType == .privateQueueConcurrencyType else {
-            fatalError("The function is only available for private queue!")
-        }
-        return Observable.create { observer -> Disposable in
+        Observable.create { observer -> Disposable in
             self.base.performAndWait {
                 self.base.delete(object)
                 observer.onNext(())

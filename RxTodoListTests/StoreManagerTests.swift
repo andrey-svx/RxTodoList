@@ -10,7 +10,7 @@ import RxTodoList
 
 class StoreManagerTests: XCTestCase {
     
-    let manager = StoreManager()
+    let manager = PersistenceManager()
     
     lazy var context: NSManagedObjectContext = {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -18,7 +18,15 @@ class StoreManagerTests: XCTestCase {
     }()
 
     override func setUpWithError() throws {
-
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "CDTodo")
+        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: request)
+        context.performAndWait {
+            do {
+                try self.context.execute(batchDeleteRequest)
+            } catch {
+                print(error)
+            }
+        }
     }
     
     override func tearDownWithError() throws {
@@ -27,7 +35,6 @@ class StoreManagerTests: XCTestCase {
     
     func test_fetchTodos() throws {
         
-        // Set up
         let testTodos: [Todo] = ["Clean the apt",
                                  "Learn to code",
                                  "Call mom",
@@ -61,15 +68,6 @@ class StoreManagerTests: XCTestCase {
             .first()!
         
         XCTAssertEqual(fetchedTodos, testTodos)
-        
-        context.performAndWait {
-            do {
-                self.context.registeredObjects.forEach(self.context.delete)
-                try self.context.save()
-            } catch {
-                print(error)
-            }
-        }
 
     }
     
@@ -77,10 +75,10 @@ class StoreManagerTests: XCTestCase {
         
         // Set up
         let testTodos: [Todo] = ["Clean the apt",
-                                     "Learn to code",
-                                     "Call mom",
-                                     "Do the workout",
-                                     "Call customers"]
+                                 "Learn to code",
+                                 "Call mom",
+                                 "Do the workout",
+                                 "Call customers"]
             .map { name -> Todo in
                 sleep(1)
                 return Todo(name)
@@ -119,15 +117,6 @@ class StoreManagerTests: XCTestCase {
             .first()!
         
         XCTAssertEqual(fetchedTodos, testTodos + [appendedTodo])
-        
-        context.performAndWait {
-            do {
-                self.context.registeredObjects.forEach(self.context.delete)
-                try self.context.save()
-            } catch {
-                print(error)
-            }
-        }
         
     }
 
