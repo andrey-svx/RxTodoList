@@ -1,6 +1,7 @@
 import Foundation
 import CoreData
 
+
 struct Todo {
     
     var name: String

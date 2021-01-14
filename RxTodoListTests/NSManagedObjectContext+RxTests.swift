@@ -19,11 +19,7 @@ class NSManagedObjectContext_RxTests: XCTestCase {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "CDTodo")
         let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: request)
         context.performAndWait {
-            do {
-                try self.context.execute(batchDeleteRequest)
-            } catch {
-                print(error)
-            }
+            try! self.context.execute(batchDeleteRequest)
         }
     }
 
@@ -31,7 +27,7 @@ class NSManagedObjectContext_RxTests: XCTestCase {
         
     }
     
-    func test_NSManagedObjectContext_fetch() throws {
+    func test_fetch() throws {
         
         let testCDTodos: [CDTodo] = ["Clean the apt",
                                      "Learn to code",
@@ -71,7 +67,7 @@ class NSManagedObjectContext_RxTests: XCTestCase {
         
     }
     
-    func test_NSManagedObjectContext_save() throws {
+    func test_save() throws {
         
         let testCDTodos = ["Test todo",
                            "Another test todo"]
@@ -108,7 +104,7 @@ class NSManagedObjectContext_RxTests: XCTestCase {
         
     }
     
-    func test_NSManagedObjectContext_insert() throws {
+    func test_insert() throws {
         
         let bag = DisposeBag()
         
@@ -170,7 +166,7 @@ class NSManagedObjectContext_RxTests: XCTestCase {
         
     }
     
-    func test_NSManagedObjectContext_delete() throws {
+    func test_delete() throws {
         
         let testCDTodos = ["Test todo",
                            "Deleted todo"]

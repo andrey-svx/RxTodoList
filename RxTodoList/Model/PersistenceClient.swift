@@ -2,7 +2,7 @@ import Foundation
 import RxSwift
 import CoreData
 
-class PersistenceManager {
+class PersistenceClient {
     
     private lazy var context: NSManagedObjectContext = {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
