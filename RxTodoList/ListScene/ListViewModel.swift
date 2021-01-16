@@ -21,16 +21,14 @@ final class ListViewModel: ViewModel {
         
         let addTapObservable = addTap.asObservable()
             .do(onNext: { [unowned user] _ in
-                user.appendOrEdit = user.appendTodo
-                user.setEdited(LocalTodo())
+                user.setForAppending()
             })
             .map { _ in Destination.route }
             .share()
         
         let selectTapObservable = selectTap.asObservable()
             .do(onNext: { [unowned user] todo in
-                user.appendOrEdit = user.editTodo
-                user.setEdited(todo)
+                user.setForEdititng(todo)
             })
             .map { _ in Destination.route }
             .share()

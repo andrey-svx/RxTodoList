@@ -10,7 +10,7 @@ import RxTodoList
 
 class StoreManagerTests: XCTestCase {
     
-    let client = PersistenceClient()
+    var client = PersistenceClient()
     
     lazy var context: NSManagedObjectContext = {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate

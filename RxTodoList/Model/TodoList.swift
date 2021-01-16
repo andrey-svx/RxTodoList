@@ -15,9 +15,8 @@ class TodoList {
     }
     
     var appendOrEdit: (() -> Void)?
-    var logOrSign: ((String, String) -> Observable<LoginDetails?>)?
     
-    private let persistenceClt = PersistenceClient()
+    private var persistenceClt = PersistenceClient()
     
     init() {
         
@@ -30,7 +29,7 @@ class TodoList {
         persistenceClt
             .fetchTodos()
             .bind { [weak self] todos in
-                guard !todos.isEmpty else { self?._todos = todos; return }
+                guard todos.isEmpty else { self?._todos = todos; return }
                 self?._todos =
                     ["Clean the apt",
                      "Learn to code",
@@ -51,21 +50,13 @@ class TodoList {
 }
 
 extension TodoList {
-    
-    func getEdited() -> LocalTodo? {
-        self._editedTodo
-    }
-    
+        
     func setEdited(_ todo: LocalTodo?) {
         self._editedTodo = todo
     }
     
     func updateEdited(_ name: String) {
         self._editedTodo?.update(name)
-    }
-    
-    func getTodos() -> [LocalTodo] {
-        _todos
     }
     
     func editTodo() {

@@ -17,25 +17,26 @@ final class ItemViewModel: ViewModel {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let user = appDelegate.user
         
-        let initialText = user.getEdited()?.name ?? ""
+        let initialText = user.initialEditedTodo?.name ?? ""
   
         self.text = textInput.asObservable()
             .skip(2)
             .startWith(initialText)
-            .do(onNext: { [weak user] text in user?.updateEdited(text) })
+            .do(onNext: { [weak user] text in
+                user?.updateEdited(text)
+            })
             .asDriver(onErrorJustReturn: "")
         
         let saveTapObservable = saveTap.asObservable()
             .do(onNext: { [weak user] _ in
-                user?.appendOrEdit?()
+                user?.updateTodoList()
             })
             .map { Destination.back }
             .share()
         
         let cancelTapObservable = cancelTap.asObservable()
             .do(onNext: { [weak user] _ in
-                user?.updateEdited(initialText)
-                user?.appendOrEdit?()
+                user?.cancelAppendinOrEdinitg()
             })
             .map { Destination.back }
             .share()
