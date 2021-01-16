@@ -49,6 +49,7 @@ class User: TodoListDelegate {
     func cancelAppendinOrEdinitg() {
         todoList.updateEdited(initialEditedTodo?.name ?? "")
         todoList.appendOrEdit?()
+        initialEditedTodo = nil
     }
     
     func updateTodoList() {
