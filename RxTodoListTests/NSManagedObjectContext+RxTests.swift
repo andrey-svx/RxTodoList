@@ -34,9 +34,9 @@ class NSManagedObjectContext_RxTests: XCTestCase {
                                      "Call mom",
                                      "Do the workout",
                                      "Call customers"]
-            .map { name -> Todo in
+            .map { name -> LocalTodo in
                 sleep(1)
-                return Todo(name)
+                return LocalTodo(name)
             }
             .map {
                 let cdTodo = CDTodo(context: context)
@@ -71,7 +71,7 @@ class NSManagedObjectContext_RxTests: XCTestCase {
         
         let testCDTodos = ["Test todo",
                            "Another test todo"]
-            .map { Todo($0) }
+            .map { LocalTodo($0) }
             .map { todo -> CDTodo in
                 let cdTodo = CDTodo(context: context)
                 cdTodo.name = todo.name
@@ -109,7 +109,7 @@ class NSManagedObjectContext_RxTests: XCTestCase {
         let bag = DisposeBag()
         
         let testCDTodo = ["Test todo"]
-            .map { Todo($0) }
+            .map { LocalTodo($0) }
             .map { todo -> CDTodo in
                 let cdTodo = CDTodo(context: context)
                 cdTodo.name = todo.name
@@ -128,7 +128,7 @@ class NSManagedObjectContext_RxTests: XCTestCase {
         }
         
         let insertedCDTodo = ["Inserted todo"]
-            .map { Todo($0) }
+            .map { LocalTodo($0) }
             .map { todo -> CDTodo in
                 let cdTodo = CDTodo(context: context)
                 cdTodo.name = todo.name
@@ -170,7 +170,7 @@ class NSManagedObjectContext_RxTests: XCTestCase {
         
         let testCDTodos = ["Test todo",
                            "Deleted todo"]
-            .map { Todo($0) }
+            .map { LocalTodo($0) }
             .map { todo -> CDTodo in
                 let cdTodo = CDTodo(context: context)
                 cdTodo.name = todo.name

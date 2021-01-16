@@ -5,13 +5,13 @@ import RxCocoa
 
 final class ListViewModel: ViewModel {
     
-    let todos: Driver<[Todo]>
+    let todos: Driver<[LocalTodo]>
     
     let destination: Observable<Destination>
     
     init(
         addTap: Signal<()>,
-        selectTap: Signal<Todo>
+        selectTap: Signal<LocalTodo>
     ) {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let user = appDelegate.user
@@ -22,7 +22,7 @@ final class ListViewModel: ViewModel {
         let addTapObservable = addTap.asObservable()
             .do(onNext: { [unowned user] _ in
                 user.appendOrEdit = user.appendTodo
-                user.setEdited(Todo())
+                user.setEdited(LocalTodo())
             })
             .map { _ in Destination.route }
             .share()

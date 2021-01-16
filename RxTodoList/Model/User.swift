@@ -6,17 +6,17 @@ class User {
     
     let loginDetails = BehaviorSubject<LoginDetails?>(value: nil)
     
-    let todos = BehaviorSubject<[Todo]>(value: [])
+    let todos = BehaviorSubject<[LocalTodo]>(value: [])
     
     private var _loginDetails: LoginDetails? {
         didSet { loginDetails.onNext(_loginDetails) }
     }
     
-    private var _todos: [Todo] {
+    private var _todos: [LocalTodo] {
         didSet { todos.onNext(_todos) }
     }
     
-    private var _editedTodo: Todo?
+    private var _editedTodo: LocalTodo?
     
     private let persistenceClt = PersistenceClient()
     
@@ -38,7 +38,7 @@ class User {
                          "Call mom",
                          "Do the workout",
                          "Call customers"]
-                        .map { Todo($0) }
+                        .map { LocalTodo($0) }
                 } else {
                     self?._todos = todos
                 }
@@ -59,11 +59,11 @@ class User {
 
 extension User {
     
-    func getEdited() -> Todo? {
+    func getEdited() -> LocalTodo? {
         self._editedTodo
     }
     
-    func setEdited(_ todo: Todo?) {
+    func setEdited(_ todo: LocalTodo?) {
         self._editedTodo = todo
     }
     
@@ -71,7 +71,7 @@ extension User {
         self._editedTodo?.update(name)
     }
     
-    func getTodos() -> [Todo] {
+    func getTodos() -> [LocalTodo] {
         _todos
     }
     

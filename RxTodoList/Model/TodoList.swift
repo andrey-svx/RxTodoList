@@ -10,23 +10,23 @@ class TodoList {
 
 protocol TodoListDelegate: AnyObject {
     
-    var todos: BehaviorSubject<[Todo]> { get }
-    var editedItem: Todo? { get set }
+    var todos: BehaviorSubject<[LocalTodo]> { get }
+    var editedItem: LocalTodo? { get set }
     
     var todoList: TodoList { get }
     
-    func update(todos: [Todo])
-    func update(editedItem: Todo?)
+    func update(todos: [LocalTodo])
+    func update(editedItem: LocalTodo?)
     
 }
 
 extension TodoListDelegate {
     
-    func update(todos: [Todo]) {
+    func update(todos: [LocalTodo]) {
         self.todos.onNext(todos)
     }
     
-    func update(editedItem: Todo?) {
+    func update(editedItem: LocalTodo?) {
         self.editedItem = editedItem
     }
     

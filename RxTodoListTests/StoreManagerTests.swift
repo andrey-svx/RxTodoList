@@ -10,7 +10,7 @@ import RxTodoList
 
 class StoreManagerTests: XCTestCase {
     
-    let manager = PersistenceClient()
+    let client = PersistenceClient()
     
     lazy var context: NSManagedObjectContext = {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -35,14 +35,10 @@ class StoreManagerTests: XCTestCase {
     
     func test_fetchTodos() throws {
         
-        let testTodos: [Todo] = ["Clean the apt",
-                                 "Learn to code",
-                                 "Call mom",
-                                 "Do the workout",
-                                 "Call customers"]
-            .map { name -> Todo in
+        let testTodos: [LocalTodo] = ["1st Todo", "2nd Todo", "3rd Todo"]
+            .map { name -> LocalTodo in
                 sleep(1)
-                return Todo(name)
+                return LocalTodo(name)
             }
             
         let testCDTodos: [CDTodo] = testTodos
@@ -56,13 +52,14 @@ class StoreManagerTests: XCTestCase {
 
         context.performAndWait {
             do {
+                testCDTodos.forEach(context.insert(_:))
                 try context.save()
             } catch {
                 print(error)
             }
         }
         
-        let fetchedTodos = try! manager
+        let fetchedTodos = try! client
             .fetchTodos()
             .toBlocking()
             .first()!
@@ -73,15 +70,10 @@ class StoreManagerTests: XCTestCase {
     
     func test_appendTodo() throws {
         
-        // Set up
-        let testTodos: [Todo] = ["Clean the apt",
-                                 "Learn to code",
-                                 "Call mom",
-                                 "Do the workout",
-                                 "Call customers"]
-            .map { name -> Todo in
+        let testTodos: [LocalTodo] = ["1st Todo", "2nd Todo", "3rd Todo"]
+            .map { name -> LocalTodo in
                 sleep(1)
-                return Todo(name)
+                return LocalTodo(name)
             }
             
         let testCDTodos: [CDTodo] = testTodos
@@ -95,23 +87,25 @@ class StoreManagerTests: XCTestCase {
 
         context.performAndWait {
             do {
+                testCDTodos.forEach(context.insert(_:))
                 try context.save()
             } catch {
                 print(error)
             }
         }
         
-        let appendedTodo: Todo = ["AppendedTodo"]
-            .map { name -> Todo in
+        let appendedTodo: LocalTodo = ["Appended Todo"]
+            .map { name -> LocalTodo in
                 sleep(1)
-                return Todo(name)
+                return LocalTodo(name)
             }
             .first!
         
-        let fetchedTodos = try! manager
+        let fetchedTodos = try! client
             .appendTodo(appendedTodo)
-            .flatMap { _ -> Observable<[Todo]> in
-                self.manager.fetchTodos()
+            .flatMap { _ -> Observable<[LocalTodo]> in
+                self.client
+                    .fetchTodos()
             }
             .toBlocking()
             .first()!

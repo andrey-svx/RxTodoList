@@ -27,7 +27,7 @@ class RxTodoListTests: XCTestCase {
     }
 
     func test_User_appendTodo_testTodo() throws {
-        user.setEdited(Todo("Test todo"))
+        user.setEdited(LocalTodo("Test todo"))
         user.appendTodo()
         
         XCTAssertEqual(
@@ -42,7 +42,7 @@ class RxTodoListTests: XCTestCase {
     }
      
     func test_User_appendTodo_emptyTodo() throws {
-        user.setEdited(Todo())
+        user.setEdited(LocalTodo())
         user.appendTodo()
         
         XCTAssertEqual(

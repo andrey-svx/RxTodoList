@@ -52,7 +52,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="tE7-TS-S82">
-                                <rect key="frame" x="25" y="94" width="364" height="75"/>
+                                <rect key="frame" x="25" y="144" width="364" height="75"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Input new to do" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="9ay-dj-9Xd">
                                         <rect key="frame" x="0.0" y="0.0" width="364" height="34"/>
@@ -72,7 +72,7 @@
                         <constraints>
                             <constraint firstItem="zfA-jT-aVq" firstAttribute="trailing" secondItem="tE7-TS-S82" secondAttribute="trailing" constant="25" id="5n2-pi-dNx"/>
                             <constraint firstItem="tE7-TS-S82" firstAttribute="leading" secondItem="zfA-jT-aVq" secondAttribute="leading" constant="25" id="UZs-Zn-FhC"/>
-                            <constraint firstItem="tE7-TS-S82" firstAttribute="top" secondItem="zfA-jT-aVq" secondAttribute="top" constant="50" id="WHT-MA-Ime"/>
+                            <constraint firstItem="tE7-TS-S82" firstAttribute="top" secondItem="zfA-jT-aVq" secondAttribute="top" constant="100" id="WHT-MA-Ime"/>
                             <constraint firstItem="tE7-TS-S82" firstAttribute="centerX" secondItem="rgU-XZ-6G9" secondAttribute="centerX" id="xOw-PO-KbF"/>
                         </constraints>
                     </view>

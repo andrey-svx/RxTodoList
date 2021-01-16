@@ -9,32 +9,32 @@ class PersistenceClient {
         return appDelegate.context
     }()
     
-    func fetchTodos() -> Observable<[Todo]> {
+    func fetchTodos() -> Observable<[LocalTodo]> {
         let request = CDTodo.fetchRequest() as NSFetchRequest<CDTodo>
         let sorter = NSSortDescriptor(key: "date", ascending: true)
         request.sortDescriptors = [sorter]
         request.returnsObjectsAsFaults = false
         return context.rx
             .fetch(request)
-            .map { $0.map { Todo($0.name, id: $0.id, date: $0.date, objectID: $0.objectID) } }
+            .map { $0.map { LocalTodo($0.name, id: $0.id, date: $0.date, objectID: $0.objectID) } }
     }
     
-    func fetchTodo(_ todo: Todo) -> Observable<Todo?> {
+    func fetchTodo(_ todo: LocalTodo) -> Observable<LocalTodo?> {
         let request = CDTodo.fetchRequest() as NSFetchRequest<CDTodo>
         let predicate = NSPredicate(format: "id CONTAINS %@", "\(todo.id)")
         request.predicate = predicate
         return context.rx
             .fetch(request)
-            .map { cdTodos -> Todo? in
+            .map { cdTodos -> LocalTodo? in
                 if let cdTodo = cdTodos.first {
-                    return Todo(cdTodo.name, id: cdTodo.id, date: cdTodo.date, objectID: cdTodo.objectID)
+                    return LocalTodo(cdTodo.name, id: cdTodo.id, date: cdTodo.date, objectID: cdTodo.objectID)
                 } else {
                     return nil
                 }
             }
     }
     
-    func removeTodo(_ todo: Todo) -> Observable<Void> {
+    func removeTodo(_ todo: LocalTodo) -> Observable<Void> {
         guard let objectID = todo.objectID else { return Observable<Void>.error(Error.some) }
         let cdTodo = context.object(with: objectID)
         return context.rx
@@ -42,7 +42,7 @@ class PersistenceClient {
             .flatMap(context.rx.save)
     }
     
-    func appendTodo(_ todo: Todo) -> Observable<Void> {
+    func appendTodo(_ todo: LocalTodo) -> Observable<Void> {
         let cdTodo = CDTodo(context: context)
         cdTodo.name = todo.name
         cdTodo.id = todo.id
@@ -53,7 +53,7 @@ class PersistenceClient {
             .flatMap(context.rx.save)
     }
     
-    func editTodo(_ todo: Todo, with editedTodo: Todo) -> Observable<Void> {
+    func editTodo(_ todo: LocalTodo, with editedTodo: LocalTodo) -> Observable<Void> {
         Observable.just(())
     }
     

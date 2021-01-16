@@ -1,12 +1,20 @@
 import Foundation
 import CoreData
 
-
-struct Todo {
+protocol Todo {
     
-    var name: String
+    var id: UUID { get }
+    var date: Date { get }
+    
+}
+
+struct LocalTodo: Todo {
+    
+    private(set) var name: String
+    
     let id: UUID
     let date: Date
+    
     var objectID: NSManagedObjectID?
     
     init(
@@ -28,9 +36,9 @@ struct Todo {
     }
 }
 
-extension Todo: Equatable {
+extension LocalTodo: Equatable {
     
-    static func == (lhs: Todo, rhs: Todo) -> Bool {
+    static func == (lhs: LocalTodo, rhs: LocalTodo) -> Bool {
             lhs.id == rhs.id
         }
 

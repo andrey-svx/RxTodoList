@@ -19,7 +19,7 @@ final class ListViewController: UITableViewController, Routable {
                 .tap
                 .asSignal(),
             selectTap: tableView.rx
-                .modelSelected(Todo.self)
+                .modelSelected(LocalTodo.self)
                 .asSignal()
         )
         
