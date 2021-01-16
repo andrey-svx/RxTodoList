@@ -48,6 +48,7 @@ class NSManagedObjectContext_RxTests: XCTestCase {
 
         context.performAndWait {
             do {
+                testCDTodos.forEach(context.insert(_:))
                 try context.save()
             } catch {
                 print(error)
@@ -121,6 +122,7 @@ class NSManagedObjectContext_RxTests: XCTestCase {
         
         context.performAndWait {
             do {
+                context.insert(testCDTodo)
                 try self.context.save()
             } catch {
                 print(error)

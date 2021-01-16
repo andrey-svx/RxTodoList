@@ -53,11 +53,12 @@ class User: TodoListDelegate {
     
     func updateTodoList() {
         todoList.appendOrEdit?()
+        initialEditedTodo = nil
     }
     
     #if DEBUG
     deinit {
-        print("Deinit: " + String(describing: Self.self))
+        print("Deinit: " + String(describing: self))
     }
     #endif
     

@@ -10,7 +10,13 @@ import RxTodoList
 
 class TodoListTests: XCTestCase {
     
-    let list = TodoList()
+    let user = User()
+    
+    lazy var list: TodoList = {
+        let list = TodoList()
+        list.delegate = user
+        return list
+    }()
     
     lazy var context: NSManagedObjectContext = {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate

@@ -26,6 +26,10 @@ class TodoList {
     }
     
     func configure() {
+        guard delegate != nil else {
+            assertionFailure("Delegate for \(String(describing: self)) was not set")
+            return
+        }
         persistenceClt
             .fetchTodos()
             .bind { [weak self] todos in
@@ -60,7 +64,7 @@ extension TodoList {
     
     func editTodo() {
         guard let editedTodo = _editedTodo,
-              let index = _todos.firstIndex(where: { $0.id == editedTodo.id }) else { return }
+              let index = _todos.firstIndex(where: { $0 == editedTodo }) else { return }
         
         if !editedTodo.name.isEmpty {
             _todos[index] = editedTodo
