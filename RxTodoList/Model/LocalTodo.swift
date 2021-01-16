@@ -1,13 +1,6 @@
 import Foundation
 import CoreData
 
-protocol Todo {
-    
-    var id: UUID { get }
-    var date: Date { get }
-    
-}
-
 struct LocalTodo: Todo {
     
     private(set) var name: String

@@ -1,11 +1,3 @@
-//
-//  CDTodo+CoreDataProperties.swift
-//  RxTodoList
-//
-//  Created by Андрей Исаев on 12.01.2021.
-//
-//
-
 import Foundation
 import CoreData
 
