@@ -30,12 +30,11 @@ class TodoList {
             .fetchTodos()
             .bind { [weak self] todos in
                 guard todos.isEmpty else { self?._todos = todos; return }
-                self?._todos =
-                    ["Clean the apt",
-                     "Learn to code",
-                     "Call mom",
-                     "Do the workout",
-                     "Call customers"]
+                self?._todos = ["Clean the apt",
+                                "Learn to code",
+                                "Call mom",
+                                "Do the workout",
+                                "Call customers"]
                     .map { LocalTodo($0) }
             }
             .disposed(by: DisposeBag())
@@ -74,6 +73,14 @@ extension TodoList {
     func appendTodo() {
         guard let editedTodo = _editedTodo, !editedTodo.name.isEmpty else { return }
         _todos.append(editedTodo)
+    }
+    
+}
+
+extension TodoList {
+    
+    func getTodos() -> [LocalTodo] {
+        _todos
     }
     
 }
