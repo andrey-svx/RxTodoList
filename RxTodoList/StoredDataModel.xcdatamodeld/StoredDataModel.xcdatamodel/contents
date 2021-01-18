@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="19H114" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="CDTodo" representedClassName="CDTodo" syncable="YES">
+    <entity name="StoredTodo" representedClassName="StoredTodo" syncable="YES">
         <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" attributeType="String"/>
     </entity>
+    <entity name="TestStoredClass" representedClassName="TestStoredClass" syncable="YES">
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="name" attributeType="String"/>
+    </entity>
     <elements>
-        <element name="CDTodo" positionX="-63" positionY="-18" width="128" height="88"/>
+        <element name="StoredTodo" positionX="-54" positionY="-9" width="128" height="88"/>
+        <element name="TestStoredClass" positionX="-36" positionY="9" width="128" height="73"/>
     </elements>
 </model>

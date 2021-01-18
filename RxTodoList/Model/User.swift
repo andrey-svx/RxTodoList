@@ -26,7 +26,7 @@ class User: TodoListDelegate {
     
     func configure() {
         _loginDetails = LoginDetails(username: "current-user", password: "1234")
-        todoList.configure()
+        todoList.fetchAllStoredTodos()
     }
     
     var logOrSign: ((String, String) -> Observable<LoginDetails?>)?

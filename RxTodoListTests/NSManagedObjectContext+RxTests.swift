@@ -16,7 +16,7 @@ class NSManagedObjectContext_RxTests: XCTestCase {
     }()
 
     override func setUpWithError() throws {
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "CDTodo")
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "StoredTodo")
         let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: request)
         context.performAndWait {
             try! self.context.execute(batchDeleteRequest)
@@ -24,12 +24,16 @@ class NSManagedObjectContext_RxTests: XCTestCase {
     }
 
     override func tearDownWithError() throws {
-        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "StoredTodo")
+        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: request)
+        context.performAndWait {
+            try! self.context.execute(batchDeleteRequest)
+        }
     }
     
     func test_fetch() throws {
         
-        let testCDTodos: [CDTodo] = ["Clean the apt",
+        let testCDTodos: [StoredTodo] = ["Clean the apt",
                                      "Learn to code",
                                      "Call mom",
                                      "Do the workout",
@@ -39,7 +43,7 @@ class NSManagedObjectContext_RxTests: XCTestCase {
                 return LocalTodo(name)
             }
             .map {
-                let cdTodo = CDTodo(context: context)
+                let cdTodo = StoredTodo(context: context)
                 cdTodo.name = $0.name
                 cdTodo.id = $0.id
                 cdTodo.date = $0.date
@@ -55,7 +59,7 @@ class NSManagedObjectContext_RxTests: XCTestCase {
             }
         }
         
-        let request = CDTodo.fetchRequest() as NSFetchRequest<CDTodo>
+        let request = StoredTodo.fetchRequest() as NSFetchRequest<StoredTodo>
         let sort = NSSortDescriptor(key: "date", ascending: true)
         request.sortDescriptors = [sort]
         request.returnsObjectsAsFaults = false
@@ -73,8 +77,8 @@ class NSManagedObjectContext_RxTests: XCTestCase {
         let testCDTodos = ["Test todo",
                            "Another test todo"]
             .map { LocalTodo($0) }
-            .map { todo -> CDTodo in
-                let cdTodo = CDTodo(context: context)
+            .map { todo -> StoredTodo in
+                let cdTodo = StoredTodo(context: context)
                 cdTodo.name = todo.name
                 cdTodo.date = todo.date
                 cdTodo.id = todo.id
@@ -87,7 +91,7 @@ class NSManagedObjectContext_RxTests: XCTestCase {
                 
                 self.context.performAndWait {
                     do {
-                        let request = CDTodo.fetchRequest() as NSFetchRequest<CDTodo>
+                        let request = StoredTodo.fetchRequest() as NSFetchRequest<StoredTodo>
                         let sort = NSSortDescriptor(key: "date", ascending: true)
                         request.sortDescriptors = [sort]
                         request.returnsObjectsAsFaults = false
@@ -111,8 +115,8 @@ class NSManagedObjectContext_RxTests: XCTestCase {
         
         let testCDTodo = ["Test todo"]
             .map { LocalTodo($0) }
-            .map { todo -> CDTodo in
-                let cdTodo = CDTodo(context: context)
+            .map { todo -> StoredTodo in
+                let cdTodo = StoredTodo(context: context)
                 cdTodo.name = todo.name
                 cdTodo.date = todo.date
                 cdTodo.id = todo.id
@@ -131,8 +135,8 @@ class NSManagedObjectContext_RxTests: XCTestCase {
         
         let insertedCDTodo = ["Inserted todo"]
             .map { LocalTodo($0) }
-            .map { todo -> CDTodo in
-                let cdTodo = CDTodo(context: context)
+            .map { todo -> StoredTodo in
+                let cdTodo = StoredTodo(context: context)
                 cdTodo.name = todo.name
                 cdTodo.date = todo.date
                 cdTodo.id = todo.id
@@ -147,7 +151,7 @@ class NSManagedObjectContext_RxTests: XCTestCase {
                 .save()
             }
             .bind(onNext: { _ in
-                let request = CDTodo.fetchRequest() as NSFetchRequest<CDTodo>
+                let request = StoredTodo.fetchRequest() as NSFetchRequest<StoredTodo>
                 let sort = NSSortDescriptor(key: "date", ascending: true)
                 request.sortDescriptors = [sort]
                 request.returnsObjectsAsFaults = false
@@ -173,8 +177,8 @@ class NSManagedObjectContext_RxTests: XCTestCase {
         let testCDTodos = ["Test todo",
                            "Deleted todo"]
             .map { LocalTodo($0) }
-            .map { todo -> CDTodo in
-                let cdTodo = CDTodo(context: context)
+            .map { todo -> StoredTodo in
+                let cdTodo = StoredTodo(context: context)
                 cdTodo.name = todo.name
                 cdTodo.date = todo.date
                 cdTodo.id = todo.id
@@ -195,7 +199,7 @@ class NSManagedObjectContext_RxTests: XCTestCase {
                     .save()
                 }
                 .bind(onNext: { _ in
-                    let request = CDTodo.fetchRequest() as NSFetchRequest<CDTodo>
+                    let request = StoredTodo.fetchRequest() as NSFetchRequest<StoredTodo>
                     let sort = NSSortDescriptor(key: "date", ascending: true)
                     request.sortDescriptors = [sort]
                     request.returnsObjectsAsFaults = false
@@ -214,6 +218,37 @@ class NSManagedObjectContext_RxTests: XCTestCase {
                 .disposed(by: bag)
         
         
+    }
+    
+    func test_deleteAll() throws {
+        let testEntities = ["First entity",
+                            "Second entity",
+                            "Third entity"]
+            .map { name -> TestStoredClass in
+                sleep(1)
+                let entity = TestStoredClass(context: self.context)
+                entity.name = name
+                entity.date = Date()
+                return entity
+            }
+        context.performAndWait{ try! context.save() }
+        
+        context.rx
+            .deleteAll(TestStoredClass.self)
+            .bind(onNext: { _ in
+                let request = TestStoredClass.fetchRequest() as NSFetchRequest<TestStoredClass>
+                self.context.performAndWait {
+                    do {
+                        let fetchedEntities = try self.context.fetch(request)
+
+                        XCTAssertEqual(fetchedEntities, [])
+                        
+                    } catch {
+                        print(error)
+                    }
+                }
+            })
+            .disposed(by: DisposeBag())
     }
     
     func testPerformanceExample() throws {

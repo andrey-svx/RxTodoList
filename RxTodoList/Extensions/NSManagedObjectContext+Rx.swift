@@ -57,6 +57,24 @@ extension Reactive where Base: NSManagedObjectContext {
         }
     }
     
+    func deleteAll<T: NSManagedObject>(_ className: T.Type) -> Observable<Void> {
+        let entityName = String(describing: className.self)
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: request)
+        return Observable.create { observer -> Disposable in
+            self.base.performAndWait {
+                do {
+                    try self.base.execute(batchDeleteRequest)
+                    observer.onNext(())
+                    observer.onCompleted()
+                } catch {
+                    observer.onError(NSManagedObjectContext.ReactiveError.batchDelete)
+                }
+            }
+            return Disposables.create()
+        }
+    }
+    
 }
 
 extension NSManagedObjectContext {
@@ -65,6 +83,7 @@ extension NSManagedObjectContext {
         
         case fetch
         case save
+        case batchDelete
         case unknown
     
     }

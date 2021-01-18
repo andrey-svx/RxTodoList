@@ -25,23 +25,38 @@ class TodoList {
         
     }
     
-    func configure() {
+    func fetchAllStoredTodos() {
         guard delegate != nil else {
             assertionFailure("Delegate for \(String(describing: self)) was not set")
             return
         }
         persistenceClt
             .fetchTodos()
-            .bind { [weak self] todos in
-                guard todos.isEmpty else { self?._todos = todos; return }
-                self?._todos = ["Clean the apt",
-                                "Learn to code",
-                                "Call mom",
-                                "Do the workout",
-                                "Call customers"]
-                    .map { LocalTodo($0) }
+            .bind { [weak self] fetchResult in
+                if case .success(let todoIDs) = fetchResult, !todoIDs.isEmpty {
+                    todoIDs.forEach { [weak self] todoID in
+                        guard let index = self?._todos.firstIndex(where: { $0.id == todoID.0 })
+                        else { return }
+                        self?._todos[index].objectID = todoID.1
+                    }
+                } else {
+                    self?._todos = ["Clean the apt",
+                                    "Learn to code",
+                                    "Call mom",
+                                    "Do the workout",
+                                    "Call customers"]
+                        .map { LocalTodo($0) }
+                }
             }
             .disposed(by: DisposeBag())
+    }
+    
+    func deleteAllStoredTodos() {
+        guard delegate != nil else {
+            assertionFailure("Delegate for \(String(describing: self)) was not set")
+            return
+        }
+        
     }
     
     #if DEBUG
@@ -76,7 +91,7 @@ extension TodoList {
     
     func appendTodo() {
         guard let editedTodo = _editedTodo, !editedTodo.name.isEmpty else { return }
-        _todos.append(editedTodo)
+        _todos.insert(editedTodo, at: 0)
     }
     
 }

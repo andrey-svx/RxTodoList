@@ -7,7 +7,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let user = User()
     
     lazy var container: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "CDTodoList")
+        let container = NSPersistentContainer(name: "StoredDataModel")
         container.loadPersistentStores { _, error in
             if let error = error {
                 fatalError("Unresolved error!")
