@@ -58,7 +58,7 @@ extension Reactive where Base: NSManagedObjectContext {
     }
     
     func deleteAll<T: NSManagedObject>(_ className: T.Type) -> Observable<Void> {
-        let entityName = String(describing: className.self)
+        let entityName = String(describing: className)
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
         let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: request)
         return Observable.create { observer -> Disposable in

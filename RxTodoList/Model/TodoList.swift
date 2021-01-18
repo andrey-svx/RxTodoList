@@ -35,9 +35,9 @@ class TodoList {
             .bind { [weak self] fetchResult in
                 if case .success(let todoIDs) = fetchResult, !todoIDs.isEmpty {
                     todoIDs.forEach { [weak self] todoID in
-                        guard let index = self?._todos.firstIndex(where: { $0.id == todoID.0 })
+                        guard let index = self?._todos.firstIndex(where: { $0.id == todoID.id })
                         else { return }
-                        self?._todos[index].objectID = todoID.1
+                        self?._todos[index].objectID = todoID.objectID
                     }
                 } else {
                     self?._todos = ["Clean the apt",

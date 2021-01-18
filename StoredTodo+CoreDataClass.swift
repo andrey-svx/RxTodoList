@@ -2,6 +2,6 @@ import Foundation
 import CoreData
 
 @objc(StoredTodo)
-public class StoredTodo: NSManagedObject {
+public class StoredTodo: NSManagedObject, Todo {
 
 }

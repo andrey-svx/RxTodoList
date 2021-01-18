@@ -4,7 +4,7 @@ import CoreData
 
 struct PersistenceClient {
     
-    typealias PersistenceClientResult = Result<[(UUID, NSManagedObjectID)], Self.Error>
+    typealias PersistenceClientResult = Result<[(id: UUID, objectID: NSManagedObjectID)], Self.Error>
     
     private lazy var context: NSManagedObjectContext = {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate

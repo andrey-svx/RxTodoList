@@ -130,9 +130,9 @@
 		5A2622382576461A006C56FA /* RxTodoListTests */ = {
 			isa = PBXGroup;
 			children = (
+				5A04164025AEF1DF006134EB /* NSManagedObjectContext+RxTests.swift */,
 				5A2622392576461A006C56FA /* TodoListTests.swift */,
 				5A1074FD25B30DE30022FE64 /* UserTests.swift */,
-				5A04164025AEF1DF006134EB /* NSManagedObjectContext+RxTests.swift */,
 				5ABE990B25AF735D000A7B4D /* StoreManagerTests.swift */,
 				5A26223B2576461A006C56FA /* Info.plist */,
 			);
@@ -143,6 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				5A147D542585658900C93749 /* User.swift */,
+				5A147D502585619600C93749 /* LoginDetails.swift */,
 				5ABE990725AF72D1000A7B4D /* PersistenceClient.swift */,
 				5A1074F125B2FC830022FE64 /* Todo.swift */,
 				5A7D2A3525ADDD0500C09B9D /* LocalTodo.swift */,
@@ -150,7 +151,6 @@
 				5A1074F725B2FCB40022FE64 /* TodoListDelegate.swift */,
 				5A62380425B5DC560034BF0B /* StoredTodo+CoreDataClass.swift */,
 				5A62380525B5DC560034BF0B /* StoredTodo+CoreDataProperties.swift */,
-				5A147D502585619600C93749 /* LoginDetails.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
