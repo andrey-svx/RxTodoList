@@ -231,7 +231,10 @@ class NSManagedObjectContext_RxTests: XCTestCase {
                 entity.date = Date()
                 return entity
             }
-        context.performAndWait{ try! context.save() }
+        context.performAndWait{
+            testEntities.forEach(context.insert(_:))
+            try! context.save()
+        }
         
         context.rx
             .deleteAll(TestStoredClass.self)

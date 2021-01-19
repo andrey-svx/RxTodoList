@@ -2,7 +2,7 @@ import RxSwift
 import RxCocoa
 import Foundation
 
-final class LogSignViewModel: ViewModel {
+final class LogSignViewModel {
     
     enum Destination {
         case dummy

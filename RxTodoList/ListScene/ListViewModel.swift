@@ -3,7 +3,7 @@ import RxSwift
 import RxRelay
 import RxCocoa
 
-final class ListViewModel: ViewModel {
+final class ListViewModel {
     
     let todos: Driver<[LocalTodo]>
     

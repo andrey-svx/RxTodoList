@@ -2,7 +2,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class SettingsViewModel: ViewModel {
+class SettingsViewModel {
     
     let title: Driver<String>
     let logoutIsEnabled: Driver<Bool>

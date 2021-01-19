@@ -3,7 +3,7 @@ import RxRelay
 import RxCocoa
 import RxSwift
 
-final class ItemViewModel: ViewModel {
+final class ItemViewModel {
     
     let text: Driver<String>
     
