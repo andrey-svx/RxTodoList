@@ -8,30 +8,30 @@ import RxBlocking
 @testable
 import RxTodoList
 
-//class StoreManagerTests: XCTestCase {
-//    
-//    var client = PersistenceClient()
-//    
-//    lazy var context: NSManagedObjectContext = {
-//        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-//        return appDelegate.context
-//    }()
-//
-//    override func setUpWithError() throws {
-//        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "CDTodo")
-//        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: request)
-//        context.performAndWait {
-//            do {
-//                try self.context.execute(batchDeleteRequest)
-//            } catch {
-//                print(error)
-//            }
-//        }
-//    }
-//    
-//    override func tearDownWithError() throws {
-//        
-//    }
+class PersistenceClientTests: XCTestCase {
+    
+    var client = PersistenceClient()
+    
+    lazy var context: NSManagedObjectContext = {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        return appDelegate.context
+    }()
+
+    override func setUpWithError() throws {
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "CDTodo")
+        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: request)
+        context.performAndWait {
+            do {
+                try self.context.execute(batchDeleteRequest)
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
+    override func tearDownWithError() throws {
+        
+    }
 //    
 //    func test_fetchTodos() throws {
 //        
@@ -113,13 +113,29 @@ import RxTodoList
 //        XCTAssertEqual(fetchedTodos, testTodos + [appendedTodo])
 //        
 //    }
-//
-//    func testPerformanceExample() throws {
-//        // This is an example of a performance test case.
-//        measure {
-//            // Put the code you want to measure the time of here.
-//        }
-//    }
-//
-//}
-//
+    
+    func test_insertTodos() throws {
+        let testTodos: [LocalTodo] = ["1st Todo", "2nd Todo", "3rd Todo"]
+            .map { name -> LocalTodo in
+                sleep(1)
+                return LocalTodo(name)
+            }
+        
+        client
+            .insert(todos: testTodos)
+            .bind { _ in
+                
+            }
+            .disposed(by: DisposeBag())
+            
+    }
+
+    func testPerformanceExample() throws {
+        // This is an example of a performance test case.
+        measure {
+            // Put the code you want to measure the time of here.
+        }
+    }
+
+}
+

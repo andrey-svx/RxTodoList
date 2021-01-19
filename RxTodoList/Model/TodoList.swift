@@ -31,7 +31,7 @@ class TodoList {
             return
         }
         persistenceClt
-            .fetchTodos()
+            .fetchAllTodos()
             .bind { [weak self] fetchResult in
                 if case .success(let todoIDs) = fetchResult, !todoIDs.isEmpty {
                     todoIDs.forEach { [weak self] todoID in

@@ -46,6 +46,17 @@ extension Reactive where Base: NSManagedObjectContext {
         }
     }
     
+    func insert<T: NSManagedObject>(_ objects: [T]) -> Observable<Void> {
+        Observable.create { observer -> Disposable in
+            self.base.performAndWait {
+                objects.forEach(base.insert)
+                observer.onNext(())
+                observer.onCompleted()
+            }
+            return Disposables.create()
+        }
+    }
+    
     func delete<T: NSManagedObject>(_ object: T) -> Observable<Void> {
         Observable.create { observer -> Disposable in
             self.base.performAndWait {
