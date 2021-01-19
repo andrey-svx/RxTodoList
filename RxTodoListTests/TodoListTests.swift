@@ -34,13 +34,13 @@ class TodoListTests: XCTestCase {
 
     func test_insertTodo_testTodo() throws {
         list.setEdited(LocalTodo("Test todo"))
-        list.appendTodo()
+        list.insertTodo()
         
     }
      
     func test_insertTodo_emptyTodo() throws {
         list.setEdited(LocalTodo())
-        list.appendTodo()
+        list.insertTodo()
         
     }
     

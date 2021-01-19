@@ -26,23 +26,11 @@ class TodoList {
     }
     
     func fetchAllStoredTodos() {
-        guard delegate != nil else {
-            assertionFailure("Delegate for \(String(describing: self)) was not set")
-            return
-        }
         persistenceClt
             .fetchAllTodos()
             .bind { [weak self] fetchResult in
-                if case .success(let todos) = fetchResult, !todos.isEmpty {
-                    self?._todos = todos
-                } else {
-                    self?._todos = ["Clean the apt",
-                                    "Learn to code",
-                                    "Call mom",
-                                    "Do the workout",
-                                    "Call customers"]
-                        .map { LocalTodo($0) }
-                }
+                guard case .success(let todos) = fetchResult, !todos.isEmpty else { return }
+                self?._todos = todos
             }
             .disposed(by: DisposeBag())
     }
@@ -74,20 +62,41 @@ extension TodoList {
     }
     
     func editTodo() {
-        guard let editedTodo = _editedTodo,
+        guard var editedTodo = _editedTodo,
               let index = _todos.firstIndex(where: { $0 == editedTodo }) else { return }
         
         if !editedTodo.name.isEmpty {
-            _todos[index] = editedTodo
+            persistenceClt
+                .remove(todo: editedTodo)
+                .flatMap { [unowned self] _ in self.persistenceClt.insert(todo: editedTodo) }
+                .bind { [weak self] insertResult in
+                    guard case .success(let objectID) = insertResult else { return }
+                    editedTodo.objectID = objectID
+                    self?._todos[index] = editedTodo
+                }
+                .disposed(by: DisposeBag())
         } else {
             let removedTodo = _todos[index]
-            _todos.remove(at: index)
+            persistenceClt
+                .remove(todo: removedTodo)
+                .bind { [weak self] removeResult in
+                    guard case .success(_) = removeResult else { return }
+                    self?._todos.remove(at: index)
+                }
+                .disposed(by: DisposeBag())
         }
     }
     
-    func appendTodo() {
-        guard let editedTodo = _editedTodo, !editedTodo.name.isEmpty else { return }
-        _todos.insert(editedTodo, at: 0)
+    func insertTodo() {
+        guard var editedTodo = _editedTodo, !editedTodo.name.isEmpty else { return }
+        persistenceClt
+            .insert(todo: editedTodo)
+            .bind { [weak self] insertResult in
+                guard case .success(let objectID) = insertResult else { return }
+                editedTodo.objectID = objectID
+                self?._todos.insert(editedTodo, at: 0)
+            }
+            .disposed(by: DisposeBag())
     }
     
 }

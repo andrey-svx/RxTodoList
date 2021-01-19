@@ -32,7 +32,7 @@ class User: TodoListDelegate {
     var logOrSign: ((String, String) -> Observable<LoginDetails?>)?
     
     func setForAppending() {
-        todoList.appendOrEdit = todoList.appendTodo
+        todoList.appendOrEdit = todoList.insertTodo
         todoList.setEdited(LocalTodo())
     }
     
