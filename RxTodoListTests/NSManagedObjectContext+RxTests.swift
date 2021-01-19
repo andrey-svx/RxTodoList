@@ -109,7 +109,7 @@ class NSManagedObjectContext_RxTests: XCTestCase {
         
     }
     
-    func test_insert() throws {
+    func test_insertObject() throws {
         
         let bag = DisposeBag()
         
@@ -167,10 +167,46 @@ class NSManagedObjectContext_RxTests: XCTestCase {
                 }
             })
             .disposed(by: bag)
+
+    }
+    
+    func test_insertObjects() throws {
         
+        let testEntities = ["First entity",
+                            "Second entity",
+                            "Third entity"]
+            .map { name -> TestStoredClass in
+                sleep(1)
+                let entity = TestStoredClass(context: self.context)
+                entity.name = name
+                entity.date = Date()
+                return entity
+            }
         
+        context.rx
+            .insert(testEntities)
+            .flatMap(context.rx.save)
+            .bind(onNext: { _ in
+                let request = TestStoredClass.fetchRequest() as NSFetchRequest<TestStoredClass>
+                let sort = NSSortDescriptor(key: "date", ascending: true)
+                request.sortDescriptors = [sort]
+                request.returnsObjectsAsFaults = false
+                self.context.performAndWait {
+                    do {
+                        let fetchedEntitesNames = try self.context.fetch(request)
+                            .map { $0.name }
+                        
+                        XCTAssertEqual(fetchedEntitesNames, testEntities.map { $0.name })
+                        
+                    } catch {
+                        print(error)
+                    }
+                }
+            })
+            .disposed(by: DisposeBag())
         
     }
+    
     
     func test_delete() throws {
         

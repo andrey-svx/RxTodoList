@@ -33,12 +33,8 @@ class TodoList {
         persistenceClt
             .fetchAllTodos()
             .bind { [weak self] fetchResult in
-                if case .success(let todoIDs) = fetchResult, !todoIDs.isEmpty {
-                    todoIDs.forEach { [weak self] todoID in
-                        guard let index = self?._todos.firstIndex(where: { $0.id == todoID.id })
-                        else { return }
-                        self?._todos[index].objectID = todoID.objectID
-                    }
+                if case .success(let todos) = fetchResult, !todos.isEmpty {
+                    self?._todos = todos
                 } else {
                     self?._todos = ["Clean the apt",
                                     "Learn to code",

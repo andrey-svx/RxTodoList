@@ -5,7 +5,7 @@ import CoreData
 struct PersistenceClient {
     
     typealias PCResult = Result<Void, Self.Error>
-    typealias PCFetchResult = Result<[(id: UUID, objectID: NSManagedObjectID)], Self.Error>
+    typealias PCFetchResult = Result<[LocalTodo], Self.Error>
     
     private lazy var context: NSManagedObjectContext = {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -19,22 +19,12 @@ struct PersistenceClient {
         request.returnsObjectsAsFaults = false
         return context.rx
             .fetch(request)
-            .map {
-                let fetchedIDs = $0.map { storedTodo -> (UUID, NSManagedObjectID) in
-                        let localTodo = LocalTodo(
-                            storedTodo.name,
-                            id: storedTodo.id,
-                            date: storedTodo.date,
-                            objectID: storedTodo.objectID
-                        )
-                        guard let objectID = localTodo.objectID else {
-                            fatalError("Fetched Stired Todo does not have objectID")
-                        }
-                        return (localTodo.id, objectID)
-                    }
-                    return .success(fetchedIDs)
-                }
-                .catchErrorJustReturn(.failure(.unknown))
+            .map { storedTodos -> [LocalTodo] in
+                storedTodos
+                    .map { LocalTodo($0.name, id: $0.id, date: $0.date, objectID: $0.objectID) }
+            }
+            .map { .success($0) }
+            .catchErrorJustReturn(.failure(.unknown))
     }
     
     mutating func remove(todo: LocalTodo) -> Observable<PCResult> {
@@ -84,7 +74,9 @@ struct PersistenceClient {
     }
     
     enum Error: Swift.Error {
+        
         case unknown
+    
     }
     
 }
