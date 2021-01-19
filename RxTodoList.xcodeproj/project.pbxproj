@@ -32,6 +32,8 @@
 		5A7D2A3625ADDD0500C09B9D /* LocalTodo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7D2A3525ADDD0500C09B9D /* LocalTodo.swift */; };
 		5A815D1725758D78005934A1 /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A815D1625758D78005934A1 /* ListViewModel.swift */; };
 		5A815D1B25758F62005934A1 /* ItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A815D1A25758F62005934A1 /* ItemViewModel.swift */; };
+		5A96C2E325B74C750023FEC9 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A96C2E225B74C750023FEC9 /* Account.swift */; };
+		5A96C2E725B74D120023FEC9 /* AccountDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A96C2E625B74D120023FEC9 /* AccountDelegate.swift */; };
 		5ABE990825AF72D1000A7B4D /* PersistenceClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABE990725AF72D1000A7B4D /* PersistenceClient.swift */; };
 		5ABE990C25AF735D000A7B4D /* PersistenceClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABE990B25AF735D000A7B4D /* PersistenceClientTests.swift */; };
 		5ACD2493256C4FC50068AD1A /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACD2492256C4FC50068AD1A /* ListViewController.swift */; };
@@ -85,6 +87,8 @@
 		5A7D2A3525ADDD0500C09B9D /* LocalTodo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalTodo.swift; sourceTree = "<group>"; };
 		5A815D1625758D78005934A1 /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
 		5A815D1A25758F62005934A1 /* ItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemViewModel.swift; sourceTree = "<group>"; };
+		5A96C2E225B74C750023FEC9 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
+		5A96C2E625B74D120023FEC9 /* AccountDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDelegate.swift; sourceTree = "<group>"; };
 		5ABE990725AF72D1000A7B4D /* PersistenceClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceClient.swift; sourceTree = "<group>"; };
 		5ABE990B25AF735D000A7B4D /* PersistenceClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceClientTests.swift; sourceTree = "<group>"; };
 		5ACD2492256C4FC50068AD1A /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
@@ -143,13 +147,15 @@
 			isa = PBXGroup;
 			children = (
 				5A147D542585658900C93749 /* User.swift */,
-				5A62381625B70B800034BF0B /* State.swift */,
+				5A96C2E225B74C750023FEC9 /* Account.swift */,
 				5A147D502585619600C93749 /* LoginDetails.swift */,
-				5ABE990725AF72D1000A7B4D /* PersistenceClient.swift */,
+				5A96C2E625B74D120023FEC9 /* AccountDelegate.swift */,
+				5A62381625B70B800034BF0B /* State.swift */,
 				5A1074F125B2FC830022FE64 /* Todo.swift */,
 				5A7D2A3525ADDD0500C09B9D /* LocalTodo.swift */,
 				5A7D29FF25ACF19500C09B9D /* TodoList.swift */,
 				5A1074F725B2FCB40022FE64 /* TodoListDelegate.swift */,
+				5ABE990725AF72D1000A7B4D /* PersistenceClient.swift */,
 				5A62380425B5DC560034BF0B /* StoredTodo+CoreDataClass.swift */,
 				5A62380525B5DC560034BF0B /* StoredTodo+CoreDataProperties.swift */,
 			);
@@ -459,6 +465,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5A62381725B70B800034BF0B /* State.swift in Sources */,
+				5A96C2E325B74C750023FEC9 /* Account.swift in Sources */,
 				5A5141BB256C4B1C003B2D3A /* ItemViewController.swift in Sources */,
 				5A62380A25B5DC560034BF0B /* TestStoredClass+CoreDataClass.swift in Sources */,
 				5AF58A8C257E93BD00731532 /* SettingsViewController.swift in Sources */,
@@ -480,6 +487,7 @@
 				5A1074F825B2FCB40022FE64 /* TodoListDelegate.swift in Sources */,
 				5A5141B7256C4B1C003B2D3A /* AppDelegate.swift in Sources */,
 				5ACD2493256C4FC50068AD1A /* ListViewController.swift in Sources */,
+				5A96C2E725B74D120023FEC9 /* AccountDelegate.swift in Sources */,
 				5A62380925B5DC560034BF0B /* StoredTodo+CoreDataProperties.swift in Sources */,
 				5A5141B9256C4B1C003B2D3A /* SceneDelegate.swift in Sources */,
 				5A147D552585658900C93749 /* User.swift in Sources */,

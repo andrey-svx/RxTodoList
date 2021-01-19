@@ -52,11 +52,11 @@ class SettingsViewModel {
             .asDriver(onErrorJustReturn: true)
         
         let loginTapObservable = loginTap.asObservable()
-            .do(onNext: { [weak user] _ in user?.logOrSign = user?.loginAs(_:_:) })
+            .do(onNext: { [weak user] _ in user?.setForLogIn() })
             .map { Destination.route }
         
         let signupTapObservable = signupTap.asObservable()
-            .do(onNext: { [weak user] _ in user?.logOrSign = user?.signupAs(_:_:) })
+            .do(onNext: { [weak user] _ in user?.setForSignUp() })
             .map { Destination.route }
         
         self.destination = Observable.of(loginTapObservable, signupTapObservable)

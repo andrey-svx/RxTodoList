@@ -2,13 +2,7 @@ import Foundation
 import CoreData
 import RxSwift
 
-class User: TodoListDelegate {
-    
-    let loginDetails = BehaviorSubject<LoginDetails?>(value: nil)
-    
-    private var _loginDetails: LoginDetails? {
-        didSet { loginDetails.onNext(_loginDetails) }
-    }
+class User: TodoListDelegate, AccountDelegate {
     
     let todos = BehaviorSubject<[LocalTodo]>(value: [])
     internal var editedTodo: LocalTodo? = nil
@@ -19,17 +13,33 @@ class User: TodoListDelegate {
         list.delegate = self
         return list
     }()
+
+    let loginDetails = BehaviorSubject<LoginDetails?>(value: nil)
+    
+    lazy var account: Account = {
+        let account = Account()
+        account.delegate = self
+        return account
+    }()
     
     init() {
         
     }
     
     func configure() {
-        _loginDetails = LoginDetails(username: "current-user", password: "1234")
+        account.checkUpLogin()
         todoList.fetchAllStoredTodos()
     }
     
-    var logOrSign: ((String, String) -> Observable<LoginDetails?>)?
+    #if DEBUG
+    deinit {
+        print("Deinit: " + String(describing: self))
+    }
+    #endif
+    
+}
+
+extension User {
     
     func setForAppending() {
         todoList.appendOrEdit = todoList.insertTodo
@@ -57,44 +67,20 @@ class User: TodoListDelegate {
         initialEditedTodo = nil
     }
     
-    #if DEBUG
-    deinit {
-        print("Deinit: " + String(describing: self))
-    }
-    #endif
-    
 }
 
 extension User {
     
-    @discardableResult
     func logout() -> Observable<LoginDetails?> {
-        Observable<LoginDetails?>.just(nil)
-            .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .do(onNext: { [weak self] _ in sleep(1); self?._loginDetails = nil })
-            .map { [weak self] _ in self?._loginDetails }
+        account.logout()
     }
     
-    func loginAs(_ username: String, _ password: String) -> Observable<LoginDetails?> {
-        Observable<(String, String)>
-            .of((username, password))
-            .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .do(onNext: { [weak self] (username, password) in
-                    sleep(1)
-                    self?._loginDetails = LoginDetails(username: username, password: password)
-            })
-            .map { [weak self] _ in self?._loginDetails }
+    func setForLogIn() {
+        account.logOrSign = account.loginAs(_:_:)
     }
     
-    func signupAs(_ username: String, _ password: String) -> Observable<LoginDetails?> {
-        Observable<(String, String)>
-            .of((username, password))
-            .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .do(onNext: { [weak self] (username, password) in
-                    sleep(1)
-                    self?._loginDetails = LoginDetails(username: username, password: password)
-            })
-            .map { [weak self] _ in self?._loginDetails }
+    func setForSignUp() {
+        account.logOrSign = account.signupAs(_:_:)
     }
     
 }
