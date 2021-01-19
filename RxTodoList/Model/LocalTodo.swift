@@ -21,6 +21,7 @@ struct LocalTodo: Todo {
         self.id = id
         self.date = date
         self.objectID = objectID
+        
     }
     
     mutating func update(_ name: String) {
