@@ -34,21 +34,21 @@ class UserTests: XCTestCase {
         XCTAssertEqual(testLogout, nil)
     }
 
-    func test_User_loginAs() throws {
-        let testLogin = try! user.loginAs("test_username", "test_password")
-            .toBlocking()
-            .first()!
-        XCTAssertEqual(testLogin,
-                       LoginDetails(username: "test_username", password: "test_password"))
-    }
-
-    func test_User_signupAs() throws {
-        let testSignup = try! user.signupAs("test_username", "test_password")
-            .toBlocking()
-            .first()!
-        XCTAssertEqual(testSignup,
-                       LoginDetails(username: "test_username", password: "test_password"))
-    }
+//    func test_User_loginAs() throws {
+//        let testLogin = try! user.loginAs("test_username", "test_password")
+//            .toBlocking()
+//            .first()!
+//        XCTAssertEqual(testLogin,
+//                       LoginDetails(username: "test_username", password: "test_password"))
+//    }
+//
+//    func test_User_signupAs() throws {
+//        let testSignup = try! user.signupAs("test_username", "test_password")
+//            .toBlocking()
+//            .first()!
+//        XCTAssertEqual(testSignup,
+//                       LoginDetails(username: "test_username", password: "test_password"))
+//    }
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.

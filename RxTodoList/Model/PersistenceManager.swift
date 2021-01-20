@@ -2,19 +2,19 @@ import Foundation
 import RxSwift
 import CoreData
 
-struct PersistenceClient {
+struct PersistenceManager {
     
-    typealias PCFetchResult = Result<[LocalTodo], Self.Error>
-    typealias PCRemoveResult = Result<Void, Self.Error>
-    typealias PCInsertOneResult = Result<NSManagedObjectID, Self.Error>
-    typealias PCInsertManyResult = Result<[(UUID, NSManagedObjectID)], Self.Error>
+    typealias PMFetchResult = Result<[LocalTodo], Self.Error>
+    typealias PMRemoveResult = Result<Void, Self.Error>
+    typealias PMInsertOneResult = Result<NSManagedObjectID, Self.Error>
+    typealias PMInsertManyResult = Result<[(UUID, NSManagedObjectID)], Self.Error>
     
     private lazy var context: NSManagedObjectContext = {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         return appDelegate.context
     }()
     
-    mutating func fetchAllTodos() -> Observable<PCFetchResult> {
+    mutating func fetchAllTodos() -> Observable<PMFetchResult> {
         let request = StoredTodo.fetchRequest() as NSFetchRequest<StoredTodo>
         let sorter = NSSortDescriptor(key: "date", ascending: false)
         request.sortDescriptors = [sorter]
@@ -29,7 +29,7 @@ struct PersistenceClient {
             .catchErrorJustReturn(.failure(.unknown))
     }
     
-    mutating func remove(todo: LocalTodo) -> Observable<PCRemoveResult> {
+    mutating func remove(todo: LocalTodo) -> Observable<PMRemoveResult> {
         guard let objectID = todo.objectID else { return Observable.just(.failure(.unknown)) }
         let cdTodo = context.object(with: objectID)
         return context.rx
@@ -39,27 +39,26 @@ struct PersistenceClient {
             .catchErrorJustReturn(.failure(.unknown))
     }
     
-    mutating func removeAllTodos() -> Observable<PCRemoveResult> {
+    mutating func removeAllTodos() -> Observable<PMRemoveResult> {
         return context.rx
             .deleteAll(StoredTodo.self)
             .map { .success(()) }
             .catchErrorJustReturn(.failure(.unknown))
     }
     
-    mutating func insert(todo: LocalTodo) -> Observable<PCInsertOneResult> {
+    mutating func insert(todo: LocalTodo) -> Observable<PMInsertOneResult> {
         let storedTodo = StoredTodo(context: context)
         storedTodo.name = todo.name
         storedTodo.id = todo.id
         storedTodo.date = todo.date
     
         return context.rx
-            .insert(storedTodo)
-            .flatMap(context.rx.save)
+            .save()
             .map { .success(storedTodo.objectID) }
             .catchErrorJustReturn(.failure(.unknown))
     }
     
-    mutating func insert(todos: [LocalTodo]) -> Observable<PCInsertManyResult> {
+    mutating func insert(todos: [LocalTodo]) -> Observable<PMInsertManyResult> {
         let storedTodos = todos
             .map { todo -> StoredTodo in
                 let storedTodo = StoredTodo(context: context)
@@ -70,7 +69,7 @@ struct PersistenceClient {
             }
         
         return context.rx
-            .insert(storedTodos)
+            .save()
             .map { 
                 let ids = todos.map { $0.id }
                 let objectIDs = storedTodos.map { $0.objectID }

@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -33,7 +34,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="9NJ-EX-9kM">
-                        <barButtonItem key="rightBarButtonItem" title="Item" image="plus" catalog="system" id="4ZK-0r-CoV"/>
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="4ZK-0r-CoV">
+                            <imageReference key="image" image="plus" catalog="system" symbolScale="large"/>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="plusBarButtonItem" destination="4ZK-0r-CoV" id="CaU-VQ-Clg"/>
@@ -56,8 +59,8 @@
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Input new to do" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="9ay-dj-9Xd">
                                         <rect key="frame" x="0.0" y="0.0" width="364" height="34"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qq9-TM-t5x">
                                         <rect key="frame" x="0.0" y="39" width="364" height="36"/>
@@ -132,27 +135,30 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="qFW-we-nAM">
-                                <rect key="frame" x="52" y="94" width="310.5" height="108.5"/>
+                                <rect key="frame" x="52" y="94" width="310.5" height="130"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Logged in as %username" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2XA-nk-inX">
-                                        <rect key="frame" x="0.0" y="0.0" width="310.5" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="310.5" height="24"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bWt-EM-ICe">
-                                        <rect key="frame" x="0.0" y="34.5" width="310.5" height="30"/>
+                                        <rect key="frame" x="0.0" y="38" width="310.5" height="39"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                         <state key="normal" title="Log out"/>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="eAY-Sn-6MD">
-                                        <rect key="frame" x="0.0" y="78.5" width="310.5" height="30"/>
+                                        <rect key="frame" x="0.0" y="91" width="310.5" height="39"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TL5-LZ-0Vm">
-                                                <rect key="frame" x="0.0" y="0.0" width="155" height="30"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="155" height="39"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                                 <state key="normal" title="Log in"/>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X38-xF-74S">
-                                                <rect key="frame" x="155" y="0.0" width="155.5" height="30"/>
+                                                <rect key="frame" x="155" y="0.0" width="155.5" height="39"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                                 <state key="normal" title="Sign up"/>
                                             </button>
                                         </subviews>
@@ -189,38 +195,40 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="22" translatesAutoresizingMaskIntoConstraints="NO" id="Z10-6r-RLb">
-                                <rect key="frame" x="52" y="99" width="310.5" height="227"/>
+                                <rect key="frame" x="52" y="108" width="310.5" height="239.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your username and password" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tQk-WX-mPA">
-                                        <rect key="frame" x="0.0" y="0.0" width="310.5" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="310.5" height="24"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WOa-TP-sEF">
-                                        <rect key="frame" x="0.0" y="42.5" width="310.5" height="34"/>
+                                        <rect key="frame" x="0.0" y="46" width="310.5" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" textContentType="username"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eQO-UW-gY7">
-                                        <rect key="frame" x="0.0" y="98.5" width="310.5" height="34"/>
+                                        <rect key="frame" x="0.0" y="102" width="310.5" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Warning mesage" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vqu-Bh-CmQ">
-                                        <rect key="frame" x="0.0" y="154.5" width="310.5" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="158" width="310.5" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" systemColor="systemRedColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HFr-mf-yn9" userLabel="Logsign Button">
-                                        <rect key="frame" x="0.0" y="197" width="310.5" height="30"/>
+                                        <rect key="frame" x="0.0" y="200.5" width="310.5" height="39"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                         <state key="normal" title="LogOrSign"/>
                                     </button>
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rK3-hp-gQv">
-                                <rect key="frame" x="335" y="59" width="54" height="30"/>
+                                <rect key="frame" x="314" y="59" width="75" height="39"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                 <state key="normal" title="Dismiss"/>
                             </button>
                         </subviews>

@@ -34,7 +34,7 @@
 		5A815D1B25758F62005934A1 /* ItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A815D1A25758F62005934A1 /* ItemViewModel.swift */; };
 		5A96C2E325B74C750023FEC9 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A96C2E225B74C750023FEC9 /* Account.swift */; };
 		5A96C2E725B74D120023FEC9 /* AccountDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A96C2E625B74D120023FEC9 /* AccountDelegate.swift */; };
-		5ABE990825AF72D1000A7B4D /* PersistenceClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABE990725AF72D1000A7B4D /* PersistenceClient.swift */; };
+		5ABE990825AF72D1000A7B4D /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABE990725AF72D1000A7B4D /* PersistenceManager.swift */; };
 		5ABE990C25AF735D000A7B4D /* PersistenceClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABE990B25AF735D000A7B4D /* PersistenceClientTests.swift */; };
 		5ACD2493256C4FC50068AD1A /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACD2492256C4FC50068AD1A /* ListViewController.swift */; };
 		5AEB3DB3257F901900B34DC8 /* LogSignViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEB3DB2257F901900B34DC8 /* LogSignViewModel.swift */; };
@@ -89,7 +89,7 @@
 		5A815D1A25758F62005934A1 /* ItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemViewModel.swift; sourceTree = "<group>"; };
 		5A96C2E225B74C750023FEC9 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		5A96C2E625B74D120023FEC9 /* AccountDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDelegate.swift; sourceTree = "<group>"; };
-		5ABE990725AF72D1000A7B4D /* PersistenceClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceClient.swift; sourceTree = "<group>"; };
+		5ABE990725AF72D1000A7B4D /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 		5ABE990B25AF735D000A7B4D /* PersistenceClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceClientTests.swift; sourceTree = "<group>"; };
 		5ACD2492256C4FC50068AD1A /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		5AEB3DB2257F901900B34DC8 /* LogSignViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogSignViewModel.swift; sourceTree = "<group>"; };
@@ -155,7 +155,7 @@
 				5A7D2A3525ADDD0500C09B9D /* LocalTodo.swift */,
 				5A7D29FF25ACF19500C09B9D /* TodoList.swift */,
 				5A1074F725B2FCB40022FE64 /* TodoListDelegate.swift */,
-				5ABE990725AF72D1000A7B4D /* PersistenceClient.swift */,
+				5ABE990725AF72D1000A7B4D /* PersistenceManager.swift */,
 				5A62380425B5DC560034BF0B /* StoredTodo+CoreDataClass.swift */,
 				5A62380525B5DC560034BF0B /* StoredTodo+CoreDataProperties.swift */,
 			);
@@ -483,7 +483,7 @@
 				5A7D2A0025ACF19500C09B9D /* TodoList.swift in Sources */,
 				5AEB3DB3257F901900B34DC8 /* LogSignViewModel.swift in Sources */,
 				5A7D2A3625ADDD0500C09B9D /* LocalTodo.swift in Sources */,
-				5ABE990825AF72D1000A7B4D /* PersistenceClient.swift in Sources */,
+				5ABE990825AF72D1000A7B4D /* PersistenceManager.swift in Sources */,
 				5A1074F825B2FCB40022FE64 /* TodoListDelegate.swift in Sources */,
 				5A5141B7256C4B1C003B2D3A /* AppDelegate.swift in Sources */,
 				5ACD2493256C4FC50068AD1A /* ListViewController.swift in Sources */,

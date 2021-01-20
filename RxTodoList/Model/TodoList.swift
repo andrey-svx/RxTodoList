@@ -16,7 +16,7 @@ class TodoList {
     
     var appendOrEdit: (() -> Void)?
     
-    private var persistenceClt = PersistenceClient()
+    private var persistenceMgr = PersistenceManager()
     
     init() {
         
@@ -26,7 +26,7 @@ class TodoList {
     }
     
     func fetchAllStoredTodos() {
-        persistenceClt
+        persistenceMgr
             .fetchAllTodos()
             .bind { [weak self] fetchResult in
                 guard case .success(let todos) = fetchResult, !todos.isEmpty else { return }
@@ -66,9 +66,9 @@ extension TodoList {
               let index = _todos.firstIndex(where: { $0 == editedTodo }) else { return }
         
         if !editedTodo.name.isEmpty {
-            persistenceClt
+            persistenceMgr
                 .remove(todo: editedTodo)
-                .flatMap { [unowned self] _ in self.persistenceClt.insert(todo: editedTodo) }
+                .flatMap { [unowned self] _ in self.persistenceMgr.insert(todo: editedTodo) }
                 .bind { [weak self] insertResult in
                     guard case .success(let objectID) = insertResult else { return }
                     editedTodo.objectID = objectID
@@ -77,7 +77,7 @@ extension TodoList {
                 .disposed(by: DisposeBag())
         } else {
             let removedTodo = _todos[index]
-            persistenceClt
+            persistenceMgr
                 .remove(todo: removedTodo)
                 .bind { [weak self] removeResult in
                     guard case .success(_) = removeResult else { return }
@@ -89,7 +89,7 @@ extension TodoList {
     
     func insertTodo() {
         guard var editedTodo = _editedTodo, !editedTodo.name.isEmpty else { return }
-        persistenceClt
+        persistenceMgr
             .insert(todo: editedTodo)
             .bind { [weak self] insertResult in
                 guard case .success(let objectID) = insertResult else { return }
