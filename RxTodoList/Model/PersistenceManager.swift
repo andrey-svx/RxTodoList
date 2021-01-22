@@ -2,19 +2,42 @@ import Foundation
 import RxSwift
 import CoreData
 
-struct PersistenceManager {
+class PersistenceManager {
     
-    typealias PMFetchResult = Result<[LocalTodo], Self.Error>
-    typealias PMRemoveResult = Result<Void, Self.Error>
-    typealias PMInsertOneResult = Result<NSManagedObjectID, Self.Error>
-    typealias PMInsertManyResult = Result<[(UUID, NSManagedObjectID)], Self.Error>
+//    typealias PMFetchResult = Result<[LocalTodo], Self.Error>
+//    typealias PMRemoveResult = Result<Void, Self.Error>
+//    typealias PMInsertOneResult = Result<NSManagedObjectID, Self.Error>
+//    typealias PMInsertManyResult = Result<[(UUID, NSManagedObjectID)], Self.Error>
+    
+    typealias PMFetchResult = Result<[LocalTodo], Error>
+    typealias PMRemoveResult = Result<Void, Error>
+    typealias PMInsertOneResult = Result<NSManagedObjectID, Error>
+    typealias PMInsertManyResult = Result<[(UUID, NSManagedObjectID)], Error>
     
     private lazy var context: NSManagedObjectContext = {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         return appDelegate.context
     }()
     
-    mutating func fetchAllTodos() -> Observable<PMFetchResult> {
+    var imageData: Data?
+    
+    init() {
+        let group = DispatchGroup()
+        var data: Data?
+        group.enter()
+        DispatchQueue.global(qos: .userInitiated).async {
+            let urlString = "https://upload.wikimedia.org/wikipedia/commons/3/39/E-burg_asv2019-05_img46_view_from_VysotSky.jpg"
+            let imageURL = URL(string: urlString)!
+            data = try! Data(contentsOf: imageURL)
+            group.leave()
+        }
+        group.notify(queue: .main) { [weak self] in
+            self?.imageData = data
+            print("IMAGE DATA: \(self?.imageData)")
+        }
+    }
+    
+    func fetchAllTodos() -> Observable<PMFetchResult> {
         let request = StoredTodo.fetchRequest() as NSFetchRequest<StoredTodo>
         let sorter = NSSortDescriptor(key: "date", ascending: false)
         request.sortDescriptors = [sorter]
@@ -29,7 +52,7 @@ struct PersistenceManager {
             .catchErrorJustReturn(.failure(.unknown))
     }
     
-    mutating func remove(todo: LocalTodo) -> Observable<PMRemoveResult> {
+    func remove(todo: LocalTodo) -> Observable<PMRemoveResult> {
         guard let objectID = todo.objectID else { return Observable.just(.failure(.unknown)) }
         let cdTodo = context.object(with: objectID)
         return context.rx
@@ -39,26 +62,28 @@ struct PersistenceManager {
             .catchErrorJustReturn(.failure(.unknown))
     }
     
-    mutating func removeAllTodos() -> Observable<PMRemoveResult> {
+    func removeAllTodos() -> Observable<PMRemoveResult> {
         return context.rx
             .deleteAll(StoredTodo.self)
             .map { .success(()) }
             .catchErrorJustReturn(.failure(.unknown))
     }
     
-    mutating func insert(todo: LocalTodo) -> Observable<PMInsertOneResult> {
+    func insert(todo: LocalTodo) -> Observable<PMInsertOneResult> {
         let storedTodo = StoredTodo(context: context)
         storedTodo.name = todo.name
         storedTodo.id = todo.id
         storedTodo.date = todo.date
-    
+        storedTodo.imageData = self.imageData
+        print("OBJECT-ID: \(storedTodo.objectID)")
+        
         return context.rx
             .save()
-            .map { .success(storedTodo.objectID) }
+            .map { _ in .success(storedTodo.objectID) }
             .catchErrorJustReturn(.failure(.unknown))
     }
     
-    mutating func insert(todos: [LocalTodo]) -> Observable<PMInsertManyResult> {
+    func insert(todos: [LocalTodo]) -> Observable<PMInsertManyResult> {
         let storedTodos = todos
             .map { todo -> StoredTodo in
                 let storedTodo = StoredTodo(context: context)

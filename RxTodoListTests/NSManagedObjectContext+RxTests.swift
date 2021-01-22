@@ -68,19 +68,29 @@ class NSManagedObjectContext_RxTests: XCTestCase {
     }
     
     func test_save() throws {
-        context.performAndWait{
-            self.testEntities.forEach(context.insert(_:))
-        }
-        
         context.rx
             .save()
-            .bind(onNext: { _ in
+            .bind(onNext: {
                 self.context.performAndWait {
                     let fetchedEntities = try! self.context.fetch(self.request)
                     XCTAssertEqual(fetchedEntities, self.testEntities.reversed())
                 }
             })
             .disposed(by: bag)
+    }
+    
+    func test_completion() throws {
+        context.performAndWait {
+            try! self.context.save()
+        }
+        
+        context.rx
+            .save { (_, _) in
+                self.context.performAndWait {
+                    let fetchedEntities = try! self.context.fetch(self.request)
+                    XCTAssertEqual(fetchedEntities, self.testEntities.reversed())
+                }
+            }
     }
     
     func test_delete() throws {

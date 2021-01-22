@@ -28,10 +28,10 @@ class TodoList {
     func fetchAllStoredTodos() {
         persistenceMgr
             .fetchAllTodos()
-            .bind { [weak self] fetchResult in
+            .bind(onNext: { [weak self] fetchResult in
                 guard case .success(let todos) = fetchResult, !todos.isEmpty else { return }
                 self?._todos = todos
-            }
+            })
             .disposed(by: DisposeBag())
     }
     
@@ -69,20 +69,20 @@ extension TodoList {
             persistenceMgr
                 .remove(todo: editedTodo)
                 .flatMap { [unowned self] _ in self.persistenceMgr.insert(todo: editedTodo) }
-                .bind { [weak self] insertResult in
+                .bind(onNext: { [weak self] insertResult in
                     guard case .success(let objectID) = insertResult else { return }
                     editedTodo.objectID = objectID
                     self?._todos[index] = editedTodo
-                }
+                })
                 .disposed(by: DisposeBag())
         } else {
             let removedTodo = _todos[index]
             persistenceMgr
                 .remove(todo: removedTodo)
-                .bind { [weak self] removeResult in
+                .bind (onNext: { [weak self] removeResult in
                     guard case .success(_) = removeResult else { return }
                     self?._todos.remove(at: index)
-                }
+                })
                 .disposed(by: DisposeBag())
         }
     }
@@ -91,11 +91,12 @@ extension TodoList {
         guard var editedTodo = _editedTodo, !editedTodo.name.isEmpty else { return }
         persistenceMgr
             .insert(todo: editedTodo)
-            .bind { [weak self] insertResult in
+            .bind(onNext: { [weak self] insertResult in
+                print(insertResult)
                 guard case .success(let objectID) = insertResult else { return }
                 editedTodo.objectID = objectID
                 self?._todos.insert(editedTodo, at: 0)
-            }
+            })
             .disposed(by: DisposeBag())
     }
     
