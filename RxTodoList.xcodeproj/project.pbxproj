@@ -31,6 +31,7 @@
 		5A7D2A0025ACF19500C09B9D /* TodoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7D29FF25ACF19500C09B9D /* TodoList.swift */; };
 		5A7D2A3625ADDD0500C09B9D /* LocalTodo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7D2A3525ADDD0500C09B9D /* LocalTodo.swift */; };
 		5A80B71025BA2464000AAE4B /* NSManagedObjectContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A80B70F25BA2464000AAE4B /* NSManagedObjectContext.swift */; };
+		5A80B71625BB417A000AAE4B /* NSManagedObjectContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A80B71525BB417A000AAE4B /* NSManagedObjectContext.swift */; };
 		5A815D1725758D78005934A1 /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A815D1625758D78005934A1 /* ListViewModel.swift */; };
 		5A815D1B25758F62005934A1 /* ItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A815D1A25758F62005934A1 /* ItemViewModel.swift */; };
 		5A96C2E325B74C750023FEC9 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A96C2E225B74C750023FEC9 /* Account.swift */; };
@@ -87,6 +88,7 @@
 		5A7D29FF25ACF19500C09B9D /* TodoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoList.swift; sourceTree = "<group>"; };
 		5A7D2A3525ADDD0500C09B9D /* LocalTodo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalTodo.swift; sourceTree = "<group>"; };
 		5A80B70F25BA2464000AAE4B /* NSManagedObjectContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSManagedObjectContext.swift; sourceTree = "<group>"; };
+		5A80B71525BB417A000AAE4B /* NSManagedObjectContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSManagedObjectContext.swift; sourceTree = "<group>"; };
 		5A815D1625758D78005934A1 /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
 		5A815D1A25758F62005934A1 /* ItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemViewModel.swift; sourceTree = "<group>"; };
 		5A96C2E225B74C750023FEC9 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 		5A2622382576461A006C56FA /* RxTodoListTests */ = {
 			isa = PBXGroup;
 			children = (
+				5A80B71525BB417A000AAE4B /* NSManagedObjectContext.swift */,
 				5A04164025AEF1DF006134EB /* NSManagedObjectContext+RxTests.swift */,
 				5A2622392576461A006C56FA /* TodoListTests.swift */,
 				5A1074FD25B30DE30022FE64 /* UserTests.swift */,
@@ -460,6 +463,7 @@
 				5A26223A2576461A006C56FA /* TodoListTests.swift in Sources */,
 				5A04164125AEF1DF006134EB /* NSManagedObjectContext+RxTests.swift in Sources */,
 				5ABE990C25AF735D000A7B4D /* PersistenceClientTests.swift in Sources */,
+				5A80B71625BB417A000AAE4B /* NSManagedObjectContext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

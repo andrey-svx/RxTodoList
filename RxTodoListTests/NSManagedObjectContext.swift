@@ -1,14 +1,10 @@
 import XCTest
 import CoreData
-import RxSwift
-import RxCocoa
-import RxRelay
-import RxBlocking
 
 @testable
 import RxTodoList
 
-class NSManagedObjectContext_RxTests: XCTestCase {
+class NSManagedObjectContextTests: XCTestCase {
     
     lazy var context: NSManagedObjectContext = {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -23,9 +19,13 @@ class NSManagedObjectContext_RxTests: XCTestCase {
         return request
     }()
     
-    var testEntities: [TestStoredClass] = []
+    lazy var imageData: Data = {
+        let urlString = "https://upload.wikimedia.org/wikipedia/commons/3/39/E-burg_asv2019-05_img46_view_from_VysotSky.jpg"
+        let imageURL = URL(string: urlString)!
+        return try! Data(contentsOf: imageURL)
+    }()
     
-    let bag = DisposeBag()
+    var testEntities: [TestStoredClass] = []
 
     override func setUpWithError() throws {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "TestStoredClass")
@@ -42,6 +42,7 @@ class NSManagedObjectContext_RxTests: XCTestCase {
                 let entity = TestStoredClass(context: self.context)
                 entity.name = name
                 entity.date = Date()
+                entity.imageData = self.imageData
                 return entity
             }
     }
@@ -58,64 +59,36 @@ class NSManagedObjectContext_RxTests: XCTestCase {
         context.performAndWait{
             try! context.save()
         }
-        
-        let fetchedEntities = try! context.rx
-            .fetch(request)
-            .toBlocking()
-            .first()!
-        print("FETCHED ENTITIES: \(fetchedEntities)")
-        XCTAssertEqual(fetchedEntities, testEntities.reversed())
     }
     
     func test_save() throws {
-        context.rx
-            .save()
-            .bind(onNext: {
+        let expectation = self.expectation(description: "Save")
+        var fetchedEntities: [TestStoredClass] = []
+        context
+            .save { result, error in
                 self.context.performAndWait {
-                    let fetchedEntities = try! self.context.fetch(self.request)
-                    XCTAssertEqual(fetchedEntities, self.testEntities.reversed())
+                    fetchedEntities = try! self.context.fetch(self.request)
+                    expectation.fulfill()
                 }
-            })
-            .disposed(by: bag)
+            }
+        waitForExpectations(timeout: 1, handler: nil)
+        XCTAssertEqual(fetchedEntities, self.testEntities.reversed())
     }
     
-    func test_delete() throws {
+    func test_deleteObject() throws {
         context.performAndWait {
             try! self.context.save()
         }
         
         let deletedEntity = testEntities.last!
         
-        context.rx
-            .delete(deletedEntity)
-            .bind(onNext: { _ in
-                self.context.performAndWait {
-                    try! self.context.save()
-                    let fetchedEntities = try! self.context.fetch(self.request)
-                    XCTAssertEqual(
-                        fetchedEntities,
-                        [self.testEntities[0], self.testEntities[1]].reversed()
-                    )
-                }
-            })
-            .disposed(by: bag)
     }
     
-    func test_deleteAll() throws {
+    func test_deleteObjects() throws {
         context.performAndWait {
             try! self.context.save()
         }
         
-        context.rx
-            .deleteAll(TestStoredClass.self)
-            .bind(onNext: { _ in
-                let request = TestStoredClass.fetchRequest() as NSFetchRequest<TestStoredClass>
-                self.context.performAndWait {
-                    let fetchedEntities = try! self.context.fetch(request)
-                    XCTAssertEqual(fetchedEntities, [])
-                }
-            })
-            .disposed(by: DisposeBag())
     }
     
     func testPerformanceExample() throws {
@@ -126,3 +99,4 @@ class NSManagedObjectContext_RxTests: XCTestCase {
     }
 
 }
+

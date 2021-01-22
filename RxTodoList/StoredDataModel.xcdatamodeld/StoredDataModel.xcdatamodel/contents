@@ -8,10 +8,11 @@
     </entity>
     <entity name="TestStoredClass" representedClassName="TestStoredClass" syncable="YES">
         <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="imageData" optional="YES" attributeType="Binary"/>
         <attribute name="name" attributeType="String"/>
     </entity>
     <elements>
         <element name="StoredTodo" positionX="-54" positionY="-9" width="128" height="103"/>
-        <element name="TestStoredClass" positionX="-36" positionY="9" width="128" height="73"/>
+        <element name="TestStoredClass" positionX="-36" positionY="9" width="128" height="88"/>
     </elements>
 </model>

@@ -20,7 +20,7 @@ extension Reactive where Base: NSManagedObjectContext {
     }
     
     func save() -> Observable<Void> {
-        guard base.hasChanges else { return Observable.just(()) }        
+        guard base.hasChanges else { return Observable.just(()) }
         return Observable.create { observer -> Disposable in
             self.base.performAndWait {
                 do {
