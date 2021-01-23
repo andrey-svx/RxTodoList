@@ -5,6 +5,9 @@ import RxSwift
 extension Reactive where Base: NSManagedObjectContext {
     
     func fetch<T>(_ request: NSFetchRequest<T>) -> Observable<[T]> {
+        
+        // TODO: Code async fetch request
+        
         Observable.create { observer -> Disposable in
             self.base.performAndWait {
                 do {
@@ -22,25 +25,36 @@ extension Reactive where Base: NSManagedObjectContext {
     func save() -> Observable<Void> {
         guard base.hasChanges else { return Observable.just(()) }
         return Observable.create { observer -> Disposable in
-            self.base.performAndWait {
-                do {
-                    try self.base.save()
-                    observer.onNext(())
-                    observer.onCompleted()
-                } catch {
-                    observer.onError(NSManagedObjectContext.ReactiveError.save)
-                }
+            let queue = DispatchQueue(label: "Save")
+            queue.sync {
+                self.base.perform {
+                    do {
+                        try self.base.save()
+                        observer.onNext(())
+                        observer.onCompleted()
+                    } catch {
+                        observer.onError(NSManagedObjectContext.ReactiveError.save)
+                    }
+                }                
             }
             return Disposables.create()
         }
     }
     
-    func delete<T: NSManagedObject>(_ object: T) -> Observable<Void> {
+    func deleteAndSave<T: NSManagedObject>(_ object: T) -> Observable<Void> {
         Observable.create { observer -> Disposable in
-            self.base.performAndWait {
-                self.base.delete(object)
-                observer.onNext(())
-                observer.onCompleted()
+            let queue = DispatchQueue(label: "Delete")
+            queue.sync {
+                self.base.perform {
+                    do {
+                        self.base.delete(object)
+                        try self.base.save()
+                        observer.onNext(())
+                        observer.onCompleted()
+                    } catch {
+                        observer.onError(NSManagedObjectContext.ReactiveError.save)
+                    }
+                }
             }
             return Disposables.create()
         }
@@ -52,12 +66,15 @@ extension Reactive where Base: NSManagedObjectContext {
         let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: request)
         return Observable.create { observer -> Disposable in
             self.base.performAndWait {
-                do {
-                    try self.base.execute(batchDeleteRequest)
-                    observer.onNext(())
-                    observer.onCompleted()
-                } catch {
-                    observer.onError(NSManagedObjectContext.ReactiveError.batchDelete)
+                let queue = DispatchQueue(label: "DeleteAll")
+                queue.sync {
+                    do {
+                        try self.base.execute(batchDeleteRequest)
+                        observer.onNext(())
+                        observer.onCompleted()
+                    } catch {
+                        observer.onError(NSManagedObjectContext.ReactiveError.batchDelete)
+                    }
                 }
             }
             return Disposables.create()

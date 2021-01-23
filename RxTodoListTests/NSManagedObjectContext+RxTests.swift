@@ -23,6 +23,12 @@ class NSManagedObjectContext_RxTests: XCTestCase {
         return request
     }()
     
+    lazy var imageData: Data = {
+        let urlString = "https://upload.wikimedia.org/wikipedia/commons/3/39/E-burg_asv2019-05_img46_view_from_VysotSky.jpg"
+        let imageURL = URL(string: urlString)!
+        return try! Data(contentsOf: imageURL)
+    }()
+    
     var testEntities: [TestStoredClass] = []
     
     let bag = DisposeBag()
@@ -42,6 +48,7 @@ class NSManagedObjectContext_RxTests: XCTestCase {
                 let entity = TestStoredClass(context: self.context)
                 entity.name = name
                 entity.date = Date()
+                entity.imageData = self.imageData
                 return entity
             }
     }
@@ -87,10 +94,9 @@ class NSManagedObjectContext_RxTests: XCTestCase {
         let deletedEntity = testEntities.last!
         
         context.rx
-            .delete(deletedEntity)
+            .deleteAndSave(deletedEntity)
             .bind(onNext: { _ in
                 self.context.performAndWait {
-                    try! self.context.save()
                     let fetchedEntities = try! self.context.fetch(self.request)
                     XCTAssertEqual(
                         fetchedEntities,

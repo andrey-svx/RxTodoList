@@ -33,7 +33,6 @@ class PersistenceManager {
         }
         group.notify(queue: .main) { [weak self] in
             self?.imageData = data
-            print("IMAGE DATA: \(self?.imageData)")
         }
     }
     
@@ -56,8 +55,8 @@ class PersistenceManager {
         guard let objectID = todo.objectID else { return Observable.just(.failure(.unknown)) }
         let cdTodo = context.object(with: objectID)
         return context.rx
-            .delete(cdTodo)
-            .flatMap(context.rx.save)
+            .deleteAndSave(cdTodo)
+//            .flatMap(context.rx.save)
             .map { .success(()) }
             .catchErrorJustReturn(.failure(.unknown))
     }
@@ -75,7 +74,6 @@ class PersistenceManager {
         storedTodo.id = todo.id
         storedTodo.date = todo.date
         storedTodo.imageData = self.imageData
-        print("OBJECT-ID: \(storedTodo.objectID)")
         
         return context.rx
             .save()
@@ -90,6 +88,9 @@ class PersistenceManager {
                 storedTodo.name = todo.name
                 storedTodo.id = todo.id
                 storedTodo.date = todo.date
+                
+                storedTodo.imageData = self.imageData
+                
                 return storedTodo
             }
         

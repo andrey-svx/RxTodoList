@@ -18,6 +18,8 @@ class TodoList {
     
     private var persistenceMgr = PersistenceManager()
     
+    private let bag = DisposeBag()
+    
     init() {
         
         self._todos = []
@@ -74,7 +76,7 @@ extension TodoList {
                     editedTodo.objectID = objectID
                     self?._todos[index] = editedTodo
                 })
-                .disposed(by: DisposeBag())
+                .disposed(by: bag)
         } else {
             let removedTodo = _todos[index]
             persistenceMgr
@@ -83,7 +85,7 @@ extension TodoList {
                     guard case .success(_) = removeResult else { return }
                     self?._todos.remove(at: index)
                 })
-                .disposed(by: DisposeBag())
+                .disposed(by: bag)
         }
     }
     
@@ -92,12 +94,11 @@ extension TodoList {
         persistenceMgr
             .insert(todo: editedTodo)
             .bind(onNext: { [weak self] insertResult in
-                print(insertResult)
                 guard case .success(let objectID) = insertResult else { return }
                 editedTodo.objectID = objectID
                 self?._todos.insert(editedTodo, at: 0)
             })
-            .disposed(by: DisposeBag())
+            .disposed(by: bag)
     }
     
 }
