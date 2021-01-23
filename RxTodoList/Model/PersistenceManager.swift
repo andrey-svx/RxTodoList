@@ -56,7 +56,6 @@ class PersistenceManager {
         let cdTodo = context.object(with: objectID)
         return context.rx
             .deleteAndSave(cdTodo)
-//            .flatMap(context.rx.save)
             .map { .success(()) }
             .catchErrorJustReturn(.failure(.unknown))
     }

@@ -4,9 +4,11 @@ import RxSwift
 
 extension Reactive where Base: NSManagedObjectContext {
     
+    // TODO: Code DispatchQueue argument for safety
+    
     func fetch<T>(_ request: NSFetchRequest<T>) -> Observable<[T]> {
         
-        // TODO: Code async fetch request
+        // TODO: Code async fetch
         
         Observable.create { observer -> Disposable in
             self.base.performAndWait {
