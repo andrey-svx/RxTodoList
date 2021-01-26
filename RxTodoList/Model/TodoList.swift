@@ -14,10 +14,10 @@ class TodoList {
         didSet { delegate?.update(editedTodo: _editedTodo) }
     }
     
+    private var persistenceMgr: PersistenceManager
+
     var appendOrEdit: (() -> Void)?
-    
-    private var persistenceMgr = PersistenceManager()
-    
+        
     private let bag = DisposeBag()
     
     init() {
@@ -25,6 +25,9 @@ class TodoList {
         self._todos = []
         self._editedTodo = nil
         
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.context
+        self.persistenceMgr = PersistenceManager(context)
     }
     
     func fetchAllStoredTodos() {

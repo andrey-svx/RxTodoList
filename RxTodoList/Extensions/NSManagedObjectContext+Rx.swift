@@ -4,9 +4,10 @@ import RxSwift
 
 extension Reactive where Base: NSManagedObjectContext {
     
-    // TODO: Code DispatchQueue argument for safety
-    
-    func fetch<T>(_ request: NSFetchRequest<T>) -> Observable<[T]> {
+    func fetch<T>(
+        _ request: NSFetchRequest<T>,
+        on queue: DispatchQueue = DispatchQueue(label: "LocalSerialQueue")
+    ) -> Observable<[T]> {
         
         // TODO: Code async fetch
         
@@ -24,10 +25,11 @@ extension Reactive where Base: NSManagedObjectContext {
         }
     }
     
-    func save() -> Observable<Void> {
+    func save(
+        on queue: DispatchQueue = DispatchQueue(label: "LocalSerialQueue")
+    ) -> Observable<Void> {
         guard base.hasChanges else { return Observable.just(()) }
         return Observable.create { observer -> Disposable in
-            let queue = DispatchQueue(label: "Save")
             queue.sync {
                 self.base.perform {
                     do {
@@ -43,9 +45,11 @@ extension Reactive where Base: NSManagedObjectContext {
         }
     }
     
-    func deleteAndSave<T: NSManagedObject>(_ object: T) -> Observable<Void> {
+    func deleteAndSave<T: NSManagedObject>(
+        _ object: T,
+        on queue: DispatchQueue = DispatchQueue(label: "LocalSerialQueue")
+    ) -> Observable<Void> {
         Observable.create { observer -> Disposable in
-            let queue = DispatchQueue(label: "Delete")
             queue.sync {
                 self.base.perform {
                     do {
@@ -62,13 +66,15 @@ extension Reactive where Base: NSManagedObjectContext {
         }
     }
     
-    func deleteAll<T: NSManagedObject>(_ className: T.Type) -> Observable<Void> {
+    func deleteAll<T: NSManagedObject>(
+        _ className: T.Type,
+        on queue: DispatchQueue = DispatchQueue(label: "LocalSerialQueue")
+    ) -> Observable<Void> {
         let entityName = String(describing: className)
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
         let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: request)
         return Observable.create { observer -> Disposable in
             self.base.performAndWait {
-                let queue = DispatchQueue(label: "DeleteAll")
                 queue.sync {
                     do {
                         try self.base.execute(batchDeleteRequest)

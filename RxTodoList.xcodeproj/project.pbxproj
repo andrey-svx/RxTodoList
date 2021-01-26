@@ -32,6 +32,7 @@
 		5A7D2A3625ADDD0500C09B9D /* LocalTodo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7D2A3525ADDD0500C09B9D /* LocalTodo.swift */; };
 		5A815D1725758D78005934A1 /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A815D1625758D78005934A1 /* ListViewModel.swift */; };
 		5A815D1B25758F62005934A1 /* ItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A815D1A25758F62005934A1 /* ItemViewModel.swift */; };
+		5A93AFCC25C0A9AB00BDD80F /* TodoListTestableDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A93AFCB25C0A9AB00BDD80F /* TodoListTestableDelegate.swift */; };
 		5A96C2E325B74C750023FEC9 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A96C2E225B74C750023FEC9 /* Account.swift */; };
 		5A96C2E725B74D120023FEC9 /* AccountDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A96C2E625B74D120023FEC9 /* AccountDelegate.swift */; };
 		5ABE990825AF72D1000A7B4D /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABE990725AF72D1000A7B4D /* PersistenceManager.swift */; };
@@ -87,6 +88,7 @@
 		5A7D2A3525ADDD0500C09B9D /* LocalTodo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalTodo.swift; sourceTree = "<group>"; };
 		5A815D1625758D78005934A1 /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
 		5A815D1A25758F62005934A1 /* ItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemViewModel.swift; sourceTree = "<group>"; };
+		5A93AFCB25C0A9AB00BDD80F /* TodoListTestableDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListTestableDelegate.swift; sourceTree = "<group>"; };
 		5A96C2E225B74C750023FEC9 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		5A96C2E625B74D120023FEC9 /* AccountDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDelegate.swift; sourceTree = "<group>"; };
 		5ABE990725AF72D1000A7B4D /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 				5A7D2A3525ADDD0500C09B9D /* LocalTodo.swift */,
 				5A7D29FF25ACF19500C09B9D /* TodoList.swift */,
 				5A1074F725B2FCB40022FE64 /* TodoListDelegate.swift */,
+				5A93AFCB25C0A9AB00BDD80F /* TodoListTestableDelegate.swift */,
 				5ABE990725AF72D1000A7B4D /* PersistenceManager.swift */,
 				5A62380425B5DC560034BF0B /* StoredTodo+CoreDataClass.swift */,
 				5A62380525B5DC560034BF0B /* StoredTodo+CoreDataProperties.swift */,
@@ -488,6 +491,7 @@
 				5A5141B7256C4B1C003B2D3A /* AppDelegate.swift in Sources */,
 				5ACD2493256C4FC50068AD1A /* ListViewController.swift in Sources */,
 				5A96C2E725B74D120023FEC9 /* AccountDelegate.swift in Sources */,
+				5A93AFCC25C0A9AB00BDD80F /* TodoListTestableDelegate.swift in Sources */,
 				5A62380925B5DC560034BF0B /* StoredTodo+CoreDataProperties.swift in Sources */,
 				5A5141B9256C4B1C003B2D3A /* SceneDelegate.swift in Sources */,
 				5A147D552585658900C93749 /* User.swift in Sources */,
