@@ -45,7 +45,7 @@ struct PersistenceManager {
     
     mutating func removeAllTodos() -> Observable<PMRemoveResult> {
         return context.rx
-            .deleteAll(StoredTodo.self)
+            .deleteAll(StoredTodo.self, on: queue)
             .map { .success(()) }
             .catchErrorJustReturn(.failure(.unknown))
     }

@@ -10,7 +10,7 @@ import RxTodoList
 
 class PersistenceClientTests: XCTestCase {
     
-    var client = PersistenceManager()
+    var manager: PersistenceManager!
     
     lazy var context: NSManagedObjectContext = {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -18,6 +18,8 @@ class PersistenceClientTests: XCTestCase {
     }()
 
     override func setUpWithError() throws {
+        
+        manager = PersistenceManager(context)
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "StoredTodo")
         let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: request)
         context.performAndWait {
@@ -121,7 +123,7 @@ class PersistenceClientTests: XCTestCase {
                 return LocalTodo(name)
             }
         
-        client
+        manager
             .insert(todos: testTodos)
             .bind { _ in
                 

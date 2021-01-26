@@ -5,16 +5,23 @@ import Foundation
 class TodoList {
     
     weak var delegate: TodoListDelegate?
+    weak var testableDelegate: TodoListTestableDelegate?
     
-    private var _todos: [LocalTodo] {
-        didSet { delegate?.update(todos: _todos) }
+    private var todos: [LocalTodo] {
+        didSet {
+            testableDelegate?.update(todos: todos)
+            delegate?.update(todos: todos)
+        }
     }
     
-    private var _editedTodo: LocalTodo? {
-        didSet { delegate?.update(editedTodo: _editedTodo) }
+    private var editedTodo: LocalTodo? {
+        didSet {
+            testableDelegate?.update(editedTodo: editedTodo)
+            delegate?.update(editedTodo: editedTodo)
+        }
     }
     
-    private var persistenceMgr: PersistenceManager
+    private var manager: PersistenceManager
 
     var appendOrEdit: (() -> Void)?
         
@@ -22,20 +29,20 @@ class TodoList {
     
     init() {
         
-        self._todos = []
-        self._editedTodo = nil
+        self.todos = []
+        self.editedTodo = nil
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.context
-        self.persistenceMgr = PersistenceManager(context)
+        self.manager = PersistenceManager(context)
     }
     
     func fetchAllStoredTodos() {
-        persistenceMgr
+        manager
             .fetchAllTodos()
             .bind(onNext: { [weak self] fetchResult in
                 guard case .success(let todos) = fetchResult, !todos.isEmpty else { return }
-                self?._todos = todos
+                self?.todos = todos
             })
             .disposed(by: DisposeBag())
     }
@@ -59,47 +66,47 @@ class TodoList {
 extension TodoList {
         
     func setEdited(_ todo: LocalTodo?) {
-        self._editedTodo = todo
+        self.editedTodo = todo
     }
     
     func updateEdited(_ name: String) {
-        self._editedTodo?.update(name)
+        self.editedTodo?.update(name)
     }
     
     func editTodo() {
-        guard var editedTodo = _editedTodo,
-              let index = _todos.firstIndex(where: { $0 == editedTodo }) else { return }
+        guard var editedTodo = editedTodo,
+              let index = todos.firstIndex(where: { $0 == editedTodo }) else { return }
         
         if !editedTodo.name.isEmpty {
-            persistenceMgr
+            manager
                 .remove(todo: editedTodo)
-                .flatMap { [unowned self] _ in self.persistenceMgr.insert(todo: editedTodo) }
+                .flatMap { [unowned self] _ in self.manager.insert(todo: editedTodo) }
                 .bind(onNext: { [weak self] insertResult in
                     guard case .success(let objectID) = insertResult else { return }
                     editedTodo.objectID = objectID
-                    self?._todos[index] = editedTodo
+                    self?.todos[index] = editedTodo
                 })
                 .disposed(by: bag)
         } else {
-            let removedTodo = _todos[index]
-            persistenceMgr
+            let removedTodo = todos[index]
+            manager
                 .remove(todo: removedTodo)
                 .bind (onNext: { [weak self] removeResult in
                     guard case .success(_) = removeResult else { return }
-                    self?._todos.remove(at: index)
+                    self?.todos.remove(at: index)
                 })
                 .disposed(by: bag)
         }
     }
     
     func insertTodo() {
-        guard var editedTodo = _editedTodo, !editedTodo.name.isEmpty else { return }
-        persistenceMgr
+        guard var editedTodo = editedTodo, !editedTodo.name.isEmpty else { return }
+        manager
             .insert(todo: editedTodo)
             .bind(onNext: { [weak self] insertResult in
                 guard case .success(let objectID) = insertResult else { return }
                 editedTodo.objectID = objectID
-                self?._todos.insert(editedTodo, at: 0)
+                self?.todos.insert(editedTodo, at: 0)
             })
             .disposed(by: bag)
     }
@@ -109,7 +116,7 @@ extension TodoList {
 extension TodoList {
     
     func getTodos() -> [LocalTodo] {
-        _todos
+        todos
     }
     
 }

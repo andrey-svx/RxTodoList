@@ -5,8 +5,10 @@ protocol TodoListTestableDelegate: AnyObject {
     var todoList: TodoList { get }
 
     var todos: [LocalTodo] { get set }
+    var editedTodo: LocalTodo? { get set }
     
     func update(todos: [LocalTodo])
+    func update(editedTodo: LocalTodo?)
     
 }
 
@@ -17,6 +19,12 @@ extension TodoListTestableDelegate {
         
         self.todos = todos
     
+    }
+    
+    func update(editedTodo: LocalTodo?) {
+        
+        self.editedTodo = editedTodo
+        
     }
     
 }
