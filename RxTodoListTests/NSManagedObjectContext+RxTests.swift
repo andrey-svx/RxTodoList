@@ -31,6 +31,8 @@ class NSManagedObjectContext_RxTests: XCTestCase {
     
     var testEntities: [TestStoredClass] = []
     
+    let queue = DispatchQueue(label: "SerialQueue")
+    
     let bag = DisposeBag()
 
     override func setUpWithError() throws {
@@ -70,13 +72,13 @@ class NSManagedObjectContext_RxTests: XCTestCase {
             .fetch(request)
             .toBlocking()
             .first()!
-        print("FETCHED ENTITIES: \(fetchedEntities)")
+        
         XCTAssertEqual(fetchedEntities, testEntities.reversed())
     }
     
     func test_save() throws {
         context.rx
-            .save()
+            .save(on: queue)
             .bind(onNext: {
                 self.context.performAndWait {
                     let fetchedEntities = try! self.context.fetch(self.request)
@@ -94,7 +96,7 @@ class NSManagedObjectContext_RxTests: XCTestCase {
         let deletedEntity = testEntities.last!
         
         context.rx
-            .deleteAndSave(deletedEntity)
+            .deleteAndSave(deletedEntity, on: queue)
             .bind(onNext: { _ in
                 self.context.performAndWait {
                     let fetchedEntities = try! self.context.fetch(self.request)
@@ -113,7 +115,7 @@ class NSManagedObjectContext_RxTests: XCTestCase {
         }
         
         context.rx
-            .deleteAll(TestStoredClass.self)
+            .deleteAll(TestStoredClass.self, on: queue)
             .bind(onNext: { _ in
                 let request = TestStoredClass.fetchRequest() as NSFetchRequest<TestStoredClass>
                 self.context.performAndWait {
@@ -121,7 +123,7 @@ class NSManagedObjectContext_RxTests: XCTestCase {
                     XCTAssertEqual(fetchedEntities, [])
                 }
             })
-            .disposed(by: DisposeBag())
+            .disposed(by: bag)
     }
     
     func testPerformanceExample() throws {

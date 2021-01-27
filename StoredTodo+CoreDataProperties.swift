@@ -1,3 +1,11 @@
+//
+//  StoredTodo+CoreDataProperties.swift
+//  RxTodoList
+//
+//  Created by Андрей Исаев on 27.01.2021.
+//
+//
+
 import Foundation
 import CoreData
 
@@ -8,10 +16,9 @@ extension StoredTodo {
         return NSFetchRequest<StoredTodo>(entityName: "StoredTodo")
     }
 
-    @NSManaged public var id: UUID
     @NSManaged public var date: Date
+    @NSManaged public var id: UUID
     @NSManaged public var name: String
-    @NSManaged public var imageData: Data?
 
 }
 

@@ -16,11 +16,15 @@ protocol TodoListDelegate: AnyObject {
 extension TodoListDelegate {
     
     func update(todos: [LocalTodo]) {
+        
         self.todos.onNext(todos)
+    
     }
     
     func update(editedTodo: LocalTodo?) {
+    
         self.editedTodo = editedTodo
+    
     }
     
 }

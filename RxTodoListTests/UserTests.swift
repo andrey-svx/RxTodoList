@@ -11,12 +11,6 @@ import RxTodoList
 class UserTests: XCTestCase {
     
     let user = User()
-    
-    lazy var context: NSManagedObjectContext = {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.context
-        return context
-    }()
 
     override func setUpWithError() throws {
         user.configure()

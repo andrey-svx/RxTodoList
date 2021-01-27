@@ -4,28 +4,23 @@ import Foundation
 
 class TodoList {
     
-    weak var delegate: TodoListDelegate?
-    weak var testableDelegate: TodoListTestableDelegate?
-    
     private var todos: [LocalTodo] {
-        didSet {
-            testableDelegate?.update(todos: todos)
-            delegate?.update(todos: todos)
-        }
+        didSet { delegate?.update(todos: todos) }
     }
     
     private var editedTodo: LocalTodo? {
-        didSet {
-            testableDelegate?.update(editedTodo: editedTodo)
-            delegate?.update(editedTodo: editedTodo)
-        }
+        didSet { delegate?.update(editedTodo: editedTodo) }
     }
     
     private var manager: PersistenceManager
 
     var appendOrEdit: (() -> Void)?
-        
+    
     private let bag = DisposeBag()
+    
+    weak var delegate: TodoListDelegate?
+    
+    typealias TestPort = ([LocalTodo]) -> Void
     
     init() {
         
@@ -35,24 +30,31 @@ class TodoList {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.context
         self.manager = PersistenceManager(context)
+        
     }
     
-    func fetchAllStoredTodos() {
+    func fetchAllStoredTodos(_ testPort: @escaping TestPort = { _ in }) {
         manager
             .fetchAllTodos()
+            .observeOn(MainScheduler.instance)
             .bind(onNext: { [weak self] fetchResult in
                 guard case .success(let todos) = fetchResult, !todos.isEmpty else { return }
                 self?.todos = todos
+                DispatchQueue.main.async { testPort(self?.todos ?? []) }
             })
-            .disposed(by: DisposeBag())
+            .disposed(by: bag)
     }
     
-    func deleteAllStoredTodos() {
-        guard delegate != nil else {
-            assertionFailure("Delegate for \(String(describing: self)) was not set")
-            return
-        }
-        
+    func deleteAllStoredTodos(_ testPort: @escaping TestPort = { _ in }) {
+        manager
+            .removeAllTodos()
+            .bind(onNext: { [weak self] deleteResult in
+                guard case .success(_) = deleteResult else { return }
+                self?.todos = []
+                DispatchQueue.main.async { testPort(self?.todos ?? []) }
+            })
+            .disposed(by: bag)
+
     }
     
     #if DEBUG
@@ -73,7 +75,7 @@ extension TodoList {
         self.editedTodo?.update(name)
     }
     
-    func editTodo() {
+    func editTodo(_ testPort: @escaping TestPort = { _ in }) {
         guard var editedTodo = editedTodo,
               let index = todos.firstIndex(where: { $0 == editedTodo }) else { return }
         
@@ -85,6 +87,7 @@ extension TodoList {
                     guard case .success(let objectID) = insertResult else { return }
                     editedTodo.objectID = objectID
                     self?.todos[index] = editedTodo
+                    DispatchQueue.main.async { testPort(self?.todos ?? []) }
                 })
                 .disposed(by: bag)
         } else {
@@ -99,7 +102,7 @@ extension TodoList {
         }
     }
     
-    func insertTodo() {
+    func insertTodo(_ testPort: @escaping TestPort = { _ in }) {
         guard var editedTodo = editedTodo, !editedTodo.name.isEmpty else { return }
         manager
             .insert(todo: editedTodo)
@@ -107,16 +110,9 @@ extension TodoList {
                 guard case .success(let objectID) = insertResult else { return }
                 editedTodo.objectID = objectID
                 self?.todos.insert(editedTodo, at: 0)
+                DispatchQueue.main.async { testPort(self?.todos ?? []) }
             })
             .disposed(by: bag)
-    }
-    
-}
-
-extension TodoList {
-    
-    func getTodos() -> [LocalTodo] {
-        todos
     }
     
 }

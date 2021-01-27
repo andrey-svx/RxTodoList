@@ -1,46 +1,62 @@
 import XCTest
 import CoreData
 import RxSwift
-import RxCocoa
-import RxRelay
-import RxBlocking
 
 @testable
 import RxTodoList
 
 class TodoListTests: XCTestCase {
     
-    let user = User()
-    
-    lazy var list: TodoList = {
+    lazy var todoList: TodoList = {
         let list = TodoList()
-        list.delegate = user
+//        list.testableDelegate = self
         return list
     }()
     
-    lazy var context: NSManagedObjectContext = {
+    var todos: [LocalTodo] = [] {
+        didSet { print("TODOS: \(todos.map { $0.name })") }
+    }
+    
+    var editedTodo: LocalTodo? = nil
+
+    var manager: PersistenceManager!
+    
+    let bag = DisposeBag()
+    
+    override func setUpWithError() throws {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.context
-        return context
-    }()
-
-    override func setUpWithError() throws {
-        
+        manager = PersistenceManager(context)
+        let todos = ["1st todo", "2nd todo", "3rd todo"]
+            .map { LocalTodo($0) }
+        manager
+            .removeAllTodos()
+            .map { _ in
+                todos
+            }
+            .flatMap {
+                self.manager
+                    .insert(todos: $0)
+            }
+            .observeOn(MainScheduler.instance)
+            .bind(onNext: { insertResult in
+                self.todos = todos
+            })
+            .disposed(by: bag)
     }
 
     override func tearDownWithError() throws {
-
+        manager
+            .removeAllTodos()
+            .bind(onNext: { _ in })
+            .disposed(by: bag)
     }
 
     func test_insertTodo_testTodo() throws {
-        list.setEdited(LocalTodo("Test todo"))
-        list.insertTodo()
-        
+        print("XXX")
     }
      
     func test_insertTodo_emptyTodo() throws {
-        list.setEdited(LocalTodo())
-        list.insertTodo()
         
     }
     
@@ -66,10 +82,6 @@ class TodoListTests: XCTestCase {
         measure {
             // Put the code you want to measure the time of here.
         }
-    }
-    
-    func update(todos: [LocalTodo]) {
-        print("DELEGATE")
     }
 
 }
