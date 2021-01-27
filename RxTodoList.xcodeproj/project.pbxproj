@@ -10,7 +10,6 @@
 		5A04164125AEF1DF006134EB /* NSManagedObjectContext+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A04164025AEF1DF006134EB /* NSManagedObjectContext+RxTests.swift */; };
 		5A1074F225B2FC830022FE64 /* Todo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1074F125B2FC830022FE64 /* Todo.swift */; };
 		5A1074F825B2FCB40022FE64 /* TodoListDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1074F725B2FCB40022FE64 /* TodoListDelegate.swift */; };
-		5A1074FE25B30DE30022FE64 /* UserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1074FD25B30DE30022FE64 /* UserTests.swift */; };
 		5A147D4B25855A1300C93749 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A147D4A25855A1300C93749 /* SettingsViewModel.swift */; };
 		5A147D512585619600C93749 /* LoginDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A147D502585619600C93749 /* LoginDetails.swift */; };
 		5A147D552585658900C93749 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A147D542585658900C93749 /* User.swift */; };
@@ -61,7 +60,6 @@
 		5A04164025AEF1DF006134EB /* NSManagedObjectContext+RxTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+RxTests.swift"; sourceTree = "<group>"; };
 		5A1074F125B2FC830022FE64 /* Todo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Todo.swift; sourceTree = "<group>"; };
 		5A1074F725B2FCB40022FE64 /* TodoListDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListDelegate.swift; sourceTree = "<group>"; };
-		5A1074FD25B30DE30022FE64 /* UserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTests.swift; sourceTree = "<group>"; };
 		5A147D4A25855A1300C93749 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		5A147D502585619600C93749 /* LoginDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDetails.swift; sourceTree = "<group>"; };
 		5A147D542585658900C93749 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -135,9 +133,8 @@
 			isa = PBXGroup;
 			children = (
 				5A04164025AEF1DF006134EB /* NSManagedObjectContext+RxTests.swift */,
-				5A2622392576461A006C56FA /* TodoListTests.swift */,
-				5A1074FD25B30DE30022FE64 /* UserTests.swift */,
 				5ABE990B25AF735D000A7B4D /* PersistenceManagerTests.swift */,
+				5A2622392576461A006C56FA /* TodoListTests.swift */,
 				5A26223B2576461A006C56FA /* Info.plist */,
 			);
 			path = RxTodoListTests;
@@ -146,18 +143,18 @@
 		5A285E8025769E0C00BC528B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				5A147D542585658900C93749 /* User.swift */,
+				5A7D29FF25ACF19500C09B9D /* TodoList.swift */,
+				5A1074F125B2FC830022FE64 /* Todo.swift */,
+				5A7D2A3525ADDD0500C09B9D /* LocalTodo.swift */,
+				5ABE990725AF72D1000A7B4D /* PersistenceManager.swift */,
 				5A47A08925C0CBE40043097A /* StoredTodo+CoreDataClass.swift */,
 				5A47A08A25C0CBE40043097A /* StoredTodo+CoreDataProperties.swift */,
-				5A147D542585658900C93749 /* User.swift */,
+				5A1074F725B2FCB40022FE64 /* TodoListDelegate.swift */,
 				5A96C2E225B74C750023FEC9 /* Account.swift */,
 				5A147D502585619600C93749 /* LoginDetails.swift */,
 				5A96C2E625B74D120023FEC9 /* AccountDelegate.swift */,
 				5A62381625B70B800034BF0B /* State.swift */,
-				5A1074F125B2FC830022FE64 /* Todo.swift */,
-				5A7D2A3525ADDD0500C09B9D /* LocalTodo.swift */,
-				5A7D29FF25ACF19500C09B9D /* TodoList.swift */,
-				5A1074F725B2FCB40022FE64 /* TodoListDelegate.swift */,
-				5ABE990725AF72D1000A7B4D /* PersistenceManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -453,7 +450,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5A1074FE25B30DE30022FE64 /* UserTests.swift in Sources */,
 				5A26223A2576461A006C56FA /* TodoListTests.swift in Sources */,
 				5A04164125AEF1DF006134EB /* NSManagedObjectContext+RxTests.swift in Sources */,
 				5ABE990C25AF735D000A7B4D /* PersistenceManagerTests.swift in Sources */,

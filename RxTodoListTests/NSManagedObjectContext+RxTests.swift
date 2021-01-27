@@ -1,9 +1,6 @@
 import XCTest
 import CoreData
 import RxSwift
-import RxCocoa
-import RxRelay
-import RxBlocking
 
 @testable
 import RxTodoList
@@ -30,18 +27,14 @@ class NSManagedObjectContext_RxTests: XCTestCase {
     }()
     
     var testEntities: [TestStoredClass] = []
+    var fetchedEntities: [TestStoredClass] = []
     
     let queue = DispatchQueue(label: "SerialQueue")
     
     let bag = DisposeBag()
 
     override func setUpWithError() throws {
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "TestStoredClass")
-        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: request)
-        context.performAndWait {
-            try! self.context.execute(batchDeleteRequest)
-        }
-        
+        clearAllEntities(at: context)
         testEntities = ["First entity",
                         "Second entity",
                         "Third entity"]
@@ -56,11 +49,7 @@ class NSManagedObjectContext_RxTests: XCTestCase {
     }
 
     override func tearDownWithError() throws {
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "TestStoredClass")
-        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: request)
-        context.performAndWait {
-            try! self.context.execute(batchDeleteRequest)
-        }
+        clearAllEntities(at: context)
     }
     
     func test_fetch() throws {
@@ -68,45 +57,59 @@ class NSManagedObjectContext_RxTests: XCTestCase {
             try! context.save()
         }
         
-        let fetchedEntities = try! context.rx
-            .fetch(request)
-            .toBlocking()
-            .first()!
+        let expectation = self.expectation(description: "FetchExpectation")
         
+        context.rx
+            .fetch(request, on: queue)
+            .bind { entites in
+                self.fetchedEntities = entites
+                expectation.fulfill()
+            }
+            .disposed(by: bag)
+        
+        waitForExpectations(timeout: 1, handler: nil)
         XCTAssertEqual(fetchedEntities, testEntities.reversed())
     }
     
     func test_save() throws {
+        let expectation = self.expectation(description: "SaveExpectation")
+        
         context.rx
             .save(on: queue)
             .bind(onNext: {
                 self.context.performAndWait {
-                    let fetchedEntities = try! self.context.fetch(self.request)
-                    XCTAssertEqual(fetchedEntities, self.testEntities.reversed())
+                    self.fetchedEntities = try! self.context.fetch(self.request)
+                    expectation.fulfill()
                 }
             })
             .disposed(by: bag)
+        
+        waitForExpectations(timeout: 1, handler: nil)
+        XCTAssertEqual(fetchedEntities, self.testEntities.reversed())
     }
     
-    func test_delete() throws {
+    func test_deleteAndSave() throws {
         context.performAndWait {
             try! self.context.save()
         }
         
         let deletedEntity = testEntities.last!
         
+        let expectation = self.expectation(description: "DeleteExpectation")
+        
         context.rx
             .deleteAndSave(deletedEntity, on: queue)
             .bind(onNext: { _ in
                 self.context.performAndWait {
-                    let fetchedEntities = try! self.context.fetch(self.request)
-                    XCTAssertEqual(
-                        fetchedEntities,
-                        [self.testEntities[0], self.testEntities[1]].reversed()
-                    )
+                    self.fetchedEntities = try! self.context.fetch(self.request)
+                    expectation.fulfill()
                 }
             })
             .disposed(by: bag)
+
+        waitForExpectations(timeout: 1, handler: nil)
+        XCTAssertEqual(fetchedEntities, [self.testEntities[0], self.testEntities[1]].reversed()
+        )
     }
     
     func test_deleteAll() throws {
@@ -114,22 +117,32 @@ class NSManagedObjectContext_RxTests: XCTestCase {
             try! self.context.save()
         }
         
+        let expectation = self.expectation(description: "DeleteAllExpectation")
+        
         context.rx
             .deleteAll(TestStoredClass.self, on: queue)
             .bind(onNext: { _ in
-                let request = TestStoredClass.fetchRequest() as NSFetchRequest<TestStoredClass>
-                self.context.performAndWait {
-                    let fetchedEntities = try! self.context.fetch(request)
-                    XCTAssertEqual(fetchedEntities, [])
-                }
+                self.fetchedEntities = try! self.context.fetch(self.request)
+                expectation.fulfill()
             })
             .disposed(by: bag)
+        
+        waitForExpectations(timeout: 1, handler: nil)
+        XCTAssertTrue(fetchedEntities.isEmpty)
     }
     
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
         measure {
             // Put the code you want to measure the time of here.
+        }
+    }
+    
+    func clearAllEntities(at context: NSManagedObjectContext) {
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "TestStoredClass")
+        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: request)
+        context.performAndWait {
+            try! context.execute(batchDeleteRequest)
         }
     }
 

@@ -4,6 +4,8 @@ import Foundation
 
 class TodoList {
     
+    var state: State = .none
+    
     private var todos: [LocalTodo] {
         didSet { delegate?.update(todos: todos) }
     }
@@ -13,8 +15,6 @@ class TodoList {
     }
     
     private var manager: PersistenceManager
-
-    var appendOrEdit: (() -> Void)?
     
     private let bag = DisposeBag()
     
@@ -48,10 +48,11 @@ class TodoList {
     func deleteAllStoredTodos(_ testPort: @escaping TestPort = { _ in }) {
         manager
             .removeAllTodos()
+            .observeOn(MainScheduler.instance)
             .bind(onNext: { [weak self] deleteResult in
                 guard case .success(_) = deleteResult else { return }
                 self?.todos = []
-                DispatchQueue.main.async { testPort(self?.todos ?? []) }
+                testPort(self?.todos ?? [])
             })
             .disposed(by: bag)
 
@@ -66,6 +67,22 @@ class TodoList {
 }
 
 extension TodoList {
+    
+    enum State {
+        
+        case inserting
+        case editing
+        case none
+    
+    }
+    
+    func appendOrEdit() {
+        switch state {
+        case .inserting: insertTodo()
+        case .editing: editTodo()
+        case .none: break
+        }
+    }
         
     func setEdited(_ todo: LocalTodo?) {
         self.editedTodo = todo
@@ -77,26 +94,30 @@ extension TodoList {
     
     func editTodo(_ testPort: @escaping TestPort = { _ in }) {
         guard var editedTodo = editedTodo,
-              let index = todos.firstIndex(where: { $0 == editedTodo }) else { return }
+              let index = todos.firstIndex(where: { $0 == editedTodo })
+        else { return }
         
         if !editedTodo.name.isEmpty {
             manager
                 .remove(todo: editedTodo)
                 .flatMap { [unowned self] _ in self.manager.insert(todo: editedTodo) }
+                .observeOn(MainScheduler.instance)
                 .bind(onNext: { [weak self] insertResult in
                     guard case .success(let objectID) = insertResult else { return }
                     editedTodo.objectID = objectID
                     self?.todos[index] = editedTodo
-                    DispatchQueue.main.async { testPort(self?.todos ?? []) }
+                    testPort(self?.todos ?? [])
                 })
                 .disposed(by: bag)
         } else {
             let removedTodo = todos[index]
             manager
                 .remove(todo: removedTodo)
+                .observeOn(MainScheduler.instance)
                 .bind (onNext: { [weak self] removeResult in
                     guard case .success(_) = removeResult else { return }
                     self?.todos.remove(at: index)
+                    testPort(self?.todos ?? [])
                 })
                 .disposed(by: bag)
         }
@@ -106,11 +127,12 @@ extension TodoList {
         guard var editedTodo = editedTodo, !editedTodo.name.isEmpty else { return }
         manager
             .insert(todo: editedTodo)
+            .observeOn(MainScheduler.instance)
             .bind(onNext: { [weak self] insertResult in
                 guard case .success(let objectID) = insertResult else { return }
                 editedTodo.objectID = objectID
                 self?.todos.insert(editedTodo, at: 0)
-                DispatchQueue.main.async { testPort(self?.todos ?? []) }
+                testPort(self?.todos ?? [])
             })
             .disposed(by: bag)
     }

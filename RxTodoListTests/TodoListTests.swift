@@ -7,53 +7,27 @@ import RxTodoList
 
 class TodoListTests: XCTestCase {
     
-    lazy var todoList: TodoList = {
-        let list = TodoList()
-//        list.testableDelegate = self
-        return list
+    let todoList = TodoList()
+    
+    var todos: [LocalTodo] = []
+    
+    lazy var context: NSManagedObjectContext = {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        return appDelegate.context        
     }()
-    
-    var todos: [LocalTodo] = [] {
-        didSet { print("TODOS: \(todos.map { $0.name })") }
-    }
-    
-    var editedTodo: LocalTodo? = nil
-
-    var manager: PersistenceManager!
     
     let bag = DisposeBag()
     
     override func setUpWithError() throws {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.context
-        manager = PersistenceManager(context)
-        let todos = ["1st todo", "2nd todo", "3rd todo"]
-            .map { LocalTodo($0) }
-        manager
-            .removeAllTodos()
-            .map { _ in
-                todos
-            }
-            .flatMap {
-                self.manager
-                    .insert(todos: $0)
-            }
-            .observeOn(MainScheduler.instance)
-            .bind(onNext: { insertResult in
-                self.todos = todos
-            })
-            .disposed(by: bag)
+        
     }
 
     override func tearDownWithError() throws {
-        manager
-            .removeAllTodos()
-            .bind(onNext: { _ in })
-            .disposed(by: bag)
+        
     }
 
     func test_insertTodo_testTodo() throws {
-        print("XXX")
+        
     }
      
     func test_insertTodo_emptyTodo() throws {

@@ -42,13 +42,13 @@ class User: TodoListDelegate, AccountDelegate {
 extension User {
     
     func setForAppending() {
-        todoList.appendOrEdit = todoList.insertTodo
+        todoList.state = .inserting
         todoList.setEdited(LocalTodo())
     }
     
     func setForEdititng(_ todo: LocalTodo) {
         initialEditedTodo = todo
-        todoList.appendOrEdit = todoList.editTodo
+        todoList.state = .editing
         todoList.setEdited(todo)
     }
     
@@ -58,12 +58,12 @@ extension User {
     
     func cancelAppendinOrEdinitg() {
         todoList.updateEdited(initialEditedTodo?.name ?? "")
-        todoList.appendOrEdit?()
+        todoList.appendOrEdit()
         initialEditedTodo = nil
     }
     
     func updateTodoList() {
-        todoList.appendOrEdit?()
+        todoList.appendOrEdit()
         initialEditedTodo = nil
     }
     

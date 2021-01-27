@@ -11,5 +11,14 @@ import CoreData
 
 @objc(StoredTodo)
 public class StoredTodo: NSManagedObject {
+    
+    convenience init(context: NSManagedObjectContext, id: UUID, date: Date, name: String) {
+        
+        self.init(context: context)
+        self.id = id
+        self.date = date
+        self.name = name
+    
+    }
 
 }
