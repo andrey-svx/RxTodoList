@@ -84,7 +84,7 @@ class NSManagedObjectContext_RxTests: XCTestCase {
             })
             .disposed(by: bag)
         
-        waitForExpectations(timeout: 1, handler: nil)
+        waitForExpectations(timeout: 2, handler: nil)
         XCTAssertEqual(fetchedEntities, self.testEntities.reversed())
     }
     

@@ -4,26 +4,42 @@ import RxSwift
 
 extension Reactive where Base: NSManagedObjectContext {
     
+    /**
+    Reactive wrapper for CoreData NSAsynchronousFetchRequest
+    
+    - parameter request: Standard NSFetchRequest used in CoreData
+    - parameter queue: Serial DispatchQueue to protect data from corruption by several read/write operations
+    - returns: Observable array of fetch result
+     */
+    
     func fetch<T>(
         _ request: NSFetchRequest<T>,
         on queue: DispatchQueue = DispatchQueue(label: "LocalSerialQueue")
     ) -> Observable<[T]> {
-        
-        // TODO: Code async fetch
-        
         Observable.create { observer -> Disposable in
-            self.base.performAndWait {
-                do {
-                    let nsObjects = try self.base.fetch(request) 
-                    observer.onNext(nsObjects)
+            let asyncRequest = NSAsynchronousFetchRequest(fetchRequest: request) { result in
+                queue.sync {
+                    observer.onNext(result.finalResult ?? [])
                     observer.onCompleted()
-                } catch {
-                    observer.onError(NSManagedObjectContext.ReactiveError.fetch)
                 }
             }
+            
+            do {
+                try self.base.execute(asyncRequest)
+            } catch {
+                observer.onError(NSManagedObjectContext.ReactiveError.fetch)
+            }
+            
             return Disposables.create()
         }
     }
+    
+    /**
+    Reactive wrapper for CoreData save() operation
+    
+    - parameter queue: Serial DispatchQueue to protect data from corruption by several read/write operations
+    - returns: Observable array of save result. Type Void used for bind(onNext:) compatibility
+     */
     
     func save(
         on queue: DispatchQueue = DispatchQueue(label: "LocalSerialQueue")
@@ -45,6 +61,14 @@ extension Reactive where Base: NSManagedObjectContext {
         }
     }
     
+    /**
+    Reactive wrapper for CoreData delete(_ object: NSManagedObject) and save() operations performed serially
+    
+    - parameter object: Object inheriting from NSManagedObject
+    - parameter queue: Serial DispatchQueue to protect data from corruption by several read/write operations
+    - returns: Observable of delete and save result. Type Void used for bind(onNext:) compatibility
+     */
+    
     func deleteAndSave<T: NSManagedObject>(
         _ object: T,
         on queue: DispatchQueue = DispatchQueue(label: "LocalSerialQueue")
@@ -65,6 +89,14 @@ extension Reactive where Base: NSManagedObjectContext {
             return Disposables.create()
         }
     }
+    
+    /**
+    Reactive wrapper for CoreData NSBatchDeleteRequest operation
+    
+    - parameter className: Class of all entities to be deleted within current NSManagedObjectContext
+    - parameter queue: Serial DispatchQueue to protect data from corruption by several read/write operations
+    - returns: Observable array of executed delete and merge request result. Type Void used for bind(onNext:) compatibility
+     */
     
     func deleteAll<T: NSManagedObject>(
         _ className: T.Type,
