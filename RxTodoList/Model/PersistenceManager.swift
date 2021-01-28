@@ -77,8 +77,7 @@ struct PersistenceManager {
             .map { 
                 let ids = todos.map { $0.id }
                 let objectIDs = storedTodos.map { $0.objectID }
-                let idsTuple = zip(ids, objectIDs)
-                    .compactMap { $0 }
+                let idsTuple = zip(ids, objectIDs).compactMap { $0 }
                 return .success(idsTuple)
             }
             .catchErrorJustReturn(.failure(.unknown))

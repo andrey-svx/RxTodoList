@@ -44,13 +44,11 @@ class PersistenceManagerTests: XCTestCase {
             }
             
         testLocalTodos
-            .forEach {
-                _ = StoredTodo(context: self.context, id: $0.id, date: $0.date, name: $0.name)
-            }
+            .forEach { StoredTodo(context: self.context, id: $0.id, date: $0.date, name: $0.name) }
         
         context.performAndWait { try! context.save() }
         
-        let expectation = self.expectation(description: "FetchTodosExpectation")
+        let expectation = self.expectation(description: "FetchTodos")
         
         manager
             .fetchAllTodos()
@@ -71,7 +69,7 @@ class PersistenceManagerTests: XCTestCase {
         let testTodo = LocalTodo("Test todo")
         var fetchedTodo: LocalTodo?
         
-        let expectation = self.expectation(description: "InsertTodoExpectation")
+        let expectation = self.expectation(description: "InsertTodo")
         
         manager
             .insert(todo: testTodo)
@@ -94,7 +92,7 @@ class PersistenceManagerTests: XCTestCase {
                 return LocalTodo(name)
             }
         
-        let expectation = self.expectation(description: "InsertTodosExpectation")
+        let expectation = self.expectation(description: "InsertTodos")
         
         manager
             .insert(todos: testTodos)
@@ -125,7 +123,7 @@ class PersistenceManagerTests: XCTestCase {
         
         testLocalTodos[0].objectID = testStoredTodos[0].objectID
         
-        let expectation = self.expectation(description: "RemoveTodoExpectation")
+        let expectation = self.expectation(description: "RemoveTodo")
         
         manager
             .remove(todo: testLocalTodos.first!)
@@ -154,7 +152,7 @@ class PersistenceManagerTests: XCTestCase {
         
         var fetchedStoredTodos: [StoredTodo] = []
         
-        let expectation = self.expectation(description: "RemoveAllExpectation")
+        let expectation = self.expectation(description: "RemoveAll")
         
         manager
             .removeAllTodos()

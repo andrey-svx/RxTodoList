@@ -28,7 +28,7 @@ class User: TodoListDelegate, AccountDelegate {
     
     func configure() {
         account.checkUpLogin()
-        todoList.fetchAllStoredTodos()
+        todoList.fetchAllTodos()
     }
     
     #if DEBUG
@@ -41,7 +41,7 @@ class User: TodoListDelegate, AccountDelegate {
 
 extension User {
     
-    func setForAppending() {
+    func setForInserting() {
         todoList.state = .inserting
         todoList.setEdited(LocalTodo())
     }
@@ -58,12 +58,12 @@ extension User {
     
     func cancelAppendinOrEdinitg() {
         todoList.updateEdited(initialEditedTodo?.name ?? "")
-        todoList.appendOrEdit()
+        todoList.insertOrEdit()
         initialEditedTodo = nil
     }
     
     func updateTodoList() {
-        todoList.appendOrEdit()
+        todoList.insertOrEdit()
         initialEditedTodo = nil
     }
     

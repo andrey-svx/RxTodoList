@@ -21,7 +21,7 @@ final class ListViewModel {
         
         let addTapObservable = addTap.asObservable()
             .do(onNext: { [unowned user] _ in
-                user.setForAppending()
+                user.setForInserting()
             })
             .map { _ in Destination.route }
             .share()
