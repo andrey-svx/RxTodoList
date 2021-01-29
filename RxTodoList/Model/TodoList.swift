@@ -55,7 +55,6 @@ class TodoList {
                 testPort?(self?.todos ?? [])
             })
             .disposed(by: bag)
-
     }
     
     #if DEBUG
@@ -92,7 +91,7 @@ extension TodoList {
         self.editedTodo?.update(name)
     }
     
-    private func editTodo(_ testPort: TestPort? = nil) {
+    private func editTodo(testPort: TestPort? = nil) {
         guard var editedTodo = editedTodo,
               let index = todos.firstIndex(where: { $0 == editedTodo })
         else { return }
@@ -123,7 +122,7 @@ extension TodoList {
         }
     }
     
-    private func insertTodo(_ testPort: TestPort? = nil) {
+    private func insertTodo(testPort: TestPort? = nil) {
         guard var editedTodo = editedTodo, !editedTodo.name.isEmpty else {
             testPort?(self.todos)
             return

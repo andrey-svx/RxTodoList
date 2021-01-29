@@ -3,49 +3,90 @@ import RxSwift
 
 class Account {
     
+    typealias AResult = Result<LoginDetails?, Error>
+    
     weak var delegate: AccountDelegate?
     
-    private var loginDetails: LoginDetails? {
+    private var loginDetails: LoginDetails? = nil {
         didSet { delegate?.update(loginDetails: loginDetails) }
     }
     
-    var logOrSign: ((String, String) -> Observable<LoginDetails?>)?
+    var logOrSign: ((String, String) -> Observable<AResult>)?
+    
+    private var isBusy = false {
+        didSet { delegate?.update(isBusy: isBusy) }
+    }
     
     init() {
         
     }
     
     func checkUpLogin() {
-        loginDetails = LoginDetails(username: "current-user", password: "1234")
+        loginDetails = LoginDetails(email: "current-user", password: "1234")
     }
     
-    func logout() -> Observable<LoginDetails?> {
+}
+
+extension Account {
+    
+    func logout() -> Observable<AResult> {
         Observable<LoginDetails?>.just(nil)
             .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .do(onNext: { [weak self] _ in sleep(1); self?.loginDetails = nil })
-            .map { [weak self] _ in self?.loginDetails }
+            .do(onNext: { [weak self] _ in
+                self?.isBusy = true
+                sleep(3)
+                self?.loginDetails = nil
+                self?.isBusy = false
+            })
+            .map { [weak self] _ -> AResult in
+                .success(self?.loginDetails)
+            }
     }
     
-    func loginAs(_ username: String, _ password: String) -> Observable<LoginDetails?> {
-        Observable<(String, String)>
-            .of((username, password))
+    func loginAs(_ email: String, _ password: String) -> Observable<AResult> {
+        Observable<(String, String)>.of((email, password))
             .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .do(onNext: { [weak self] (username, password) in
-                    sleep(1)
-                    self?.loginDetails = LoginDetails(username: username, password: password)
+            .do(onNext: { [weak self] (email, password) in
+                sleep(3)
+                self?.loginDetails = LoginDetails(email: email, password: password)
             })
-            .map { [weak self] _ in self?.loginDetails }
+            .map { [weak self] _ -> AResult in
+                .success(self?.loginDetails)
+            }
     }
     
-    func signupAs(_ username: String, _ password: String) -> Observable<LoginDetails?> {
-        Observable<(String, String)>
-            .of((username, password))
+    func signupAs(_ email: String, _ password: String) -> Observable<AResult> {
+        Observable<(String, String)>.of((email, password))
             .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .do(onNext: { [weak self] (username, password) in
-                    sleep(1)
-                    self?.loginDetails = LoginDetails(username: username, password: password)
+            .do(onNext: { [weak self] (email, password) in
+                sleep(3)
+                self?.loginDetails = LoginDetails(email: email, password: password)
             })
-            .map { [weak self] _ in self?.loginDetails }
+            .map { [weak self] _ -> AResult in
+                .success(self?.loginDetails)
+            }
+    }
+    
+}
+
+extension Account {
+    
+    func uploadTodos(_ todos: Todo) -> Observable<Void> {
+        Observable<Void>.just(())
+    }
+    
+    func downloadTodos() -> Observable<[Todo]> {
+        Observable.just([])
+    }
+    
+}
+
+extension Account {
+    
+    enum Error: Swift.Error {
+        
+        case unknown
+        
     }
     
 }

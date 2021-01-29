@@ -15,12 +15,14 @@ class User: TodoListDelegate, AccountDelegate {
     }()
 
     let loginDetails = BehaviorSubject<LoginDetails?>(value: nil)
+    let isBusy = BehaviorSubject<Bool>(value: false)
     
     lazy var account: Account = {
         let account = Account()
         account.delegate = self
         return account
     }()
+
     
     init() {
         
@@ -71,7 +73,7 @@ extension User {
 
 extension User {
     
-    func logout() -> Observable<LoginDetails?> {
+    func logout() -> Observable<Account.AResult> {
         account.logout()
     }
     

@@ -35,9 +35,7 @@ class NSManagedObjectContext_RxTests: XCTestCase {
 
     override func setUpWithError() throws {
         clearAllEntities(at: context)
-        testEntities = ["First entity",
-                        "Second entity",
-                        "Third entity"]
+        testEntities = ["1st entity", "2nd entity", "3rd entity"]
             .map { name -> TestStoredClass in
                 sleep(1)
                 let entity = TestStoredClass(context: self.context)
@@ -57,7 +55,7 @@ class NSManagedObjectContext_RxTests: XCTestCase {
             try! context.save()
         }
         
-        let expectation = self.expectation(description: "FetchExpectation")
+        let expectation = self.expectation(description: "Fetch")
         
         context.rx
             .fetch(request, on: queue)
@@ -72,7 +70,7 @@ class NSManagedObjectContext_RxTests: XCTestCase {
     }
     
     func test_save() throws {
-        let expectation = self.expectation(description: "SaveExpectation")
+        let expectation = self.expectation(description: "Save")
         
         context.rx
             .save(on: queue)
@@ -95,7 +93,7 @@ class NSManagedObjectContext_RxTests: XCTestCase {
         
         let deletedEntity = testEntities.last!
         
-        let expectation = self.expectation(description: "DeleteExpectation")
+        let expectation = self.expectation(description: "Delete")
         
         context.rx
             .deleteAndSave(deletedEntity, on: queue)
@@ -117,7 +115,7 @@ class NSManagedObjectContext_RxTests: XCTestCase {
             try! self.context.save()
         }
         
-        let expectation = self.expectation(description: "DeleteAllExpectation")
+        let expectation = self.expectation(description: "DeleteAll")
         
         context.rx
             .deleteAll(TestStoredClass.self, on: queue)

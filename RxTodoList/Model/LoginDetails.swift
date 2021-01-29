@@ -2,9 +2,15 @@ import Foundation
 
 struct LoginDetails {
     
-    let username: String
+    let email: String
     let password: String
     
 }
 
-extension LoginDetails: Equatable { }
+extension LoginDetails: Equatable {
+    
+    static func == (lhs: LoginDetails, rhs: LoginDetails) -> Bool {
+            lhs.email == rhs.email
+        }
+
+}

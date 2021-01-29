@@ -8,6 +8,7 @@ final class SettingsViewController: UIViewController, Routable {
     @IBOutlet weak var logoutButton: UIButton!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var signupButton: UIButton!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     private let bag = DisposeBag()
     
@@ -45,6 +46,10 @@ final class SettingsViewController: UIViewController, Routable {
         viewModel.destination
             .observeOn(MainScheduler.instance)
             .bind(onNext: { [weak self] destination in self?.route(to: LogSignViewController.self) })
+            .disposed(by: bag)
+        
+        viewModel.isBusy
+            .drive(activityIndicator.rx.isAnimating)
             .disposed(by: bag)
         
     }
