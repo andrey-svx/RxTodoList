@@ -21,10 +21,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let context = container.newBackgroundContext()
         return context
     }()
+    
+    override init() {
+        
+        FirebaseApp.configure()
+    
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         model.configure()
-        FirebaseApp.configure()
         return true
     }
 

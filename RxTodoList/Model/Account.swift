@@ -2,21 +2,23 @@ import Foundation
 import RxSwift
 import Firebase
 
-class Account {
+final class Account {
     
     typealias AResult = Result<LoginDetails?, Error>
-    
-    weak var delegate: AccountDelegate?
     
     private var loginDetails: LoginDetails? = nil {
         didSet { delegate?.update(loginDetails: loginDetails) }
     }
     
-    var logOrSign: ((String, String) -> Observable<AResult>)?
-    
     private var isBusy = false {
         didSet { delegate?.update(isBusy: isBusy) }
     }
+
+    var logOrSign: ((String, String) -> Observable<AResult>)?
+    
+    weak var delegate: AccountDelegate?
+    
+    private let auth = Auth.auth()
     
     init() {
         
@@ -31,29 +33,24 @@ class Account {
 extension Account {
     
     func logout() -> Observable<AResult> {
-        Observable<LoginDetails?>.just(nil)
-            .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .do(onNext: { [weak self] _ in
-                self?.isBusy = true
-                sleep(3)
-                self?.loginDetails = nil
-                self?.isBusy = false
-            })
-            .map { [weak self] _ -> AResult in
-                .success(self?.loginDetails)
-            }
+        Observable<User?>.create { [weak self] observer -> Disposable in
+            self?.isBusy = true
+            observer.onNext(nil)
+            observer.onCompleted()
+            self?.loginDetails = nil
+            self?.isBusy = false
+            return Disposables.create()
+        }
+        .map { _ in .success(nil) }
     }
     
     func loginAs(_ email: String, _ password: String) -> Observable<AResult> {
-        Observable<(String, String)>.of((email, password))
-            .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .do(onNext: { [weak self] (email, password) in
-                sleep(3)
-                self?.loginDetails = LoginDetails(email: email, password: password)
-            })
-            .map { [weak self] _ -> AResult in
-                .success(self?.loginDetails)
-            }
+        Observable<AResult>.create { [weak self] observer -> Disposable in            
+            return Disposables.create()
+        }
+        .map { [weak self] _ -> AResult in
+            .success(self?.loginDetails)
+        }
     }
     
     func signupAs(_ email: String, _ password: String) -> Observable<AResult> {
