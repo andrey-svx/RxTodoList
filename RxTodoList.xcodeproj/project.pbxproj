@@ -13,7 +13,7 @@
 		5A1074F825B2FCB40022FE64 /* TodoListDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1074F725B2FCB40022FE64 /* TodoListDelegate.swift */; };
 		5A147D4B25855A1300C93749 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A147D4A25855A1300C93749 /* SettingsViewModel.swift */; };
 		5A147D512585619600C93749 /* LoginDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A147D502585619600C93749 /* LoginDetails.swift */; };
-		5A147D552585658900C93749 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A147D542585658900C93749 /* User.swift */; };
+		5A147D552585658900C93749 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A147D542585658900C93749 /* Model.swift */; };
 		5A1BFA9A25C5683B00270F34 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5A1BFA9925C5683B00270F34 /* GoogleService-Info.plist */; };
 		5A1BFA9B25C5683B00270F34 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5A1BFA9925C5683B00270F34 /* GoogleService-Info.plist */; };
 		5A26223A2576461A006C56FA /* TodoListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2622392576461A006C56FA /* TodoListTests.swift */; };
@@ -64,7 +64,7 @@
 		5A1074F725B2FCB40022FE64 /* TodoListDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListDelegate.swift; sourceTree = "<group>"; };
 		5A147D4A25855A1300C93749 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		5A147D502585619600C93749 /* LoginDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDetails.swift; sourceTree = "<group>"; };
-		5A147D542585658900C93749 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		5A147D542585658900C93749 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		5A1BFA9925C5683B00270F34 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5A2622372576461A006C56FA /* RxTodoListTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RxTodoListTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A2622392576461A006C56FA /* TodoListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListTests.swift; sourceTree = "<group>"; };
@@ -138,7 +138,7 @@
 		5A285E8025769E0C00BC528B /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				5A147D542585658900C93749 /* User.swift */,
+				5A147D542585658900C93749 /* Model.swift */,
 				5A7D29FF25ACF19500C09B9D /* TodoList.swift */,
 				5A1074F125B2FC830022FE64 /* Todo.swift */,
 				5A7D2A3525ADDD0500C09B9D /* LocalTodo.swift */,
@@ -474,7 +474,7 @@
 				5ACD2493256C4FC50068AD1A /* ListViewController.swift in Sources */,
 				5A96C2E725B74D120023FEC9 /* AccountDelegate.swift in Sources */,
 				5A5141B9256C4B1C003B2D3A /* SceneDelegate.swift in Sources */,
-				5A147D552585658900C93749 /* User.swift in Sources */,
+				5A147D552585658900C93749 /* Model.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

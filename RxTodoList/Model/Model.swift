@@ -2,7 +2,7 @@ import Foundation
 import CoreData
 import RxSwift
 
-class User: TodoListDelegate, AccountDelegate {
+class Model: TodoListDelegate, AccountDelegate {
     
     let todos = BehaviorSubject<[LocalTodo]>(value: [])
     internal var editedTodo: LocalTodo? = nil
@@ -41,7 +41,7 @@ class User: TodoListDelegate, AccountDelegate {
     
 }
 
-extension User {
+extension Model {
     
     func setForInserting() {
         todoList.state = .inserting
@@ -71,7 +71,7 @@ extension User {
     
 }
 
-extension User {
+extension Model {
     
     func logout() -> Observable<Account.AResult> {
         account.logout()

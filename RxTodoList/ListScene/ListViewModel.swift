@@ -14,7 +14,7 @@ final class ListViewModel {
         selectTap: Signal<LocalTodo>
     ) {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let user = appDelegate.user
+        let user = appDelegate.model
         
         self.todos = user.todos
             .asDriver(onErrorJustReturn: [])

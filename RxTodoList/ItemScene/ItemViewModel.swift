@@ -15,28 +15,28 @@ final class ItemViewModel {
         cancelTap: Signal<()>
     ) {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let user = appDelegate.user
+        let model = appDelegate.model
         
-        let initialText = user.initialEditedTodo?.name ?? ""
+        let initialText = model.initialEditedTodo?.name ?? ""
   
         self.text = textInput.asObservable()
             .skip(2)
             .startWith(initialText)
-            .do(onNext: { [weak user] text in
-                user?.updateEdited(text)
+            .do(onNext: { [weak model] text in
+                model?.updateEdited(text)
             })
             .asDriver(onErrorJustReturn: "")
         
         let saveTapObservable = saveTap.asObservable()
-            .do(onNext: { [weak user] _ in
-                user?.updateTodoList()
+            .do(onNext: { [weak model] _ in
+                model?.updateTodoList()
             })
             .map { Destination.back }
             .share()
         
         let cancelTapObservable = cancelTap.asObservable()
-            .do(onNext: { [weak user] _ in
-                user?.cancelAppendinOrEdinitg()
+            .do(onNext: { [weak model] _ in
+                model?.cancelAppendinOrEdinitg()
             })
             .map { Destination.back }
             .share()

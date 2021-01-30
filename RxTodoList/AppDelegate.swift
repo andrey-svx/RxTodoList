@@ -5,7 +5,7 @@ import Firebase
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    let user = User()
+    let model = Model()
     
     lazy var container: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "StoredDataModel")
@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        user.configure()
+        model.configure()
         FirebaseApp.configure()
         return true
     }

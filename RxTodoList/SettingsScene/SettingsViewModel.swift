@@ -18,10 +18,10 @@ class SettingsViewModel {
         signupTap: Signal<()>
     ) {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let user = appDelegate.user
+        let model = appDelegate.model
         
         let loginDetailsObservable = Observable
-            .of(user.loginDetails)
+            .of(model.loginDetails)
             .flatMap { $0 }
         
         self.title = loginDetailsObservable
@@ -35,8 +35,8 @@ class SettingsViewModel {
             .asDriver(onErrorJustReturn: "")
 
         let logoutTapObservable = logoutTap.asObservable()
-            .flatMap { [unowned user] _ -> Observable<Account.AResult> in
-                user.logout()
+            .flatMap { [unowned model] _ -> Observable<Account.AResult> in
+                model.logout()
             }
             .map { result -> LoginDetails? in
                 if case .success(let details) = result {
@@ -60,17 +60,17 @@ class SettingsViewModel {
             .asDriver(onErrorJustReturn: true)
         
         let loginTapObservable = loginTap.asObservable()
-            .do(onNext: { [weak user] _ in user?.setForLogIn() })
+            .do(onNext: { [weak model] _ in model?.setForLogIn() })
             .map { Destination.route }
         
         let signupTapObservable = signupTap.asObservable()
-            .do(onNext: { [weak user] _ in user?.setForSignUp() })
+            .do(onNext: { [weak model] _ in model?.setForSignUp() })
             .map { Destination.route }
         
         self.destination = Observable.of(loginTapObservable, signupTapObservable)
             .merge()
         
-        self.isBusy = user.isBusy
+        self.isBusy = model.isBusy
             .asDriver(onErrorJustReturn: false)
         
     }
