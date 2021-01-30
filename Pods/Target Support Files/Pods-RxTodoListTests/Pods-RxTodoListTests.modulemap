@@ -1,4 +1,4 @@
-framework module Pods_RxTodoListTests {
+module Pods_RxTodoListTests {
   umbrella header "Pods-RxTodoListTests-umbrella.h"
 
   export *
