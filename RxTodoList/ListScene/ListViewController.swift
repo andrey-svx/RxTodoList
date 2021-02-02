@@ -33,7 +33,7 @@ final class ListViewController: UITableViewController, Routable {
         
         viewModel.destination
             .observeOn(MainScheduler.instance)
-            .bind(onNext: { [weak self] destination in self?.route(to: ItemViewController.self) })
+            .bind { [weak self] destination in self?.route(to: ItemViewController.self) }
             .disposed(by: bag)
     }
     

@@ -53,7 +53,7 @@ final class LogSignViewController: UIViewController, Routable {
             .disposed(by: bag)
         viewModel.destination
             .observeOn(MainScheduler.instance)
-            .bind(onNext: { [weak self] destination in self?.back() })
+            .bind { [weak self] destination in self?.back() }
             .disposed(by: bag)
     }
     

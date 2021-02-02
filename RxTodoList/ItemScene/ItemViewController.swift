@@ -34,10 +34,9 @@ final class ItemViewController: UIViewController, Routable {
         viewModel.text
             .drive(textField.rx.text)
             .disposed(by: bag)
-        
         viewModel.destination
             .observeOn(MainScheduler.instance)
-            .bind(onNext: { [weak self] destination in self?.back() })
+            .bind { [weak self] destination in self?.back() }
             .disposed(by: bag)
         
         textField.becomeFirstResponder()

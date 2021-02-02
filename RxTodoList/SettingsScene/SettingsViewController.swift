@@ -41,7 +41,7 @@ final class SettingsViewController: UIViewController, Routable {
             .disposed(by: bag)
         viewModel.destination
             .observeOn(MainScheduler.instance)
-            .bind(onNext: { [weak self] destination in self?.route(to: LogSignViewController.self) })
+            .bind { [weak self] destination in self?.route(to: LogSignViewController.self) }
             .disposed(by: bag)
         viewModel.isBusy
             .drive(activityIndicator.rx.isAnimating)

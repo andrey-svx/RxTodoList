@@ -27,7 +27,7 @@ class SettingsViewModel {
         self.title = loginDetailsObservable
             .map {
                 if let username = $0?.email {
-                    return "Logged in as \(username)"
+                    return "\(username)"
                 } else {
                     return "Log in or sign up"
                 }
@@ -35,27 +35,15 @@ class SettingsViewModel {
             .asDriver(onErrorJustReturn: "")
 
         let logoutTapObservable = logoutTap.asObservable()
-            .flatMap { [unowned model] _ -> Observable<Account.AResult> in
-                model.logout()
-            }
+            .flatMap { [unowned model] in model.logout() }
             .map { result -> LoginDetails? in
-                if case .success(let details) = result {
-                    return details
-                } else {
-                    return nil
-                }
+                guard case .success(let details) = result else { return nil }
+                return details
             }
         
         self.logoutIsEnabled = Observable.of(loginDetailsObservable, logoutTapObservable)
             .merge()
-            .map {
-                if $0 == nil {
-                    return false
-                } else {
-                    return true
-                }
-//                $0 == nil ? false : true
-            }
+            .map { $0 == nil ? false : true }
             .asDriver(onErrorJustReturn: false)
         
         self.loginIsEnabled = loginDetailsObservable
