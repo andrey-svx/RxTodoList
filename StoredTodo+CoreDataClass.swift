@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 @objc(StoredTodo)
-public class StoredTodo: NSManagedObject, Todo {
+final public class StoredTodo: NSManagedObject, Todo {
     
     convenience init(context: NSManagedObjectContext, id: UUID, date: Date, name: String) {
         
@@ -18,6 +18,17 @@ public class StoredTodo: NSManagedObject, Todo {
         self.id = id
         self.date = date
         self.name = name
+    
+    }
+    
+    convenience init(context: NSManagedObjectContext, localTodo: LocalTodo) {
+        
+        self.init(
+            context: context,
+            id: localTodo.id,
+            date: localTodo.date,
+            name: localTodo.name
+        )
     
     }
 

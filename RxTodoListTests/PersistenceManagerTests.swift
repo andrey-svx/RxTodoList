@@ -42,12 +42,9 @@ class PersistenceManagerTests: XCTestCase {
                 sleep(1)
                 return LocalTodo(name)
             }
-            
         testLocalTodos
             .forEach { StoredTodo(context: self.context, id: $0.id, date: $0.date, name: $0.name) }
-        
         context.performAndWait { try! context.save() }
-        
         let expectation = self.expectation(description: "FetchTodos")
         
         manager
@@ -62,13 +59,11 @@ class PersistenceManagerTests: XCTestCase {
         
         waitForExpectations(timeout: 1, handler: nil)
         XCTAssertEqual(fetchedTodos, testLocalTodos.reversed())
-            
     }
     
     func test_insertTodo() throws {
         let testTodo = LocalTodo("Test todo")
         var fetchedTodo: LocalTodo?
-        
         let expectation = self.expectation(description: "InsertTodo")
         
         manager
@@ -88,10 +83,8 @@ class PersistenceManagerTests: XCTestCase {
     func test_insertTodos() throws {
         testTodos = ["1st Todo", "2nd Todo", "3rd Todo"]
             .map { name -> LocalTodo in
-                sleep(1)
-                return LocalTodo(name)
+                sleep(1); return LocalTodo(name)
             }
-        
         let expectation = self.expectation(description: "InsertTodos")
         
         manager
@@ -108,21 +101,14 @@ class PersistenceManagerTests: XCTestCase {
     }
     
     func test_removeTodo() throws {
-        
         var testLocalTodos = ["1st Todo", "2nd Todo", "3rd Todo"]
             .map { name -> LocalTodo in
-                sleep(1)
-                return LocalTodo(name)
+                sleep(1); return LocalTodo(name)
             }
-            
         let testStoredTodos: [StoredTodo] = testLocalTodos
             .map { StoredTodo(context: self.context, id: $0.id, date: $0.date, name: $0.name) }
-        
-        
         context.performAndWait { try! context.save() }
-        
         testLocalTodos[0].objectID = testStoredTodos[0].objectID
-        
         let expectation = self.expectation(description: "RemoveTodo")
         
         manager
@@ -147,11 +133,8 @@ class PersistenceManagerTests: XCTestCase {
             .forEach {
                 _ = StoredTodo(context: context, id: $0.id, date: $0.date, name: $0.name)
             }
-        
         context.performAndWait { try! context.save() }
-        
         var fetchedStoredTodos: [StoredTodo] = []
-        
         let expectation = self.expectation(description: "RemoveAll")
         
         manager

@@ -16,7 +16,6 @@ class TodoListTests: XCTestCase {
         return appDelegate.context        
     }()
     
-    
     override func setUpWithError() throws {
         clearAllEntities(at: context)
         testTodos = ["1st Todo", "2nd Todo", "3rd Todo"]

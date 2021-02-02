@@ -5,7 +5,9 @@ import Foundation
 final class LogSignViewModel {
     
     enum Destination {
+        
         case dummy
+    
     }
     
     let warning: Driver<String>

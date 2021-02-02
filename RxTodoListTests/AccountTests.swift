@@ -3,7 +3,6 @@ import CoreData
 import RxSwift
 import RxRelay
 
-
 @testable
 import RxTodoList
 

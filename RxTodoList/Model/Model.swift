@@ -2,7 +2,7 @@ import Foundation
 import CoreData
 import RxSwift
 
-class Model: TodoListDelegate, AccountDelegate {
+final class Model: TodoListDelegate, AccountDelegate {
     
     let todos = BehaviorSubject<[LocalTodo]>(value: [])
     internal var editedTodo: LocalTodo? = nil

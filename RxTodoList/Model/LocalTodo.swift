@@ -24,6 +24,17 @@ struct LocalTodo: Todo {
         
     }
     
+    init(storedTodo: StoredTodo) {
+        
+        self.init(
+            storedTodo.name,
+            id: storedTodo.id,
+            date: storedTodo.date,
+            objectID: storedTodo.objectID
+        )
+    
+    }
+    
     mutating func update(_ name: String) {
         self.name = name
     }

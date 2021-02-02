@@ -28,7 +28,7 @@ struct PersistenceManager {
             .fetch(request, on: queue)
             .map { storedTodos -> [LocalTodo] in
                 storedTodos
-                    .map { LocalTodo($0.name, id: $0.id, date: $0.date, objectID: $0.objectID) }
+                    .map { LocalTodo(storedTodo: $0) }
             }
             .map { .success($0) }
             .catchErrorJustReturn(.failure(.unknown))
@@ -51,11 +51,7 @@ struct PersistenceManager {
     }
     
     mutating func insert(todo: LocalTodo) -> Observable<PMInsertOneResult> {
-        let storedTodo = StoredTodo(context: context)
-        storedTodo.name = todo.name
-        storedTodo.id = todo.id
-        storedTodo.date = todo.date
-        
+        let storedTodo = StoredTodo(context: context, localTodo: todo)
         return context.rx
             .save(on: queue)
             .map { _ in .success(storedTodo.objectID) }
@@ -64,14 +60,7 @@ struct PersistenceManager {
     
     mutating func insert(todos: [LocalTodo]) -> Observable<PMInsertManyResult> {
         let storedTodos = todos
-            .map { todo -> StoredTodo in
-                let storedTodo = StoredTodo(context: context)
-                storedTodo.name = todo.name
-                storedTodo.id = todo.id
-                storedTodo.date = todo.date
-                return storedTodo
-            }
-        
+            .map { StoredTodo(context: context, localTodo: $0) }
         return context.rx
             .save(on: queue)
             .map { 

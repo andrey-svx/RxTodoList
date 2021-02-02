@@ -2,7 +2,7 @@ import CoreData
 import RxSwift
 import Foundation
 
-class TodoList {
+final class TodoList {
     
     var state: State = .none
     
@@ -63,17 +63,17 @@ class TodoList {
     }
     #endif
 
-}
-
-extension TodoList {
-    
     enum State {
         
         case inserting
         case editing
         case none
-    
+        
     }
+    
+}
+
+extension TodoList {
     
     func insertOrEdit(_ testPort: TestPort? = nil) {
         switch state {

@@ -25,7 +25,9 @@ final class Account {
     }
     
     func checkUpLogin() {
+        
         loginDetails = LoginDetails(email: "current-user", password: "1234")
+    
     }
     
 }
@@ -33,23 +35,30 @@ final class Account {
 extension Account {
     
     func logout() -> Observable<AResult> {
-        Observable<User?>.create { [weak self] observer -> Disposable in
-            self?.isBusy = true
-            observer.onNext(nil)
-            observer.onCompleted()
-            self?.loginDetails = nil
+        Observable<Void>.of(())
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+            .do(onNext: { [weak self] _ in
+                self?.isBusy = true
+                sleep(3)
+                self?.loginDetails = nil
+            })
+        .map { [weak self] _ in
             self?.isBusy = false
-            return Disposables.create()
+            return .success(self?.loginDetails)
         }
-        .map { _ in .success(nil) }
     }
     
     func loginAs(_ email: String, _ password: String) -> Observable<AResult> {
-        Observable<AResult>.create { [weak self] observer -> Disposable in            
-            return Disposables.create()
-        }
+        Observable<(String, String)>.of((email, password))
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+            .do(onNext: { [weak self] (email, password) in
+                self?.isBusy = true
+                sleep(3)
+                self?.loginDetails = LoginDetails(email: email, password: password)
+            })
         .map { [weak self] _ -> AResult in
-            .success(self?.loginDetails)
+            self?.isBusy = false
+            return .success(self?.loginDetails)
         }
     }
     
@@ -57,11 +66,13 @@ extension Account {
         Observable<(String, String)>.of((email, password))
             .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .do(onNext: { [weak self] (email, password) in
+                self?.isBusy = true
                 sleep(3)
                 self?.loginDetails = LoginDetails(email: email, password: password)
             })
             .map { [weak self] _ -> AResult in
-                .success(self?.loginDetails)
+                self?.isBusy = false
+                return .success(self?.loginDetails)
             }
     }
     
