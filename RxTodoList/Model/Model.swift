@@ -22,11 +22,6 @@ final class Model: TodoListDelegate, AccountDelegate {
         account.delegate = self
         return account
     }()
-
-    
-    init() {
-        
-    }
     
     func configure() {
         account.checkUpLogin()
@@ -77,12 +72,24 @@ extension Model {
         account.logout()
     }
     
+    func logOrSign() -> Observable<Account.AResult> {
+        account.logOrSign()
+    }
+    
+    func updateEmail(_ email: String) {
+        account.updateEmail(email)
+    }
+    
+    func updatePassword(_ password: String) {
+        account.updatePassword(password)
+    }
+    
     func setForLogIn() {
-        account.logOrSign = account.loginAs(_:_:)
+        account.logOrSign = account.logIn
     }
     
     func setForSignUp() {
-        account.logOrSign = account.signupAs(_:_:)
+        account.logOrSign = account.signUp
     }
     
 }

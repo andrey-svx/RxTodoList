@@ -22,24 +22,16 @@ final class ItemViewModel {
         self.text = textInput.asObservable()
             .skip(2)
             .startWith(initialText)
-            .do(onNext: { [weak model] text in
-                model?.updateEdited(text)
-            })
+            .do { [weak model] text in model?.updateEdited(text) }
             .asDriver(onErrorJustReturn: "")
         
         let saveTapObservable = saveTap.asObservable()
-            .do(onNext: { [weak model] _ in
-                model?.updateTodoList()
-            })
+            .do { [weak model] _ in model?.updateTodoList() }
             .map { Destination.back }
-            .share()
         
         let cancelTapObservable = cancelTap.asObservable()
-            .do(onNext: { [weak model] _ in
-                model?.cancelAppendinOrEdinitg()
-            })
+            .do { [weak model] _ in model?.cancelAppendinOrEdinitg() }
             .map { Destination.back }
-            .share()
         
         self.destination = Observable.of(saveTapObservable, cancelTapObservable)
             .merge()

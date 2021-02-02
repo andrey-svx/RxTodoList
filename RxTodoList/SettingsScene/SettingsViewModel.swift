@@ -20,9 +20,9 @@ class SettingsViewModel {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let model = appDelegate.model
         
-        let loginDetailsObservable = Observable
-            .of(model.loginDetails)
-            .flatMap { $0 }
+        let loginDetailsObservable = model.loginDetails
+            .asObservable()
+            .share(replay: 1, scope: .whileConnected)
         
         self.title = loginDetailsObservable
             .map {
@@ -48,7 +48,14 @@ class SettingsViewModel {
         
         self.logoutIsEnabled = Observable.of(loginDetailsObservable, logoutTapObservable)
             .merge()
-            .map { $0 == nil ? false : true }
+            .map {
+                if $0 == nil {
+                    return false
+                } else {
+                    return true
+                }
+//                $0 == nil ? false : true
+            }
             .asDriver(onErrorJustReturn: false)
         
         self.loginIsEnabled = loginDetailsObservable

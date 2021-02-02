@@ -30,24 +30,19 @@ final class SettingsViewController: UIViewController, Routable {
         viewModel.title
             .drive(titleLabel.rx.text)
             .disposed(by: bag)
-        
         viewModel.logoutIsEnabled
             .drive(logoutButton.rx.isEnabled)
             .disposed(by: bag)
-        
         viewModel.loginIsEnabled
             .drive(loginButton.rx.isEnabled)
             .disposed(by: bag)
-        
         viewModel.signupIsEnabled
             .drive(signupButton.rx.isEnabled)
             .disposed(by: bag)
-        
         viewModel.destination
             .observeOn(MainScheduler.instance)
             .bind(onNext: { [weak self] destination in self?.route(to: LogSignViewController.self) })
             .disposed(by: bag)
-        
         viewModel.isBusy
             .drive(activityIndicator.rx.isAnimating)
             .disposed(by: bag)

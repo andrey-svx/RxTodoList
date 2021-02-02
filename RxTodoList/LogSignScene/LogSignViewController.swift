@@ -20,11 +20,13 @@ final class LogSignViewController: UIViewController, Routable {
             usernameInput: usernameField.rx
                 .textInput
                 .text
-                .asDriver(),
+                .map { $0 ?? "" }
+                .asDriver(onErrorJustReturn: ""),
             passwordInput: passwordField.rx
                 .textInput
                 .text
-                .asDriver(),
+                .map { $0 ?? "" }
+                .asDriver(onErrorJustReturn: ""),
             logsignTap: logsignButton.rx
                 .tap
                 .asSignal(),
@@ -33,11 +35,21 @@ final class LogSignViewController: UIViewController, Routable {
                 .asSignal()
         )
         
-        viewModel.warningIsHidden
+        viewModel.email
+            .drive(usernameField.rx.text)
+            .disposed(by: bag)
+        viewModel.password
+            .drive(passwordField.rx.text)
+            .disposed(by: bag)
+        viewModel.warning
+            .map { $0.isEmpty }
             .drive(warningLabel.rx.isHidden)
             .disposed(by: bag)
         viewModel.warning
             .drive(warningLabel.rx.text)
+            .disposed(by: bag)
+        viewModel.isBusy
+            .drive(activityIndicator.rx.isAnimating)
             .disposed(by: bag)
         viewModel.destination
             .observeOn(MainScheduler.instance)

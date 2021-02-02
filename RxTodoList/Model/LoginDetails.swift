@@ -2,8 +2,9 @@ import Foundation
 
 struct LoginDetails {
     
-    let email: String
-    let password: String
+    var email: String = ""
+    var password: String = ""
+    var uid: String? = ""
     
 }
 

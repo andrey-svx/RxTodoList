@@ -10,26 +10,75 @@ final class LogSignViewModel {
     
     }
     
+    let email: Driver<String>
+    let password: Driver<String>
+    
     let warning: Driver<String>
-    let warningIsHidden: Driver<Bool>
+    
+    let isBusy: Driver<Bool>
     
     let destination: Observable<Destination>
     
     init(
-        usernameInput: Driver<String?>,
-        passwordInput: Driver<String?>,
+        usernameInput: Driver<String>,
+        passwordInput: Driver<String>,
         logsignTap: Signal<()>,
         dismissTap: Signal<()>
     ) {
-        self.warningIsHidden = Observable.just(true)
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let model = appDelegate.model
+        
+        self.email = usernameInput.asObservable()
+            .skip(2)
+            .do { [weak model] text in model?.updateEmail(text) }
+            .asDriver(onErrorJustReturn: "")
+        
+        self.password = passwordInput.asObservable()
+            .skip(2)
+            .do { [weak model] text in model?.updatePassword(text) }
+            .asDriver(onErrorJustReturn: "")
+        
+        let logsignTapObservable = logsignTap.asObservable()
+            .flatMap { [unowned model] _ in model.logOrSign() }
+            .share()
+        
+        self.warning = logsignTapObservable
+            .filter {
+                if case .failure( _) = $0 {
+                    return true
+                } else {
+                    return false
+                }
+            }
+            .startWith(.success(nil))
+            .map{
+                if case .failure(let error) = $0 {
+                    return error.localizedDescription
+                } else {
+                    return ""
+                }
+            }
+            .asDriver(onErrorJustReturn: "Unknown Warning")
+        
+        self.isBusy = model.isBusy
             .asDriver(onErrorJustReturn: false)
         
-        self.warning = Observable.just("No warning for now")
-            .asDriver(onErrorJustReturn: "Empty")
-        
-        self.destination = Observable.of(logsignTap.asObservable(), dismissTap.asObservable())
+        self.destination = Observable.of(
+            logsignTapObservable
+                .filter {
+                    if case .success( _) = $0 {
+                        return true
+                    } else {
+                        return false
+                    }
+                }
+                .map { _ in () },
+            dismissTap.asObservable()
+        )
             .merge()
             .map { Destination.dummy }
+        
     }
     
 }

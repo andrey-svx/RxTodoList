@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "A6EA9A34-BB6C-460F-80DC-D708726ABAFC"
+   type = "0"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "49BFF5D9-E22E-4225-B0D8-FEA7BACD0BE1"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RxTodoList/LogSignScene/LogSignViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "34"
+            endingLineNumber = "34"
+            landmarkName = "init(usernameInput:passwordInput:logsignTap:dismissTap:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "49BFF5D9-E22E-4225-B0D8-FEA7BACD0BE1 - cce9c7b23bf09eb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RxTodoList.LogSignViewModel.init(usernameInput: RxCocoa.SharedSequence&lt;RxCocoa.DriverSharingStrategy, Swift.String&gt;, passwordInput: RxCocoa.SharedSequence&lt;RxCocoa.DriverSharingStrategy, Swift.String&gt;, logsignTap: RxCocoa.SharedSequence&lt;RxCocoa.SignalSharingStrategy, ()&gt;, dismissTap: RxCocoa.SharedSequence&lt;RxCocoa.SignalSharingStrategy, ()&gt;) -&gt; RxTodoList.LogSignViewModel"
+                  moduleName = "RxTodoList"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/andrey.isaev/Documents/%D0%9E%D0%B1%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5%20XCode/%D0%A1%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%D0%B5%20%D0%B8%D0%B7%D1%83%D1%87%D0%B5%D0%BD%D0%B5/RxTodoList/RxTodoList/LogSignScene/LogSignViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "34"
+                  endingLineNumber = "34"
+                  offsetFromSymbolStart = "859">
+               </Location>
+               <Location
+                  uuid = "49BFF5D9-E22E-4225-B0D8-FEA7BACD0BE1 - cce9c7b23bf09eb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RxTodoList.LogSignViewModel.init(usernameInput: RxCocoa.SharedSequence&lt;RxCocoa.DriverSharingStrategy, Swift.String&gt;, passwordInput: RxCocoa.SharedSequence&lt;RxCocoa.DriverSharingStrategy, Swift.String&gt;, logsignTap: RxCocoa.SharedSequence&lt;RxCocoa.SignalSharingStrategy, ()&gt;, dismissTap: RxCocoa.SharedSequence&lt;RxCocoa.SignalSharingStrategy, ()&gt;) -&gt; RxTodoList.LogSignViewModel"
+                  moduleName = "RxTodoList"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/andrey.isaev/Documents/%D0%9E%D0%B1%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5%20XCode/%D0%A1%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%D0%B5%20%D0%B8%D0%B7%D1%83%D1%87%D0%B5%D0%BD%D0%B5/RxTodoList/RxTodoList/LogSignScene/LogSignViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "34"
+                  endingLineNumber = "34"
+                  offsetFromSymbolStart = "951">
+               </Location>
+               <Location
+                  uuid = "49BFF5D9-E22E-4225-B0D8-FEA7BACD0BE1 - 1cd1ff5b5fd56ec"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.String) -&gt; () in RxTodoList.LogSignViewModel.init(usernameInput: RxCocoa.SharedSequence&lt;RxCocoa.DriverSharingStrategy, Swift.String&gt;, passwordInput: RxCocoa.SharedSequence&lt;RxCocoa.DriverSharingStrategy, Swift.String&gt;, logsignTap: RxCocoa.SharedSequence&lt;RxCocoa.SignalSharingStrategy, ()&gt;, dismissTap: RxCocoa.SharedSequence&lt;RxCocoa.SignalSharingStrategy, ()&gt;) -&gt; RxTodoList.LogSignViewModel"
+                  moduleName = "RxTodoList"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/andrey.isaev/Documents/%D0%9E%D0%B1%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5%20XCode/%D0%A1%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%D0%B5%20%D0%B8%D0%B7%D1%83%D1%87%D0%B5%D0%BD%D0%B5/RxTodoList/RxTodoList/LogSignScene/LogSignViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "34"
+                  endingLineNumber = "34"
+                  offsetFromSymbolStart = "101">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "41855216-0DBE-4912-B14C-22D54DA1551E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RxTodoList/LogSignScene/LogSignViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
+            landmarkName = "init(usernameInput:passwordInput:logsignTap:dismissTap:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "41855216-0DBE-4912-B14C-22D54DA1551E - cce9c7b23bf094e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RxTodoList.LogSignViewModel.init(usernameInput: RxCocoa.SharedSequence&lt;RxCocoa.DriverSharingStrategy, Swift.String&gt;, passwordInput: RxCocoa.SharedSequence&lt;RxCocoa.DriverSharingStrategy, Swift.String&gt;, logsignTap: RxCocoa.SharedSequence&lt;RxCocoa.SignalSharingStrategy, ()&gt;, dismissTap: RxCocoa.SharedSequence&lt;RxCocoa.SignalSharingStrategy, ()&gt;) -&gt; RxTodoList.LogSignViewModel"
+                  moduleName = "RxTodoList"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/andrey.isaev/Documents/%D0%9E%D0%B1%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5%20XCode/%D0%A1%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%D0%B5%20%D0%B8%D0%B7%D1%83%D1%87%D0%B5%D0%BD%D0%B5/RxTodoList/RxTodoList/LogSignScene/LogSignViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "39"
+                  endingLineNumber = "39"
+                  offsetFromSymbolStart = "2357">
+               </Location>
+               <Location
+                  uuid = "41855216-0DBE-4912-B14C-22D54DA1551E - cce9c7b23bf094e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RxTodoList.LogSignViewModel.init(usernameInput: RxCocoa.SharedSequence&lt;RxCocoa.DriverSharingStrategy, Swift.String&gt;, passwordInput: RxCocoa.SharedSequence&lt;RxCocoa.DriverSharingStrategy, Swift.String&gt;, logsignTap: RxCocoa.SharedSequence&lt;RxCocoa.SignalSharingStrategy, ()&gt;, dismissTap: RxCocoa.SharedSequence&lt;RxCocoa.SignalSharingStrategy, ()&gt;) -&gt; RxTodoList.LogSignViewModel"
+                  moduleName = "RxTodoList"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/andrey.isaev/Documents/%D0%9E%D0%B1%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5%20XCode/%D0%A1%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%D0%B5%20%D0%B8%D0%B7%D1%83%D1%87%D0%B5%D0%BD%D0%B5/RxTodoList/RxTodoList/LogSignScene/LogSignViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "39"
+                  endingLineNumber = "39"
+                  offsetFromSymbolStart = "2449">
+               </Location>
+               <Location
+                  uuid = "41855216-0DBE-4912-B14C-22D54DA1551E - 21b953e961258c48"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (Swift.String) -&gt; () in RxTodoList.LogSignViewModel.init(usernameInput: RxCocoa.SharedSequence&lt;RxCocoa.DriverSharingStrategy, Swift.String&gt;, passwordInput: RxCocoa.SharedSequence&lt;RxCocoa.DriverSharingStrategy, Swift.String&gt;, logsignTap: RxCocoa.SharedSequence&lt;RxCocoa.SignalSharingStrategy, ()&gt;, dismissTap: RxCocoa.SharedSequence&lt;RxCocoa.SignalSharingStrategy, ()&gt;) -&gt; RxTodoList.LogSignViewModel"
+                  moduleName = "RxTodoList"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/andrey.isaev/Documents/%D0%9E%D0%B1%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5%20XCode/%D0%A1%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%D0%B5%20%D0%B8%D0%B7%D1%83%D1%87%D0%B5%D0%BD%D0%B5/RxTodoList/RxTodoList/LogSignScene/LogSignViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "39"
+                  endingLineNumber = "39"
+                  offsetFromSymbolStart = "101">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A863ACAD-0F8A-44CD-8DF0-F1929A4EE23D"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RxTodoList/Model/Model.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "80"
+            endingLineNumber = "80"
+            landmarkName = "updateEmail(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "672735BD-59C9-41C8-8131-8E0B2304B6C7"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RxTodoList/Model/Model.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
+            landmarkName = "updatePassword(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "FDF61EB5-C174-4B01-B54B-7DC0CF5CACC5"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RxTodoList/Model/Account.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
+            landmarkName = "updateEmail(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1536D57E-948F-44D5-916C-DAD4BC326CF2"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RxTodoList/SettingsScene/SettingsViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
+            landmarkName = "init(logoutTap:loginTap:signupTap:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E50E8ACF-256E-4388-87E6-55F68DAE3AAC"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RxTodoList/SettingsScene/SettingsViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
+            landmarkName = "init(logoutTap:loginTap:signupTap:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "E50E8ACF-256E-4388-87E6-55F68DAE3AAC - 5a74bb5939ff73f5"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RxTodoList.SettingsViewModel.init(logoutTap: RxCocoa.SharedSequence&lt;RxCocoa.SignalSharingStrategy, ()&gt;, loginTap: RxCocoa.SharedSequence&lt;RxCocoa.SignalSharingStrategy, ()&gt;, signupTap: RxCocoa.SharedSequence&lt;RxCocoa.SignalSharingStrategy, ()&gt;) -&gt; RxTodoList.SettingsViewModel"
+                  moduleName = "RxTodoList"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/andrey.isaev/Documents/%D0%9E%D0%B1%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5%20XCode/%D0%A1%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%D0%B5%20%D0%B8%D0%B7%D1%83%D1%87%D0%B5%D0%BD%D0%B5/RxTodoList/RxTodoList/SettingsScene/SettingsViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "52"
+                  endingLineNumber = "52"
+                  offsetFromSymbolStart = "3552">
+               </Location>
+               <Location
+                  uuid = "E50E8ACF-256E-4388-87E6-55F68DAE3AAC - 145b0785d071169d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #5 (Swift.Optional&lt;RxTodoList.LoginDetails&gt;) -&gt; Swift.Bool in RxTodoList.SettingsViewModel.init(logoutTap: RxCocoa.SharedSequence&lt;RxCocoa.SignalSharingStrategy, ()&gt;, loginTap: RxCocoa.SharedSequence&lt;RxCocoa.SignalSharingStrategy, ()&gt;, signupTap: RxCocoa.SharedSequence&lt;RxCocoa.SignalSharingStrategy, ()&gt;) -&gt; RxTodoList.SettingsViewModel"
+                  moduleName = "RxTodoList"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/andrey.isaev/Documents/%D0%9E%D0%B1%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5%20XCode/%D0%A1%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%D0%B5%20%D0%B8%D0%B7%D1%83%D1%87%D0%B5%D0%BD%D0%B5/RxTodoList/RxTodoList/SettingsScene/SettingsViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "52"
+                  endingLineNumber = "52"
+                  offsetFromSymbolStart = "42">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8ACF602B-651D-4E92-B0BE-8819B68AE580"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RxTodoList/SettingsScene/SettingsViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
+            landmarkName = "init(logoutTap:loginTap:signupTap:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3D0B363C-323C-4B5E-AE53-7CE5E464AC83"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RxTodoList/SettingsScene/SettingsViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
+            landmarkName = "init(logoutTap:loginTap:signupTap:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
