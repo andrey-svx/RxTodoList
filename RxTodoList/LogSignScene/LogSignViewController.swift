@@ -9,6 +9,7 @@ final class LogSignViewController: UIViewController, Routable {
     @IBOutlet weak var warningLabel: UILabel!
     @IBOutlet weak var logsignButton: UIButton!
     @IBOutlet weak var dismissButton: UIButton!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     private let bag = DisposeBag()
     

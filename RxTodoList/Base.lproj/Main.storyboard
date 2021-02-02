@@ -237,10 +237,15 @@
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                 <state key="normal" title="Dismiss"/>
                             </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="sLe-uL-ewG">
+                                <rect key="frame" x="188.5" y="429.5" width="37" height="37"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="0O2-rg-O6D"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="sLe-uL-ewG" firstAttribute="centerX" secondItem="jzc-4o-Yfd" secondAttribute="centerX" id="0dD-MB-VE6"/>
+                            <constraint firstItem="sLe-uL-ewG" firstAttribute="centerY" secondItem="jzc-4o-Yfd" secondAttribute="centerY" id="Fej-3x-J85"/>
                             <constraint firstItem="Z10-6r-RLb" firstAttribute="top" secondItem="rK3-hp-gQv" secondAttribute="bottom" constant="10" id="UfL-ca-idp"/>
                             <constraint firstItem="Z10-6r-RLb" firstAttribute="width" secondItem="jzc-4o-Yfd" secondAttribute="width" multiplier="0.75" id="dxN-E4-aUa"/>
                             <constraint firstItem="Z10-6r-RLb" firstAttribute="centerX" secondItem="jzc-4o-Yfd" secondAttribute="centerX" id="jV6-v5-qqr"/>
@@ -249,6 +254,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="sLe-uL-ewG" id="SWL-YX-EoG"/>
                         <outlet property="dismissButton" destination="rK3-hp-gQv" id="KQx-V4-Jnh"/>
                         <outlet property="loginButton" destination="TL5-LZ-0Vm" id="T3t-Oe-ZiM"/>
                         <outlet property="logsignButton" destination="HFr-mf-yn9" id="gwn-px-Npb"/>
