@@ -1,5 +1,4 @@
 import Foundation
-import RxRelay
 import RxCocoa
 import RxSwift
 
