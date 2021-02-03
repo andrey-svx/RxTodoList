@@ -68,7 +68,7 @@ extension Model {
 
 extension Model {
     
-    func logout() -> Observable<Account.AResult> {
+    func logout() -> Observable<Account.LoggingResult> {
         let todos = (try? self.todos.value()) ?? []
         return upload(todos)
             .flatMap { [unowned self] _ in self.account.logout() }
@@ -79,24 +79,35 @@ extension Model {
             })
     }
     
-    func logOrSign(_ username: String, _ password: String) -> Observable<Account.AResult> {
+    func logOrSign(_ username: String, _ password: String) -> Observable<Account.LoggingResult> {
         account
             .logOrSign(username, password)
             .flatMap { [unowned self] result -> Observable<(String?, [LocalTodo])> in
                 if case .success(let name) = result {
-                    let nameObservable = Observable.of(name)
-                    return Observable<(String?, [LocalTodo])>.zip(nameObservable, self.download()) { ($0, $1) }
+                    return Observable<(String?, [LocalTodo])>
+                        .zip(
+                            Observable.of(name),
+                            self.download()
+                        ) { ($0, $1) }
                 } else {
-                    let nameObservable = Observable<String?>.of(nil)
-                    let emptyArrayObservable = Observable<[LocalTodo]>.of([])
-                    return Observable<(String?, [LocalTodo])>.zip(nameObservable, emptyArrayObservable) { ($0, $1) }
+                    return Observable<(String?, [LocalTodo])>
+                        .zip(
+                            Observable<String?>.of(nil),
+                            Observable<[LocalTodo]>.of([])
+                        ) { ($0, $1) }
                 }
             }
             .do { [unowned self] (name, todos) in
                 self.todoList.deleteAllTodos()
                 self.todoList.insertAllTodos(todos)
             }
-            .map { name, _ in .success(name) }
+            .map { name, _ in
+                if let name = name {
+                    return .success(name)
+                } else {
+                    return .failure(Account.Error.unknown)
+                }
+            }
     }
     
     func setForLogIn() {
@@ -111,29 +122,9 @@ extension Model {
 
 extension Model {
     
-    private func wrapToFirebase(_ todo: LocalTodo) -> [String: Any] {
-        var firebaseCompatible: [String: Any] = [:]
-        firebaseCompatible["id"] = todo.id.uuidString
-        let date = todo.date
-        let timeInterval = date.timeIntervalSince1970
-        firebaseCompatible["date"] = timeInterval
-        firebaseCompatible["name"] = todo.name
-        return firebaseCompatible
-    }
-    
-    private func unwrapFromFirebase(_ todo: [String: Any]) -> LocalTodo {
-        let date = Date(timeIntervalSince1970: todo["date"] as! TimeInterval)
-        return LocalTodo(
-            todo["name"] as! String,
-            id: UUID(uuidString: todo["id"] as! String)!,
-            date: date,
-            objectID: nil
-        )
-    }
-    
     func upload(_ todos: [LocalTodo]) -> Observable<Void> {
         isBusy.onNext(true)
-        let fbTodos = todos.map { wrapToFirebase($0) }
+        let fbTodos = todos.map { FirebaseLocalConverter.wrapToFirebase($0) }
         return account
             .uploadTodos(fbTodos)
             .observeOn(MainScheduler.instance)
@@ -144,9 +135,10 @@ extension Model {
         isBusy.onNext(true)
         return account
             .downloadTodos()
-            .map { $0.map { [unowned self] fbTodo in self.unwrapFromFirebase(fbTodo) } }
+            .map { $0.map { FirebaseLocalConverter.unwrapFromFirebase($0) } }
             .observeOn(MainScheduler.instance)
             .do(onNext: { [weak self] _ in self?.isBusy.onNext(false) })
     }
     
 }
+

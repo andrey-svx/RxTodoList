@@ -4,7 +4,7 @@ import Firebase
 
 final class Account {
     
-    typealias AResult = Result<String?, Error>
+    typealias LoggingResult = Result<String?, Error>
     
     var state: State = .none
     
@@ -12,11 +12,7 @@ final class Account {
         didSet { delegate?.update(username: loginDetails?.email) }
     }
     
-    private var isBusy = false {
-        didSet { delegate?.update(isBusy: isBusy) }
-    }
-
-    var logOrSign: ((String, String) -> Observable<AResult>) = { _, _ in
+    var logOrSign: ((String, String) -> Observable<LoggingResult>) = { _, _ in
         fatalError("Did not set function!")
     }
     
@@ -26,8 +22,6 @@ final class Account {
     private let dbReference = Database.database().reference()
     
     func checkUpLogin() {
-        
-//        loginDetails = LoginDetails(email: "Test user", uid: nil)
     
     }
     
@@ -43,7 +37,7 @@ final class Account {
 
 extension Account {
     
-    func logout() -> Observable<AResult> {
+    func logout() -> Observable<LoggingResult> {
         Observable<Void>.create { [weak self] observer in
             do {
                 try self?.authorization.signOut()
@@ -59,17 +53,14 @@ extension Account {
         .catchErrorJustReturn(.failure(Error.unknown))
     }
     
-    func logIn(_ username: String, _ password: String) -> Observable<AResult> {
-        self.isBusy = true
+    func logIn(_ username: String, _ password: String) -> Observable<LoggingResult> {
         return Observable<User>.create { [weak self] observer in
             self?.authorization.signIn(withEmail: username, password: password) { result, error in
                 if let error = error {
                     observer.onError(error)
-                    self?.isBusy = false
                 } else if let result = result {
                     observer.onNext(result.user)
                     observer.onCompleted()
-                    self?.isBusy = false
                 }
             }
             return Disposables.create()
@@ -77,21 +68,18 @@ extension Account {
         .do(onNext: { [weak self] user in
             self?.loginDetails = LoginDetails(email: user.email!, uid: user.uid)
         })
-        .map { user -> AResult in .success(user.email) }
+        .map { user -> LoggingResult in .success(user.email) }
         .catchErrorJustReturn(.failure(Error.unknown))
     }
     
-    func signUp(_ username: String, password: String) -> Observable<AResult> {
-        self.isBusy = true
+    func signUp(_ username: String, password: String) -> Observable<LoggingResult> {
         return Observable<User>.create { [weak self] observer in
             self?.authorization.createUser(withEmail: username, password: password) { result, error in
                 if let error = error {
                     observer.onError(error)
-                    self?.isBusy = false
                 } else if let result = result {
                     observer.onNext(result.user)
                     observer.onCompleted()
-                    self?.isBusy = false
                 }
             }
             return Disposables.create()

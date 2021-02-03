@@ -18,6 +18,7 @@
 		5A26223A2576461A006C56FA /* TodoListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2622392576461A006C56FA /* TodoListTests.swift */; };
 		5A3038DE2580EB9E0042EC84 /* Routable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3038DD2580EB9E0042EC84 /* Routable.swift */; };
 		5A34A84B8A905DAF4A5BBCF8 /* Pods_RxTodoList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 152B42294B306D770FFBD257 /* Pods_RxTodoList.framework */; };
+		5A40E23825CB254200C61DA7 /* FirebaseLocalConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A40E23725CB254200C61DA7 /* FirebaseLocalConverter.swift */; };
 		5A47A08B25C0CBE40043097A /* StoredTodo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A47A08925C0CBE40043097A /* StoredTodo+CoreDataClass.swift */; };
 		5A47A08C25C0CBE40043097A /* StoredTodo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A47A08A25C0CBE40043097A /* StoredTodo+CoreDataProperties.swift */; };
 		5A5141B7256C4B1C003B2D3A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5141B6256C4B1C003B2D3A /* AppDelegate.swift */; };
@@ -71,6 +72,7 @@
 		5A2622392576461A006C56FA /* TodoListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListTests.swift; sourceTree = "<group>"; };
 		5A26223B2576461A006C56FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5A3038DD2580EB9E0042EC84 /* Routable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routable.swift; sourceTree = "<group>"; };
+		5A40E23725CB254200C61DA7 /* FirebaseLocalConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseLocalConverter.swift; sourceTree = "<group>"; };
 		5A47A08925C0CBE40043097A /* StoredTodo+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StoredTodo+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		5A47A08A25C0CBE40043097A /* StoredTodo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StoredTodo+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		5A5141B3256C4B1C003B2D3A /* RxTodoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RxTodoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -139,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				5A147D542585658900C93749 /* Model.swift */,
+				5A40E23725CB254200C61DA7 /* FirebaseLocalConverter.swift */,
 				5A7D29FF25ACF19500C09B9D /* TodoList.swift */,
 				5A1074F125B2FC830022FE64 /* Todo.swift */,
 				5A7D2A3525ADDD0500C09B9D /* LocalTodo.swift */,
@@ -453,6 +456,7 @@
 				5A96C2E325B74C750023FEC9 /* Account.swift in Sources */,
 				5A47A08B25C0CBE40043097A /* StoredTodo+CoreDataClass.swift in Sources */,
 				5A5141BB256C4B1C003B2D3A /* ItemViewController.swift in Sources */,
+				5A40E23825CB254200C61DA7 /* FirebaseLocalConverter.swift in Sources */,
 				5A62380A25B5DC560034BF0B /* TestStoredClass+CoreDataClass.swift in Sources */,
 				5AF58A8C257E93BD00731532 /* SettingsViewController.swift in Sources */,
 				5A815D1725758D78005934A1 /* ListViewModel.swift in Sources */,

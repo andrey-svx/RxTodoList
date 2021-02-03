@@ -4,7 +4,7 @@ import Foundation
 
 final class TodoList {
     
-    var state: State = .none
+    var state: State = .available
     
     private var todos: [LocalTodo] {
         didSet { delegate?.update(todos: todos) }
@@ -63,7 +63,7 @@ final class TodoList {
             .observeOn(MainScheduler.instance)
             .bind(onNext: { [weak self] insertResult in
                 guard case .success(let objectIDs) = insertResult else { return }
-                for var (i, todo) in todos.enumerated() {
+                for var todo in todos {
                     let objectID = objectIDs.first(where: { (id, _) in id == todo.id })!
                     todo.objectID = objectID.1
                     self?.todos.append(todo)
@@ -85,7 +85,7 @@ final class TodoList {
         
         case inserting
         case editing
-        case none
+        case available
         
     }
     
@@ -97,7 +97,7 @@ extension TodoList {
         switch state {
         case .inserting: insertTodo { testPort?($0) }
         case .editing: editTodo { testPort?($0) }
-        case .none: break
+        case .available: break
         }
     }
         
