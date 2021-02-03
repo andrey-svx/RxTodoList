@@ -9,6 +9,7 @@ target 'RxTodoList' do
   pod 'RxSwift', '~> 5.0.0'
   pod 'RxCocoa', '~> 5.0.0'
   pod 'Firebase/Auth'
+  pod 'Firebase/Database'
 end
 
 target 'RxTodoListTests' do
@@ -18,5 +19,6 @@ target 'RxTodoListTests' do
   pod 'RxSwift', '~> 5.0.0'
   pod 'RxCocoa', '~> 5.0.0'
   pod 'Firebase/Auth'
+  pod 'Firebase/Database'
 end
 

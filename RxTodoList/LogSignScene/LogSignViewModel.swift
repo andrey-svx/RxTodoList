@@ -4,9 +4,6 @@ import Foundation
 
 final class LogSignViewModel {
     
-//    let email: Driver<String>
-//    let password: Driver<String>
-    
     let warning: Driver<String>
     
     let isBusy: Driver<Bool>
@@ -30,7 +27,6 @@ final class LogSignViewModel {
             .share()
         
         self.warning = logsignTapObservable
-            .withLatestFrom(logsignTapObservable)
             .filter {
                 guard case .failure( _) = $0 else { return false }
                 return true

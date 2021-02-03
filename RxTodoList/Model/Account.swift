@@ -6,6 +6,8 @@ final class Account {
     
     typealias AResult = Result<String?, Error>
     
+    var state: State = .none
+    
     private var loginDetails: LoginDetails? = nil {
         didSet { delegate?.update(username: loginDetails?.email) }
     }
@@ -15,19 +17,26 @@ final class Account {
     }
 
     var logOrSign: ((String, String) -> Observable<AResult>) = { _, _ in
-        
         fatalError("Did not set function!")
-    
     }
     
     weak var delegate: AccountDelegate?
     
-    private let auth = Auth.auth()
+    private let authorization = Auth.auth()
+    private let dbReference = Database.database().reference()
     
     func checkUpLogin() {
         
 //        loginDetails = LoginDetails(email: "Test user", uid: nil)
     
+    }
+    
+    enum State {
+        
+        case loggingIn
+        case signingUp
+        case none
+        
     }
     
 }
@@ -37,7 +46,7 @@ extension Account {
     func logout() -> Observable<AResult> {
         Observable<Void>.create { [weak self] observer in
             do {
-                try self?.auth.signOut()
+                try self?.authorization.signOut()
                 observer.onNext(())
                 observer.onCompleted()
             } catch {
@@ -51,13 +60,16 @@ extension Account {
     }
     
     func logIn(_ username: String, _ password: String) -> Observable<AResult> {
-        Observable<User>.create { [weak self] observer in
-            self?.auth.signIn(withEmail: username, password: password) { result, error in
+        self.isBusy = true
+        return Observable<User>.create { [weak self] observer in
+            self?.authorization.signIn(withEmail: username, password: password) { result, error in
                 if let error = error {
-                    observer.onError(error); print(error.localizedDescription)
+                    observer.onError(error)
+                    self?.isBusy = false
                 } else if let result = result {
                     observer.onNext(result.user)
                     observer.onCompleted()
+                    self?.isBusy = false
                 }
             }
             return Disposables.create()
@@ -70,13 +82,16 @@ extension Account {
     }
     
     func signUp(_ username: String, password: String) -> Observable<AResult> {
-        Observable<User>.create { [weak self] observer in
-            self?.auth.createUser(withEmail: username, password: password) { result, error in
+        self.isBusy = true
+        return Observable<User>.create { [weak self] observer in
+            self?.authorization.createUser(withEmail: username, password: password) { result, error in
                 if let error = error {
                     observer.onError(error)
+                    self?.isBusy = false
                 } else if let result = result {
                     observer.onNext(result.user)
                     observer.onCompleted()
+                    self?.isBusy = false
                 }
             }
             return Disposables.create()
@@ -92,12 +107,44 @@ extension Account {
 
 extension Account {
     
-    func uploadTodos(_ todos: Todo) -> Observable<Void> {
-        Observable<Void>.just(())
+    typealias FirebaseTodo = [String: Any]
+    
+    func uploadTodos(_ todos: [FirebaseTodo]) -> Observable<Void> {
+        Observable<Void>.create { [weak self] observable -> Disposable in
+            guard let uid = self?.loginDetails?.uid else {
+                observable.onError(Error.unknown)
+                return Disposables.create()
+            }
+            self?.dbReference
+                .child("users")
+                .child("\(uid)")
+                .setValue(todos) { error, _ in
+                    if let error = error {
+                        observable.onError(error)
+                    } else {
+                        observable.onNext(())
+                        observable.onCompleted()
+                    }
+            }
+            return Disposables.create()
+        }
     }
     
-    func downloadTodos() -> Observable<[Todo]> {
-        Observable.just([])
+    func downloadTodos() -> Observable<[FirebaseTodo]> {
+        Observable<[FirebaseTodo]>.create { [weak self] observable -> Disposable in
+            guard let uid = self?.loginDetails?.uid else {
+                observable.onError(Error.unknown)
+                return Disposables.create()
+            }
+            self?.dbReference
+                .child("users")
+                .child("\(uid)")
+                .observeSingleEvent(of: .value) { snapshot in
+                    observable.onNext((snapshot.value as? [FirebaseTodo]) ?? [])
+                    observable.onCompleted()
+            }
+            return Disposables.create()
+        }
     }
     
 }

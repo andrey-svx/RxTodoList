@@ -49,4 +49,25 @@ final class SettingsViewController: UIViewController, Routable {
         
     }
     
+    @IBAction func upload(_ sender: Any) {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let model = appDelegate.model
+        let todo = LocalTodo("test-todo", id: UUID(), date: Date(), objectID: nil)
+        model
+            .upload([todo, todo, todo])
+            .bind(onNext: { print("UPLOADED!") })
+            .disposed(by: bag)
+    }
+    
+    @IBAction func download(_ sender: Any) {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let model = appDelegate.model
+        model
+            .download()
+            .bind(onNext: {
+                $0.forEach { print($0) }
+            })
+            .disposed(by: bag)
+    }
+    
 }

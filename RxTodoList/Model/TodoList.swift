@@ -57,6 +57,24 @@ final class TodoList {
             .disposed(by: bag)
     }
     
+    func insertAllTodos(_ todos: [LocalTodo], _ testPort: TestPort? = nil) {
+        manager
+            .insert(todos: todos)
+            .observeOn(MainScheduler.instance)
+            .bind(onNext: { [weak self] insertResult in
+                guard case .success(let objectIDs) = insertResult else { return }
+                for var (i, todo) in todos.enumerated() {
+                    let objectID = objectIDs.first(where: { (id, _) in id == todo.id })!
+                    todo.objectID = objectID.1
+                    self?.todos.append(todo)
+                }
+                self?.todos.sort(by: { $0.date > $1.date })
+                testPort?(self?.todos ?? [])
+            })
+            .disposed(by: bag)
+        
+    }
+    
     #if DEBUG
     deinit {
         print("Deinit: " + String(describing: Self.self))

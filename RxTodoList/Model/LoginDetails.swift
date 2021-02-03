@@ -3,7 +3,7 @@ import Foundation
 struct LoginDetails {
     
     let email: String
-    let uid: String?
+    let uid: String
     
 }
 
