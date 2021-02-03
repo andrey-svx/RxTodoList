@@ -17,16 +17,17 @@ final class ItemViewModel {
         let model = appDelegate.model
         
         let initialText = model.initialEditedTodo?.name ?? ""
-  
-        self.text = textInput.asObservable()
-            .skip(2)
-            .startWith(initialText)
-            .do { [weak model] text in model?.updateEdited(text) }
+        
+        self.text = Observable.just(initialText)
             .asDriver(onErrorJustReturn: "")
         
         let saveTapObservable = saveTap.asObservable()
-            .do { [weak model] _ in model?.updateTodoList() }
-            .map { Destination.back }
+            .withLatestFrom(textInput)
+            .do { [weak model] text in
+                model?.updateEdited(text)
+                model?.updateTodoList()
+            }
+            .map { _ in Destination.back }
         
         let cancelTapObservable = cancelTap.asObservable()
             .do { [weak model] _ in model?.cancelAppendinOrEdinitg() }
