@@ -14,7 +14,7 @@ final class Model: TodoListDelegate, AccountDelegate {
         return list
     }()
 
-    let loginDetails = BehaviorSubject<LoginDetails?>(value: nil)
+    let username = BehaviorSubject<String?>(value: nil)
     let isBusy = BehaviorSubject<Bool>(value: false)
     
     lazy var account: Account = {
@@ -72,16 +72,8 @@ extension Model {
         account.logout()
     }
     
-    func logOrSign() -> Observable<Account.AResult> {
-        account.logOrSign()
-    }
-    
-    func updateEmail(_ email: String) {
-        account.updateEmail(email)
-    }
-    
-    func updatePassword(_ password: String) {
-        account.updatePassword(password)
+    func logOrSign(_ username: String, _ password: String) -> Observable<Account.AResult> {
+        account.logOrSign(username, password)
     }
     
     func setForLogIn() {

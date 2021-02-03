@@ -35,12 +35,12 @@ final class LogSignViewController: UIViewController, Routable {
                 .asSignal()
         )
         
-        viewModel.email
-            .drive(usernameField.rx.text)
-            .disposed(by: bag)
-        viewModel.password
-            .drive(passwordField.rx.text)
-            .disposed(by: bag)
+//        viewModel.email
+//            .drive(usernameField.rx.text)
+//            .disposed(by: bag)
+//        viewModel.password
+//            .drive(passwordField.rx.text)
+//            .disposed(by: bag)
         viewModel.warning
             .map { $0.isEmpty }
             .drive(warningLabel.rx.isHidden)

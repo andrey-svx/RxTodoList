@@ -8,6 +8,7 @@ class SettingsViewModel {
     let logoutIsEnabled: Driver<Bool>
     let loginIsEnabled: Driver<Bool>
     let signupIsEnabled: Driver<Bool>
+    
     let isBusy: Driver<Bool>
     
     let destination: Observable<Destination>
@@ -20,54 +21,51 @@ class SettingsViewModel {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let model = appDelegate.model
         
-        let loginDetailsObservable = model.loginDetails
+        let usernameObservable = model.username
             .asObservable()
             .share(replay: 1, scope: .whileConnected)
         
-        self.title = loginDetailsObservable
+        self.title = usernameObservable
             .map {
-                if let username = $0?.email {
-                    return "\(username)"
-                } else {
-                    return "Log in or sign up"
-                }
+                guard let username = $0 else { return "Log in or sign up" }
+                return "\(username)"
             }
             .asDriver(onErrorJustReturn: "")
-
+        
         let logoutTapObservable = logoutTap.asObservable()
             .flatMap { [unowned model] in model.logout() }
-            .map { result -> LoginDetails? in
-                guard case .success(let details) = result else { return nil }
-                return details
+            .filter { result -> Bool in
+                guard case .success(_ ) = result else { return false }
+                return true
             }
+            .map { _ -> String? in nil }
         
-        self.logoutIsEnabled = Observable.of(loginDetailsObservable, logoutTapObservable)
+        self.logoutIsEnabled = Observable.of(logoutTapObservable, usernameObservable)
             .merge()
             .map { $0 == nil ? false : true }
             .asDriver(onErrorJustReturn: false)
         
-        self.loginIsEnabled = loginDetailsObservable
+        self.loginIsEnabled = usernameObservable
             .map { $0 == nil ? true : false }
             .asDriver(onErrorJustReturn: true)
         
-        self.signupIsEnabled = loginDetailsObservable
+        self.signupIsEnabled = usernameObservable
             .map { $0 == nil ? true : false }
             .asDriver(onErrorJustReturn: true)
         
         let loginTapObservable = loginTap.asObservable()
             .do(onNext: { [weak model] _ in model?.setForLogIn() })
-            .map { Destination.route }
         
         let signupTapObservable = signupTap.asObservable()
             .do(onNext: { [weak model] _ in model?.setForSignUp() })
-            .map { Destination.route }
-        
-        self.destination = Observable.of(loginTapObservable, signupTapObservable)
-            .merge()
-        
+
         self.isBusy = model.isBusy
             .asDriver(onErrorJustReturn: false)
         
+        self.destination = Observable.of(loginTapObservable, signupTapObservable)
+            .merge()
+            .map { Destination.route }
+
     }
     
 }

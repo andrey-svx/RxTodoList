@@ -4,14 +4,8 @@ import Foundation
 
 final class LogSignViewModel {
     
-    enum Destination {
-        
-        case dummy
-    
-    }
-    
-    let email: Driver<String>
-    let password: Driver<String>
+//    let email: Driver<String>
+//    let password: Driver<String>
     
     let warning: Driver<String>
     
@@ -29,35 +23,22 @@ final class LogSignViewModel {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let model = appDelegate.model
         
-        self.email = usernameInput.asObservable()
-            .skip(2)
-            .do { [weak model] text in model?.updateEmail(text) }
-            .asDriver(onErrorJustReturn: "")
-        
-        self.password = passwordInput.asObservable()
-            .skip(2)
-            .do { [weak model] text in model?.updatePassword(text) }
-            .asDriver(onErrorJustReturn: "")
-        
+        let loginAndPassword = Driver.combineLatest(usernameInput, passwordInput)
         let logsignTapObservable = logsignTap.asObservable()
-            .flatMap { [unowned model] _ in model.logOrSign() }
+            .withLatestFrom(loginAndPassword)
+            .flatMap { [unowned model] login, password in model.logOrSign(login, password) }
             .share()
         
         self.warning = logsignTapObservable
+            .withLatestFrom(logsignTapObservable)
             .filter {
-                if case .failure( _) = $0 {
-                    return true
-                } else {
-                    return false
-                }
+                guard case .failure( _) = $0 else { return false }
+                return true
             }
             .startWith(.success(nil))
             .map{
-                if case .failure(let error) = $0 {
-                    return error.localizedDescription
-                } else {
-                    return ""
-                }
+                guard case .failure(let error) = $0 else { return "" }
+                return error.localizedDescription
             }
             .asDriver(onErrorJustReturn: "Unknown Warning")
         
@@ -67,17 +48,14 @@ final class LogSignViewModel {
         self.destination = Observable.of(
             logsignTapObservable
                 .filter {
-                    if case .success( _) = $0 {
-                        return true
-                    } else {
-                        return false
-                    }
+                    guard case .success( _) = $0 else { return false }
+                    return true
                 }
                 .map { _ in () },
             dismissTap.asObservable()
         )
             .merge()
-            .map { Destination.dummy }
+            .map { Destination.back }
         
     }
     
