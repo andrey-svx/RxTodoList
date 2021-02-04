@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		5A04164125AEF1DF006134EB /* NSManagedObjectContext+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A04164025AEF1DF006134EB /* NSManagedObjectContext+RxTests.swift */; };
+		5A0E042325CBD10400668039 /* StoredTodo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0E042225CBD10400668039 /* StoredTodo+CoreDataClass.swift */; };
+		5A0E042425CBD10400668039 /* StoredTodo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0E042225CBD10400668039 /* StoredTodo+CoreDataClass.swift */; };
+		5A0E042A25CBD10D00668039 /* StoredTodo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0E042925CBD10D00668039 /* StoredTodo+CoreDataProperties.swift */; };
+		5A0E042B25CBD10D00668039 /* StoredTodo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0E042925CBD10D00668039 /* StoredTodo+CoreDataProperties.swift */; };
 		5A1074F225B2FC830022FE64 /* Todo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1074F125B2FC830022FE64 /* Todo.swift */; };
 		5A1074F825B2FCB40022FE64 /* TodoListDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1074F725B2FCB40022FE64 /* TodoListDelegate.swift */; };
 		5A147D4B25855A1300C93749 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A147D4A25855A1300C93749 /* SettingsViewModel.swift */; };
@@ -19,8 +23,6 @@
 		5A3038DE2580EB9E0042EC84 /* Routable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3038DD2580EB9E0042EC84 /* Routable.swift */; };
 		5A34A84B8A905DAF4A5BBCF8 /* Pods_RxTodoList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 152B42294B306D770FFBD257 /* Pods_RxTodoList.framework */; };
 		5A40E23825CB254200C61DA7 /* FirebaseLocalConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A40E23725CB254200C61DA7 /* FirebaseLocalConverter.swift */; };
-		5A47A08B25C0CBE40043097A /* StoredTodo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A47A08925C0CBE40043097A /* StoredTodo+CoreDataClass.swift */; };
-		5A47A08C25C0CBE40043097A /* StoredTodo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A47A08A25C0CBE40043097A /* StoredTodo+CoreDataProperties.swift */; };
 		5A5141B7256C4B1C003B2D3A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5141B6256C4B1C003B2D3A /* AppDelegate.swift */; };
 		5A5141B9256C4B1C003B2D3A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5141B8256C4B1C003B2D3A /* SceneDelegate.swift */; };
 		5A5141BB256C4B1C003B2D3A /* ItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5141BA256C4B1C003B2D3A /* ItemViewController.swift */; };
@@ -62,6 +64,8 @@
 		1CCDDAE74F5F1E2A631EE649 /* libPods-RxTodoListTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RxTodoListTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		400F4FAF110CB5466F8C5DB7 /* Pods-RxTodoListTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxTodoListTests.debug.xcconfig"; path = "Target Support Files/Pods-RxTodoListTests/Pods-RxTodoListTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5A04164025AEF1DF006134EB /* NSManagedObjectContext+RxTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+RxTests.swift"; sourceTree = "<group>"; };
+		5A0E042225CBD10400668039 /* StoredTodo+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StoredTodo+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5A0E042925CBD10D00668039 /* StoredTodo+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StoredTodo+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5A1074F125B2FC830022FE64 /* Todo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Todo.swift; sourceTree = "<group>"; };
 		5A1074F725B2FCB40022FE64 /* TodoListDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListDelegate.swift; sourceTree = "<group>"; };
 		5A147D4A25855A1300C93749 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
@@ -73,8 +77,6 @@
 		5A26223B2576461A006C56FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5A3038DD2580EB9E0042EC84 /* Routable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routable.swift; sourceTree = "<group>"; };
 		5A40E23725CB254200C61DA7 /* FirebaseLocalConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseLocalConverter.swift; sourceTree = "<group>"; };
-		5A47A08925C0CBE40043097A /* StoredTodo+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StoredTodo+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		5A47A08A25C0CBE40043097A /* StoredTodo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StoredTodo+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		5A5141B3256C4B1C003B2D3A /* RxTodoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RxTodoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A5141B6256C4B1C003B2D3A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5A5141B8256C4B1C003B2D3A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -142,18 +144,26 @@
 			children = (
 				5A147D542585658900C93749 /* Model.swift */,
 				5A40E23725CB254200C61DA7 /* FirebaseLocalConverter.swift */,
-				5A7D29FF25ACF19500C09B9D /* TodoList.swift */,
-				5A1074F125B2FC830022FE64 /* Todo.swift */,
-				5A7D2A3525ADDD0500C09B9D /* LocalTodo.swift */,
-				5ABE990725AF72D1000A7B4D /* PersistenceManager.swift */,
-				5A47A08925C0CBE40043097A /* StoredTodo+CoreDataClass.swift */,
-				5A47A08A25C0CBE40043097A /* StoredTodo+CoreDataProperties.swift */,
-				5A1074F725B2FCB40022FE64 /* TodoListDelegate.swift */,
+				5A40E23D25CBD09000C61DA7 /* TodoList */,
 				5A96C2E225B74C750023FEC9 /* Account.swift */,
 				5A147D502585619600C93749 /* LoginDetails.swift */,
 				5A96C2E625B74D120023FEC9 /* AccountDelegate.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		5A40E23D25CBD09000C61DA7 /* TodoList */ = {
+			isa = PBXGroup;
+			children = (
+				5A7D29FF25ACF19500C09B9D /* TodoList.swift */,
+				5A1074F125B2FC830022FE64 /* Todo.swift */,
+				5A7D2A3525ADDD0500C09B9D /* LocalTodo.swift */,
+				5ABE990725AF72D1000A7B4D /* PersistenceManager.swift */,
+				5A1074F725B2FCB40022FE64 /* TodoListDelegate.swift */,
+				5A0E042225CBD10400668039 /* StoredTodo+CoreDataClass.swift */,
+				5A0E042925CBD10D00668039 /* StoredTodo+CoreDataProperties.swift */,
+			);
+			path = TodoList;
 			sourceTree = "<group>";
 		};
 		5A5141AA256C4B1C003B2D3A = {
@@ -443,6 +453,8 @@
 			files = (
 				5A26223A2576461A006C56FA /* TodoListTests.swift in Sources */,
 				5AC7DC3025C47E210073A3C0 /* AccountTests.swift in Sources */,
+				5A0E042B25CBD10D00668039 /* StoredTodo+CoreDataProperties.swift in Sources */,
+				5A0E042425CBD10400668039 /* StoredTodo+CoreDataClass.swift in Sources */,
 				5A04164125AEF1DF006134EB /* NSManagedObjectContext+RxTests.swift in Sources */,
 				5ABE990C25AF735D000A7B4D /* PersistenceManagerTests.swift in Sources */,
 			);
@@ -452,13 +464,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5A47A08C25C0CBE40043097A /* StoredTodo+CoreDataProperties.swift in Sources */,
 				5A96C2E325B74C750023FEC9 /* Account.swift in Sources */,
-				5A47A08B25C0CBE40043097A /* StoredTodo+CoreDataClass.swift in Sources */,
 				5A5141BB256C4B1C003B2D3A /* ItemViewController.swift in Sources */,
 				5A40E23825CB254200C61DA7 /* FirebaseLocalConverter.swift in Sources */,
 				5A62380A25B5DC560034BF0B /* TestStoredClass+CoreDataClass.swift in Sources */,
 				5AF58A8C257E93BD00731532 /* SettingsViewController.swift in Sources */,
+				5A0E042A25CBD10D00668039 /* StoredTodo+CoreDataProperties.swift in Sources */,
 				5A815D1725758D78005934A1 /* ListViewModel.swift in Sources */,
 				5A147D512585619600C93749 /* LoginDetails.swift in Sources */,
 				5AFFD545257ECFC9008393AB /* LogSignViewController.swift in Sources */,
@@ -478,6 +489,7 @@
 				5ACD2493256C4FC50068AD1A /* ListViewController.swift in Sources */,
 				5A96C2E725B74D120023FEC9 /* AccountDelegate.swift in Sources */,
 				5A5141B9256C4B1C003B2D3A /* SceneDelegate.swift in Sources */,
+				5A0E042325CBD10400668039 /* StoredTodo+CoreDataClass.swift in Sources */,
 				5A147D552585658900C93749 /* Model.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

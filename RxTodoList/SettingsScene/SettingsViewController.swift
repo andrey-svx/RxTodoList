@@ -50,8 +50,6 @@ final class SettingsViewController: UIViewController, Routable {
             .drive(activityIndicator.rx.isAnimating)
             .disposed(by: bag)
         
-        emailLabel.text = "\(Auth.auth().currentUser?.email)"
-        
     }
     
 }

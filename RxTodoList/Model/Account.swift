@@ -4,8 +4,6 @@ import Firebase
 
 final class Account {
     
-    typealias LoggingResult = Result<String?, Error>
-    
     var state: State = .none
     
     private var loginDetails: LoginDetails? = nil {
@@ -22,7 +20,9 @@ final class Account {
     private let dbReference = Database.database().reference()
     
     func checkUpLogin() {
-    
+        guard let currentUser = authorization.currentUser,
+              let email = currentUser.email else { return }
+        loginDetails = LoginDetails(email: email, uid: currentUser.uid)
     }
     
     enum State {
@@ -36,6 +36,8 @@ final class Account {
 }
 
 extension Account {
+    
+    typealias LoggingResult = Result<String?, Error>
     
     func logout() -> Observable<LoggingResult> {
         Observable<Void>.create { [weak self] observer in
@@ -53,8 +55,8 @@ extension Account {
         .catchErrorJustReturn(.failure(Error.unknown))
     }
     
-    func logIn(_ username: String, _ password: String) -> Observable<LoggingResult> {
-        return Observable<User>.create { [weak self] observer in
+    func login(_ username: String, _ password: String) -> Observable<LoggingResult> {
+        Observable<User>.create { [weak self] observer in
             self?.authorization.signIn(withEmail: username, password: password) { result, error in
                 if let error = error {
                     observer.onError(error)
@@ -72,8 +74,8 @@ extension Account {
         .catchErrorJustReturn(.failure(Error.unknown))
     }
     
-    func signUp(_ username: String, password: String) -> Observable<LoggingResult> {
-        return Observable<User>.create { [weak self] observer in
+    func signup(_ username: String, password: String) -> Observable<LoggingResult> {
+        Observable<User>.create { [weak self] observer in
             self?.authorization.createUser(withEmail: username, password: password) { result, error in
                 if let error = error {
                     observer.onError(error)

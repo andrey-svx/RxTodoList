@@ -93,14 +93,14 @@ extension Model {
                     return Observable<(String?, [LocalTodo])>
                         .zip(
                             Observable<String?>.of(nil),
-                            Observable<[LocalTodo]>.of([])
+                            Observable<[LocalTodo]>.of(try! self.todos.value())
                         ) { ($0, $1) }
                 }
             }
-            .do { [unowned self] (name, todos) in
+            .do(onNext: { [unowned self] (name, todos) in
                 self.todoList.deleteAllTodos()
                 self.todoList.insertAllTodos(todos)
-            }
+            })
             .map { name, _ in
                 if let name = name {
                     return .success(name)
@@ -111,11 +111,11 @@ extension Model {
     }
     
     func setForLogIn() {
-        account.logOrSign = account.logIn
+        account.logOrSign = account.login
     }
     
     func setForSignUp() {
-        account.logOrSign = account.signUp
+        account.logOrSign = account.signup
     }
     
 }
@@ -124,7 +124,7 @@ extension Model {
     
     func upload(_ todos: [LocalTodo]) -> Observable<Void> {
         isBusy.onNext(true)
-        let fbTodos = todos.map { FirebaseLocalConverter.wrapToFirebase($0) }
+        let fbTodos = todos.map(FirebaseLocalConverter.wrapToFirebase)
         return account
             .uploadTodos(fbTodos)
             .observeOn(MainScheduler.instance)
@@ -135,7 +135,7 @@ extension Model {
         isBusy.onNext(true)
         return account
             .downloadTodos()
-            .map { $0.map { FirebaseLocalConverter.unwrapFromFirebase($0) } }
+            .map { $0.map(FirebaseLocalConverter.unwrapFromFirebase) }
             .observeOn(MainScheduler.instance)
             .do(onNext: { [weak self] _ in self?.isBusy.onNext(false) })
     }
