@@ -127,6 +127,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5A0108EF25CE8DB5003F0F5A /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				5A96C2E225B74C750023FEC9 /* Account.swift */,
+				5A147D502585619600C93749 /* LoginDetails.swift */,
+				5A96C2E625B74D120023FEC9 /* AccountDelegate.swift */,
+			);
+			path = Account;
+			sourceTree = "<group>";
+		};
 		5A2622382576461A006C56FA /* RxTodoListTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -145,9 +155,7 @@
 				5A147D542585658900C93749 /* Model.swift */,
 				5A40E23725CB254200C61DA7 /* FirebaseLocalConverter.swift */,
 				5A40E23D25CBD09000C61DA7 /* TodoList */,
-				5A96C2E225B74C750023FEC9 /* Account.swift */,
-				5A147D502585619600C93749 /* LoginDetails.swift */,
-				5A96C2E625B74D120023FEC9 /* AccountDelegate.swift */,
+				5A0108EF25CE8DB5003F0F5A /* Account */,
 			);
 			path = Model;
 			sourceTree = "<group>";

@@ -10,9 +10,9 @@ final class Account {
         didSet { delegate?.update(username: loginDetails?.email) }
     }
     
-    var logOrSign: ((String, String) -> Observable<LoggingResult>) = { _, _ in
-        fatalError("Did not set function!")
-    }
+//    var logOrSign: ((String, String) -> Observable<LoggingResult>) = { _, _ in
+//        fatalError("Did not set function!")
+//    }
     
     weak var delegate: AccountDelegate?
     
@@ -55,6 +55,14 @@ extension Account {
         .catchErrorJustReturn(.failure(Error.unknown))
     }
     
+    func logOrSign(_ email: String, _ password: String) -> Observable<LoggingResult> {
+        switch state {
+        case .loggingIn: return login(email, password)
+        case .signingUp: return signup(email, password)
+        default: return Observable<LoggingResult>.error(Error.unknown)
+        }
+    }
+    
     func login(_ username: String, _ password: String) -> Observable<LoggingResult> {
         Observable<User>.create { [weak self] observer in
             self?.authorization.signIn(withEmail: username, password: password) { result, error in
@@ -74,7 +82,7 @@ extension Account {
         .catchErrorJustReturn(.failure(Error.unknown))
     }
     
-    func signup(_ username: String, password: String) -> Observable<LoggingResult> {
+    func signup(_ username: String, _ password: String) -> Observable<LoggingResult> {
         Observable<User>.create { [weak self] observer in
             self?.authorization.createUser(withEmail: username, password: password) { result, error in
                 if let error = error {
@@ -120,7 +128,7 @@ extension Account {
         }
     }
     
-    func downloadTodos() -> Observable<[FirebaseTodo]> {
+    func downloadTodosForAccount() -> Observable<[FirebaseTodo]> {
         Observable<[FirebaseTodo]>.create { [weak self] observable -> Disposable in
             guard let uid = self?.loginDetails?.uid else {
                 observable.onError(Error.unknown)

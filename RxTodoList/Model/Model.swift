@@ -98,6 +98,7 @@ extension Model {
                 }
             }
             .do(onNext: { [unowned self] (name, todos) in
+                guard name != nil, account.state == .loggingIn else { return }
                 self.todoList.deleteAllTodos()
                 self.todoList.insertAllTodos(todos)
             })
@@ -111,11 +112,11 @@ extension Model {
     }
     
     func setForLogIn() {
-        account.logOrSign = account.login
+        account.state = .loggingIn
     }
     
     func setForSignUp() {
-        account.logOrSign = account.signup
+        account.state = .signingUp
     }
     
 }
@@ -134,7 +135,7 @@ extension Model {
     func download() -> Observable<[LocalTodo]> {
         isBusy.onNext(true)
         return account
-            .downloadTodos()
+            .downloadTodosForAccount()
             .map { $0.map(FirebaseLocalConverter.unwrapFromFirebase) }
             .observeOn(MainScheduler.instance)
             .do(onNext: { [weak self] _ in self?.isBusy.onNext(false) })
