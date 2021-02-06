@@ -68,6 +68,14 @@ extension Model {
 
 extension Model {
     
+    func setForLogIn() {
+        account.state = .loggingIn
+    }
+    
+    func setForSignUp() {
+        account.state = .signingUp
+    }
+    
     func logout() -> Observable<Account.LoggingResult> {
         let todos = (try? self.todos.value()) ?? []
         return upload(todos)
@@ -83,19 +91,7 @@ extension Model {
         account
             .logOrSign(username, password)
             .flatMap { [unowned self] result -> Observable<(String?, [LocalTodo])> in
-                if case .success(let name) = result {
-                    return Observable<(String?, [LocalTodo])>
-                        .zip(
-                            Observable.of(name),
-                            self.download()
-                        ) { ($0, $1) }
-                } else {
-                    return Observable<(String?, [LocalTodo])>
-                        .zip(
-                            Observable<String?>.of(nil),
-                            Observable<[LocalTodo]>.of(try! self.todos.value())
-                        ) { ($0, $1) }
-                }
+                self.zipLogOrSignResultWithTodos(result)
             }
             .do(onNext: { [unowned self] (name, todos) in
                 guard name != nil, account.state == .loggingIn else { return }
@@ -103,27 +99,16 @@ extension Model {
                 self.todoList.insertAllTodos(todos)
             })
             .map { name, _ in
-                if let name = name {
-                    return .success(name)
-                } else {
-                    return .failure(Account.Error.unknown)
-                }
+                guard let name = name else { return .failure(Account.Error.unknown) }
+                return .success(name)
             }
-    }
-    
-    func setForLogIn() {
-        account.state = .loggingIn
-    }
-    
-    func setForSignUp() {
-        account.state = .signingUp
     }
     
 }
 
 extension Model {
     
-    func upload(_ todos: [LocalTodo]) -> Observable<Void> {
+    private func upload(_ todos: [LocalTodo]) -> Observable<Void> {
         isBusy.onNext(true)
         let fbTodos = todos.map(FirebaseLocalConverter.wrapToFirebase)
         return account
@@ -132,13 +117,22 @@ extension Model {
             .do(onNext: { [weak self] _ in self?.isBusy.onNext(false) })
     }
     
-    func download() -> Observable<[LocalTodo]> {
+    private func download() -> Observable<[LocalTodo]> {
         isBusy.onNext(true)
         return account
             .downloadTodosForAccount()
             .map { $0.map(FirebaseLocalConverter.unwrapFromFirebase) }
             .observeOn(MainScheduler.instance)
             .do(onNext: { [weak self] _ in self?.isBusy.onNext(false) })
+    }
+    
+    private func zipLogOrSignResultWithTodos(_ result: Account.LoggingResult) -> Observable<(String?, [LocalTodo])> {
+        if case .success(let name) = result {
+            return Observable<(String?, [LocalTodo])>.zip(Observable.of(name),self.download()) { ($0, $1) }
+        } else {
+            let value = (try? self.todos.value()) ?? []
+            return Observable<(String?, [LocalTodo])>.zip(Observable<String?>.of(nil), Observable<[LocalTodo]>.of(value)) { ($0, $1) }
+        }
     }
     
 }

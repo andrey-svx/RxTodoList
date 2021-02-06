@@ -10,10 +10,6 @@ final class Account {
         didSet { delegate?.update(username: loginDetails?.email) }
     }
     
-//    var logOrSign: ((String, String) -> Observable<LoggingResult>) = { _, _ in
-//        fatalError("Did not set function!")
-//    }
-    
     weak var delegate: AccountDelegate?
     
     private let authorization = Auth.auth()
@@ -45,7 +41,7 @@ extension Account {
                 try self?.authorization.signOut()
                 observer.onNext(())
                 observer.onCompleted()
-            } catch {
+            } catch (let error as NSError) {
                 observer.onError(error)
             }
             return Disposables.create()
@@ -66,7 +62,7 @@ extension Account {
     func login(_ username: String, _ password: String) -> Observable<LoggingResult> {
         Observable<User>.create { [weak self] observer in
             self?.authorization.signIn(withEmail: username, password: password) { result, error in
-                if let error = error {
+                if let error = error as NSError? {
                     observer.onError(error)
                 } else if let result = result {
                     observer.onNext(result.user)
@@ -85,7 +81,7 @@ extension Account {
     func signup(_ username: String, _ password: String) -> Observable<LoggingResult> {
         Observable<User>.create { [weak self] observer in
             self?.authorization.createUser(withEmail: username, password: password) { result, error in
-                if let error = error {
+                if let error = error as NSError? {
                     observer.onError(error)
                 } else if let result = result {
                     observer.onNext(result.user)
