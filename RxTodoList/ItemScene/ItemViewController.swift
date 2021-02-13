@@ -8,6 +8,10 @@ final class ItemViewController: UIViewController, Routable {
     private lazy var cancelButton: UIBarButtonItem = { [weak self] in
         self?.navigationItem.setHidesBackButton(true, animated: false)
         let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: nil, action: nil)
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.preferredFont(forTextStyle: .title2)
+        ]
+        cancelButton.setTitleTextAttributes(attributes, for: .normal)
         self?.navigationItem.leftBarButtonItem = cancelButton
         return cancelButton
     }()
