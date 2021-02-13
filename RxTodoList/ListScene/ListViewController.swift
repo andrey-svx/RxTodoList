@@ -31,6 +31,15 @@ final class ListViewController: UITableViewController, Routable {
             }
             .disposed(by: bag)
         
+        viewModel.title
+            .observeOn(MainScheduler.instance)
+            .subscribe(
+                onNext: { [weak self] text in self?.navigationItem.title = text },
+                onError: { [weak self] _ in self?.navigationItem.title = "RxTodoList" }
+            )
+            .disposed(by: bag)
+
+        
         viewModel.destination
             .observeOn(MainScheduler.instance)
             .bind { [weak self] destination in self?.route(to: ItemViewController.self) }

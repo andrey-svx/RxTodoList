@@ -33,9 +33,7 @@ class SettingsViewModel {
             .asDriver(onErrorJustReturn: "Username error")
         
         let logoutTapObservable = logoutTap.asObservable()
-            .flatMap { [unowned model] _ in
-                model.logout().materialize()
-            }
+            .flatMap { [unowned model] _ in model.logout().materialize() }
             .filter {
                 switch $0 {
                 case .next(_): return true

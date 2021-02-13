@@ -156,3 +156,11 @@ extension AuthErrorCode: Swift.Error, LocalizedError {
     }
     
 }
+
+extension NSError: LocalizedError {
+    
+    public var errorDescription: String? {
+        "Error with code \(self.code)"
+    }
+    
+}

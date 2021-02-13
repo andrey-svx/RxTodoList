@@ -5,6 +5,7 @@ import RxCocoa
 final class ListViewModel {
     
     let todos: Driver<[LocalTodo]>
+    let title: Observable<String>
     
     let destination: Observable<Destination>
     
@@ -31,6 +32,9 @@ final class ListViewModel {
             })
             .map { _ in Destination.route }
             .share()
+        
+        self.title = user.username
+            .map { $0 ?? "RxTodoList" }
         
         self.destination = Observable.of(addTapObservable, selectTapObservable)
             .merge()
