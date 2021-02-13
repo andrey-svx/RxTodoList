@@ -76,32 +76,34 @@ extension Model {
         account.state = .signingUp
     }
     
-    func logout() -> Observable<Account.LoggingResult> {
+    func logout() -> Observable<Void> {
+        isBusy.onNext(true)
         let todos = (try? self.todos.value()) ?? []
         return upload(todos)
-            .flatMap { [unowned self] _ in self.account.logout() }
-            .do(onNext: { [weak self] result in
-                if case .success(_) = result {
+            .flatMap(account.logout)
+            .do(onNext: { [weak self] _ in
                     self?.todoList.deleteAllTodos()
-                }
             })
+            .do(
+                onNext: { [weak self] _ in self?.isBusy.onNext(false) },
+                onError: { [weak self] _ in self?.isBusy.onNext(false) }
+            )
     }
     
-    func logOrSign(_ username: String, _ password: String) -> Observable<Account.LoggingResult> {
-        account
+    func logOrSign(_ username: String, _ password: String) -> Observable<String?> {
+        isBusy.onNext(true)
+        return account
             .logOrSign(username, password)
-            .flatMap { [unowned self] result -> Observable<(String?, [LocalTodo])> in
-                self.zipLogOrSignResultWithTodos(result)
-            }
-            .do(onNext: { [unowned self] (name, todos) in
-                guard name != nil, account.state == .loggingIn else { return }
-                self.todoList.deleteAllTodos()
-                self.todoList.insertAllTodos(todos)
+            .flatMap { [unowned self] name in self.zipLogOrSignResultWithTodos(name) }
+            .do(onNext: { [weak self] (name, todos) in
+                self?.todoList.deleteAllTodos()
+                self?.todoList.insertAllTodos(todos)
             })
-            .map { name, _ in
-                guard let name = name else { return .failure(Account.Error.unknown) }
-                return .success(name)
-            }
+            .map { name, _ in name }
+            .do(
+                onNext: { [weak self] _ in self?.isBusy.onNext(false) },
+                onError: { [weak self] _ in self?.isBusy.onNext(false) }
+            )
     }
     
 }
@@ -114,7 +116,10 @@ extension Model {
         return account
             .uploadTodos(fbTodos)
             .observeOn(MainScheduler.instance)
-            .do(onNext: { [weak self] _ in self?.isBusy.onNext(false) })
+            .do(
+                onNext: { [weak self] _ in self?.isBusy.onNext(false) },
+                onError: { [weak self] _ in self?.isBusy.onNext(false) }
+            )
     }
     
     private func download() -> Observable<[LocalTodo]> {
@@ -123,11 +128,14 @@ extension Model {
             .downloadTodosForAccount()
             .map { $0.map(FirebaseLocalConverter.unwrapFromFirebase) }
             .observeOn(MainScheduler.instance)
-            .do(onNext: { [weak self] _ in self?.isBusy.onNext(false) })
+            .do(
+                onNext: { [weak self] _ in self?.isBusy.onNext(false) },
+                onError: { [weak self] _ in self?.isBusy.onNext(false) }
+            )
     }
     
-    private func zipLogOrSignResultWithTodos(_ result: Account.LoggingResult) -> Observable<(String?, [LocalTodo])> {
-        if case .success(let name) = result {
+    private func zipLogOrSignResultWithTodos(_ name: String?) -> Observable<(String?, [LocalTodo])> {
+        if let name = name {
             return Observable<(String?, [LocalTodo])>.zip(Observable.of(name),self.download()) { ($0, $1) }
         } else {
             let value = (try? self.todos.value()) ?? []

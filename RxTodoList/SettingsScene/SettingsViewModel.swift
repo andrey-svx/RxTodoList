@@ -30,13 +30,18 @@ class SettingsViewModel {
                 guard let username = $0 else { return "Log in or sign up" }
                 return "\(username)"
             }
-            .asDriver(onErrorJustReturn: "")
+            .asDriver(onErrorJustReturn: "Username error")
         
         let logoutTapObservable = logoutTap.asObservable()
-            .flatMap { [unowned model] in model.logout() }
-            .filter { result -> Bool in
-                guard case .success(_ ) = result else { return false }
-                return true
+            .flatMap { [unowned model] _ in
+                model.logout().materialize()
+            }
+            .filter {
+                switch $0 {
+                case .next(_): return true
+                case .error(_): return false
+                default: return false
+                }
             }
             .map { _ -> String? in nil }
         

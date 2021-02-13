@@ -23,20 +23,28 @@ final class LogSignViewModel {
         let loginAndPassword = Driver.combineLatest(usernameInput, passwordInput)
         let logsignTapObservable = logsignTap.asObservable()
             .withLatestFrom(loginAndPassword)
-            .flatMap { [unowned model] login, password in model.logOrSign(login, password) }
+            .flatMap { [unowned model] login, password in
+                model
+                    .logOrSign(login, password)
+                    .materialize()
+            }
             .share()
         
         self.warning = logsignTapObservable
             .filter {
-                guard case .failure( _) = $0 else { return false }
-                return true
+                switch $0 {
+                case .error(_): return true
+                default: return false
+                }
             }
-            .startWith(.success(nil))
-            .map{
-                guard case .failure(let error) = $0 else { return "" }
-                return error.localizedDescription
+            .map {
+                switch $0 {
+                case .error(let error): return error.localizedDescription
+                default: return ""
+                }
             }
-            .asDriver(onErrorJustReturn: "Unknown Warning")
+            .startWith("")
+            .asDriver(onErrorJustReturn: "Unknown error")
         
         self.isBusy = model.isBusy
             .asDriver(onErrorJustReturn: false)
@@ -44,8 +52,10 @@ final class LogSignViewModel {
         self.destination = Observable.of(
             logsignTapObservable
                 .filter {
-                    guard case .success( _) = $0 else { return false }
-                    return true
+                    switch $0 {
+                    case .next(_): return true
+                    default: return false
+                    }
                 }
                 .map { _ in () },
             dismissTap.asObservable()
