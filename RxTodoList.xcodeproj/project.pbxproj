@@ -9,9 +9,7 @@
 /* Begin PBXBuildFile section */
 		5A04164125AEF1DF006134EB /* NSManagedObjectContext+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A04164025AEF1DF006134EB /* NSManagedObjectContext+RxTests.swift */; };
 		5A0E042325CBD10400668039 /* StoredTodo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0E042225CBD10400668039 /* StoredTodo+CoreDataClass.swift */; };
-		5A0E042425CBD10400668039 /* StoredTodo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0E042225CBD10400668039 /* StoredTodo+CoreDataClass.swift */; };
 		5A0E042A25CBD10D00668039 /* StoredTodo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0E042925CBD10D00668039 /* StoredTodo+CoreDataProperties.swift */; };
-		5A0E042B25CBD10D00668039 /* StoredTodo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0E042925CBD10D00668039 /* StoredTodo+CoreDataProperties.swift */; };
 		5A1074F225B2FC830022FE64 /* Todo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1074F125B2FC830022FE64 /* Todo.swift */; };
 		5A1074F825B2FCB40022FE64 /* TodoListDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1074F725B2FCB40022FE64 /* TodoListDelegate.swift */; };
 		5A147D4B25855A1300C93749 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A147D4A25855A1300C93749 /* SettingsViewModel.swift */; };
@@ -461,8 +459,6 @@
 			files = (
 				5A26223A2576461A006C56FA /* TodoListTests.swift in Sources */,
 				5AC7DC3025C47E210073A3C0 /* AccountTests.swift in Sources */,
-				5A0E042B25CBD10D00668039 /* StoredTodo+CoreDataProperties.swift in Sources */,
-				5A0E042425CBD10400668039 /* StoredTodo+CoreDataClass.swift in Sources */,
 				5A04164125AEF1DF006134EB /* NSManagedObjectContext+RxTests.swift in Sources */,
 				5ABE990C25AF735D000A7B4D /* PersistenceManagerTests.swift in Sources */,
 			);

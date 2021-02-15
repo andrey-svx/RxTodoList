@@ -82,7 +82,7 @@ extension Model {
         return upload(todos)
             .flatMap(account.logout)
             .do(onNext: { [weak self] _ in
-                    self?.todoList.deleteAllTodos()
+                self?.todoList.deleteAllTodos()
             })
             .do(
                 onNext: { [weak self] _ in self?.isBusy.onNext(false) },
@@ -95,9 +95,11 @@ extension Model {
         return account
             .logOrSign(username, password)
             .flatMap { [unowned self] name in self.zipLogOrSignResultWithTodos(name) }
-            .do(onNext: { [weak self] (name, todos) in
-                self?.todoList.deleteAllTodos()
-                self?.todoList.insertAllTodos(todos)
+            .do(onNext: { [unowned self] (name, todos) in
+                if self.account.state == .loggingIn {
+                    self.todoList.deleteAllTodos()
+                }
+                self.todoList.insertAllTodos(todos)
             })
             .map { name, _ in name }
             .do(

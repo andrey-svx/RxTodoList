@@ -18,6 +18,7 @@ target 'RxTodoListTests' do
   # Pods for testing
   pod 'RxSwift', '~> 5.0.0'
   pod 'RxCocoa', '~> 5.0.0'
+  pod 'RxBlocking'
   pod 'Firebase/Auth'
   pod 'Firebase/Database'
 end

@@ -42,6 +42,9 @@ final class LogSignViewController: UIViewController, Routable {
         viewModel.warning
             .drive(warningLabel.rx.text)
             .disposed(by: bag)
+        viewModel.buttonTitle
+            .drive(logsignButton.rx.title(for: .normal))
+            .disposed(by: bag)
         viewModel.isBusy
             .drive(activityIndicator.rx.isAnimating)
             .disposed(by: bag)

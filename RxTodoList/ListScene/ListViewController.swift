@@ -26,6 +26,7 @@ final class ListViewController: UITableViewController, Routable {
         viewModel.todos
             .drive(tableView.rx.items) { (tableView, row, element) in
                 let cell = tableView.dequeueReusableCell(withIdentifier: "TodoCell")!
+                cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .title3)
                 cell.textLabel?.text = "\(row + 1). \(element.name)"
                 return cell
             }

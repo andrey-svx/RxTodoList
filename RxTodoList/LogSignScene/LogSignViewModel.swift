@@ -5,6 +5,7 @@ import Foundation
 final class LogSignViewModel {
     
     let warning: Driver<String>
+    let buttonTitle: Driver<String>
     
     let isBusy: Driver<Bool>
     
@@ -45,6 +46,10 @@ final class LogSignViewModel {
             }
             .startWith("")
             .asDriver(onErrorJustReturn: "Unknown error")
+        
+        let title = model.account.state == .loggingIn ? "Log in" : "Sign up"
+        self.buttonTitle = Observable<String>.just(title)
+            .asDriver(onErrorJustReturn: "Log or sign")
         
         self.isBusy = model.isBusy
             .asDriver(onErrorJustReturn: false)
