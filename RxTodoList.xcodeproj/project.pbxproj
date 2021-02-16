@@ -40,6 +40,7 @@
 		5ABE990C25AF735D000A7B4D /* PersistenceManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABE990B25AF735D000A7B4D /* PersistenceManagerTests.swift */; };
 		5AC7DC3025C47E210073A3C0 /* AccountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC7DC2F25C47E210073A3C0 /* AccountTests.swift */; };
 		5ACD2493256C4FC50068AD1A /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACD2492256C4FC50068AD1A /* ListViewController.swift */; };
+		5AE11CDE25DBAD6A00FE1111 /* LogoutButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE11CDD25DBAD6A00FE1111 /* LogoutButton.swift */; };
 		5AEB3DB3257F901900B34DC8 /* LogSignViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEB3DB2257F901900B34DC8 /* LogSignViewModel.swift */; };
 		5AED0BAF25AE3A0800F21225 /* NSManagedObjectContext+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AED0BAB25AE3A0300F21225 /* NSManagedObjectContext+Rx.swift */; };
 		5AF58A8C257E93BD00731532 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF58A8B257E93BD00731532 /* SettingsViewController.swift */; };
@@ -96,6 +97,7 @@
 		5ABE990B25AF735D000A7B4D /* PersistenceManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManagerTests.swift; sourceTree = "<group>"; };
 		5AC7DC2F25C47E210073A3C0 /* AccountTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTests.swift; sourceTree = "<group>"; };
 		5ACD2492256C4FC50068AD1A /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
+		5AE11CDD25DBAD6A00FE1111 /* LogoutButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutButton.swift; sourceTree = "<group>"; };
 		5AEB3DB2257F901900B34DC8 /* LogSignViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogSignViewModel.swift; sourceTree = "<group>"; };
 		5AED0BAB25AE3A0300F21225 /* NSManagedObjectContext+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Rx.swift"; sourceTree = "<group>"; };
 		5AF58A8B257E93BD00731532 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -254,6 +256,7 @@
 			children = (
 				5A147D4A25855A1300C93749 /* SettingsViewModel.swift */,
 				5AF58A8B257E93BD00731532 /* SettingsViewController.swift */,
+				5AE11CDD25DBAD6A00FE1111 /* LogoutButton.swift */,
 			);
 			path = SettingsScene;
 			sourceTree = "<group>";
@@ -483,6 +486,7 @@
 				5A147D4B25855A1300C93749 /* SettingsViewModel.swift in Sources */,
 				5AED0BAF25AE3A0800F21225 /* NSManagedObjectContext+Rx.swift in Sources */,
 				5A3038DE2580EB9E0042EC84 /* Routable.swift in Sources */,
+				5AE11CDE25DBAD6A00FE1111 /* LogoutButton.swift in Sources */,
 				5A1074F225B2FC830022FE64 /* Todo.swift in Sources */,
 				5A7D2A0025ACF19500C09B9D /* TodoList.swift in Sources */,
 				5AEB3DB3257F901900B34DC8 /* LogSignViewModel.swift in Sources */,
